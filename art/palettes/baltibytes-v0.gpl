@@ -1,0 +1,34 @@
+GIMP Palette
+Name: baltibytes-v0
+Columns: 8
+#
+ 42  30  43	ink
+ 75  47  69	plum
+106  65  46	bark-dark
+142  91  58	bark
+185 127  79	wood
+220 174 120	sand
+243 227 195	cream
+253 246 227	paper
+ 47  82  51	moss-dark
+ 70 122  60	moss
+106 160  74	grass
+156 198  92	grass-light
+207 224 138	leaf-light
+ 36  80 107	sea-deep
+ 58 127 155	sea
+119 184 196	sea-light
+198 230 220	foam
+ 85  80  90	stone-dark
+132 124 132	stone
+184 174 166	stone-light
+168  72  60	brick
+217 121 107	rose
+238 163 142	blush
+242 199 159	skin
+207 150 112	skin-shade
+227 168  64	gold
+246 214 122	gold-light
+ 61  90 140	denim
+ 95 130 181	denim-light
+111  85 144	heather

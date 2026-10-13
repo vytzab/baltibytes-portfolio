@@ -1,0 +1,1600 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "tiledversion": "1.11.2",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "infinite": false,
+ "compressionlevel": -1,
+ "width": 24,
+ "height": 15,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "nextlayerid": 4,
+ "nextobjectid": 14,
+ "layers": [
+  {
+   "id": 1,
+   "name": "ground",
+   "type": "tilelayer",
+   "width": 24,
+   "height": 15,
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "data": [
+    1,
+    1,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    17,
+    1,
+    1,
+    1,
+    1,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    18,
+    1,
+    1,
+    1,
+    3,
+    33,
+    33,
+    34,
+    33,
+    35,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    35,
+    33,
+    34,
+    33,
+    33,
+    9,
+    1,
+    1,
+    3,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    35,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    35,
+    34,
+    9,
+    1,
+    1,
+    3,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    35,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    9,
+    1,
+    1,
+    3,
+    33,
+    33,
+    35,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    35,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    9,
+    1,
+    1,
+    3,
+    33,
+    34,
+    33,
+    33,
+    34,
+    35,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    35,
+    33,
+    33,
+    34,
+    9,
+    1,
+    1,
+    3,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    35,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    35,
+    9,
+    1,
+    1,
+    3,
+    35,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    35,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    9,
+    1,
+    1,
+    3,
+    33,
+    34,
+    33,
+    35,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    35,
+    33,
+    34,
+    33,
+    33,
+    34,
+    9,
+    1,
+    1,
+    3,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    35,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    35,
+    34,
+    33,
+    9,
+    1,
+    1,
+    3,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    35,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    34,
+    33,
+    33,
+    9,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    4,
+    33,
+    33,
+    34,
+    33,
+    10,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    3,
+    33,
+    34,
+    33,
+    33,
+    9,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  {
+   "id": 2,
+   "name": "decor",
+   "type": "tilelayer",
+   "width": 24,
+   "height": 15,
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "data": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    31,
+    0,
+    28,
+    0,
+    29,
+    0,
+    0,
+    0,
+    0,
+    0,
+    26,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    27,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    47,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    46,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    23,
+    24,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": 3,
+   "name": "entities",
+   "type": "objectgroup",
+   "draworder": "topdown",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true,
+   "objects": [
+    {
+     "id": 1,
+     "name": "player",
+     "type": "spawn",
+     "point": true,
+     "x": 192,
+     "y": 216,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "char.player"
+      }
+     ]
+    },
+    {
+     "id": 2,
+     "name": "from-village",
+     "type": "arrive",
+     "point": true,
+     "x": 192,
+     "y": 216,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "facing",
+       "type": "string",
+       "value": "up"
+      }
+     ]
+    },
+    {
+     "id": 3,
+     "name": "guildmaster",
+     "type": "npc",
+     "point": true,
+     "x": 192,
+     "y": 68,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "char.npc-guildmaster"
+      },
+      {
+       "name": "dialogue",
+       "type": "string",
+       "value": "guild-master"
+      }
+     ]
+    },
+    {
+     "id": 4,
+     "name": "hearth",
+     "type": "prop",
+     "point": true,
+     "x": 192,
+     "y": 32,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.hearth"
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "name": "plaque-role-current",
+     "type": "prop",
+     "point": true,
+     "x": 56,
+     "y": 32,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.plaque"
+      },
+      {
+       "name": "panel",
+       "type": "string",
+       "value": "role:role-current"
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "name": "plaque-role-previous",
+     "type": "prop",
+     "point": true,
+     "x": 88,
+     "y": 32,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.plaque"
+      },
+      {
+       "name": "panel",
+       "type": "string",
+       "value": "role:role-previous"
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "name": "plaque-independent",
+     "type": "prop",
+     "point": true,
+     "x": 120,
+     "y": 32,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.plaque"
+      },
+      {
+       "name": "panel",
+       "type": "string",
+       "value": "role:independent"
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "name": "records",
+     "type": "prop",
+     "point": true,
+     "x": 64,
+     "y": 192,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.noticeboard"
+      },
+      {
+       "name": "panel",
+       "type": "string",
+       "value": "experience"
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "name": "table-0",
+     "type": "prop",
+     "point": true,
+     "x": 112,
+     "y": 96,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.table"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "table-1",
+     "type": "prop",
+     "point": true,
+     "x": 272,
+     "y": 96,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.table"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "table-2",
+     "type": "prop",
+     "point": true,
+     "x": 112,
+     "y": 144,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.table"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "table-3",
+     "type": "prop",
+     "point": true,
+     "x": 272,
+     "y": 144,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.table"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "to-village",
+     "type": "portal",
+     "x": 160,
+     "y": 218,
+     "width": 64,
+     "height": 6,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "to",
+       "type": "string",
+       "value": "map.village"
+      },
+      {
+       "name": "arrive",
+       "type": "string",
+       "value": "from-guild-hall"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "tilesets": [
+  {
+   "firstgid": 1,
+   "name": "tiles.dungeon",
+   "image": "../tiles/dungeon.png",
+   "imagewidth": 128,
+   "imageheight": 64,
+   "columns": 8,
+   "tilecount": 32,
+   "tilewidth": 16,
+   "tileheight": 16,
+   "margin": 0,
+   "spacing": 0,
+   "tiles": [
+    {
+     "id": 0,
+     "type": "wall-top-0",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 1,
+     "type": "wall-top-1",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 2,
+     "type": "wall-top-2",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 3,
+     "type": "wall-top-3",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 4,
+     "type": "wall-top-4",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "type": "wall-top-5",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "type": "wall-top-6",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "type": "wall-top-7",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "type": "wall-top-8",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "type": "wall-top-9",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "type": "wall-top-10",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "type": "wall-top-11",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "type": "wall-top-12",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "type": "wall-top-13",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "type": "wall-top-14",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "type": "wall-top-15",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "type": "wall-face-upper",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "type": "wall-face-lower",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "type": "floor",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "type": "floor-2",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "type": "floor-cracked",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "type": "floor-moss",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 22,
+     "type": "rug-left",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "type": "rug-right",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 24,
+     "type": "rubble",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 25,
+     "type": "cobweb-nw",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 26,
+     "type": "cobweb-ne",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 27,
+     "type": "banner-brick",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 28,
+     "type": "banner-denim",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 29,
+     "type": "banner-moss",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 30,
+     "type": "banner-gold",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    },
+    {
+     "id": 31,
+     "type": "banner-heather",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "firstgid": 33,
+   "name": "tiles.interior",
+   "image": "../tiles/interior.png",
+   "imagewidth": 128,
+   "imageheight": 32,
+   "columns": 8,
+   "tilecount": 16,
+   "tilewidth": 16,
+   "tileheight": 16,
+   "margin": 0,
+   "spacing": 0,
+   "tiles": [
+    {
+     "id": 0,
+     "type": "planks",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 1,
+     "type": "planks-2",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 2,
+     "type": "planks-worn",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 3,
+     "type": "rug-nw",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 4,
+     "type": "rug-n",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "type": "rug-ne",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "type": "rug-w",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "type": "rug-c",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "type": "rug-e",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "type": "rug-sw",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "type": "rug-s",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "type": "rug-se",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "type": "rug-star",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "type": "books",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "type": "scrolls",
+     "properties": [
+      {
+       "name": "collides",
+       "type": "bool",
+       "value": false
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
