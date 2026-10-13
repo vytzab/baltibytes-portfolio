@@ -86,7 +86,7 @@ function entities(): Placed[] {
   const list: Placed[] = [
     { name: 'player', type: 'spawn', x: px(13), y: px(17), props: { sprite: 'char.player' } },
     { name: 'from-village', type: 'arrive', x: px(13), y: px(17), props: { facing: 'up' } },
-    { name: 'guide', type: 'npc', x: px(10) + 8, y: px(11), props: { sprite: 'char.npc-guide', dialogue: 'dungeon-guide' } },
+    { name: 'keeper', type: 'npc', x: px(10) + 8, y: px(11), props: { sprite: 'char.npc-keeper', dialogue: 'dungeon-keeper' } },
     { name: 'stairs-up', type: 'prop', x: px(13), y: px(19), props: { sprite: 'obj.stairs-up' } },
   ];
   PROJECTS.forEach((p, i) => {

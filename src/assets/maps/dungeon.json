@@ -1129,7 +1129,7 @@
     },
     {
      "id": 3,
-     "name": "guide",
+     "name": "keeper",
      "type": "npc",
      "point": true,
      "x": 168,
@@ -1142,12 +1142,12 @@
       {
        "name": "sprite",
        "type": "string",
-       "value": "char.npc-guide"
+       "value": "char.npc-keeper"
       },
       {
        "name": "dialogue",
        "type": "string",
-       "value": "dungeon-guide"
+       "value": "dungeon-keeper"
       }
      ]
     },

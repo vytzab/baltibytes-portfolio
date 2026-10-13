@@ -91,7 +91,7 @@
       "category": "character",
       "type": "spritesheet",
       "status": "draft",
-      "usage": "Guide NPC (one per location later): idle and walk in four directions; turns to face the player when spoken to.",
+      "usage": "Guide NPC in the Starting Village: idle and walk in four directions; turns to face the player when spoken to.",
       "width": 96,
       "height": 256,
       "grid": {
@@ -168,6 +168,90 @@
         "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
       },
       "notes": "v2 design: silver bun, round glasses, long heather coat, gold scarf, red book. Body ~29 px tall; origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
+    },
+    {
+      "id": "char.npc-keeper",
+      "path": "characters/npc-keeper.png",
+      "category": "character",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "The Dungeon's keeper (Projects): idle and walk in four directions; turns to face the player when spoken to.",
+      "width": 96,
+      "height": 256,
+      "grid": {
+        "width": 24,
+        "height": 32
+      },
+      "animations": [
+        {
+          "name": "idle-down",
+          "row": 0,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-left",
+          "row": 1,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-right",
+          "row": 2,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-up",
+          "row": 3,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "walk-down",
+          "row": 4,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-left",
+          "row": 5,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-right",
+          "row": 6,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-up",
+          "row": 7,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/characters/compose.ts",
+        "source": "tools/art/characters/keeper.ts",
+        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
+      },
+      "notes": "Pointed green hood, ginger beard, brick tunic, keys on the belt, lantern in hand (it swings when he walks). Body ~27 px tall; origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
     },
     {
       "id": "tiles.terrain",

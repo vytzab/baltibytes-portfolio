@@ -10,6 +10,7 @@ import { PALETTE_DIR, colorsByName, loadPalette, type Palette } from './palette.
 import { characterSheet } from './characters/compose.ts';
 import { GUIDE } from './characters/guide.ts';
 import { PLAYER } from './characters/player.ts';
+import { KEEPER } from './characters/keeper.ts';
 import { terrainTileset } from './placeholders/terrain.ts';
 import { dialogueBox, interactPrompt, shadow, sign } from './placeholders/props.ts';
 import { previewMap } from './placeholders/map.ts';
@@ -53,6 +54,7 @@ function writeSwatch(p: Palette): void {
 console.log('Generating code-drawn art:');
 out('characters/player.png', characterSheet(PLAYER, c));
 out('characters/npc-guide.png', characterSheet(GUIDE, c));
+out('characters/npc-keeper.png', characterSheet(KEEPER, c));
 out('tiles/terrain.png', terrainTileset(c));
 out('objects/sign.png', sign(c));
 out('ui/dialogue-box.png', dialogueBox(c));

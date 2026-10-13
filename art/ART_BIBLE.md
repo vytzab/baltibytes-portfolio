@@ -86,7 +86,7 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 - **3–4 colours per material** is plenty for a 16 px object.
 - **No pure black or white.** `ink` (deep plum) is the darkest colour, `paper` the lightest.
 - **Reserved meanings:** `brick` marks what wants attention (the "!" prompt, a speaker's name), so keep big brick areas rare (small accents like headphone cups or a book cover are fine). `heather` is for magic, skills and guides (Skill Tower, portal, the guide's coat).
-- **Character colour plans:** give each character one dominant garment hue no other character uses, plus one warm accent. Player: denim blue with a mustard backpack. Guide: heather coat with a gold scarf. Avoid large green or sand garments, which vanish against grass and paths.
+- **Character colour plans:** give each character one dominant garment hue no other character uses, plus one warm accent. Player: denim blue with a mustard backpack. Guide: heather coat with a gold scarf. Keeper (Dungeon): moss-green hooded cloak with a brick tunic and a gold lantern. Avoid large green or sand garments, which vanish against grass and paths.
 - **Changing the palette:** propose it, update the JSON, rerun `npm run art:generate` (for the .gpl/.png), bump the id when it's a breaking change (`baltibytes-v1`) and update assets' `palette` fields.
 
 ## 6. Outlines, light, shadow and contrast

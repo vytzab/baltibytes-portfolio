@@ -24,7 +24,7 @@ How art gets into the game: where files live, how they're described, checked and
 | `tools/art/placeholders/` | Code that draws the placeholder terrain, props, UI and map | Yes |
 | `tools/art/village/` | The Starting Village: `tiles.ts` (village tileset: edges, cobbles, plants), `props.ts` (workshop, trees, arch, notice board, lamp, crates), `map.ts` (the village layout as text, written as Tiled JSON with edges chosen automatically) | Yes |
 | `tools/art/dungeon/` | The Dungeon: `tiles.ts` (walls with faces and rimmed tops, flagstones, rug, cobwebs, a banner per project colour), `props.ts` (torch, quest chest, exit stairs, and the village's cellar entrance), `map.ts` (walls as `#`/`.` text; vaults follow `src/content/projects.ts`) | Yes |
-| `tools/art/characters/` | The characters: `player.ts` and `guide.ts` hold every pixel as hand-drawn text grids (head, body, arm, legs per direction); `compose.ts` stacks them into 24 × 32 frames and sheets | Yes |
+| `tools/art/characters/` | The characters: `player.ts`, `guide.ts` and `keeper.ts` hold every pixel as hand-drawn text grids (head, body, arm, legs per direction); `compose.ts` stacks them into 24 × 32 frames and sheets | Yes |
 | `src/game/` | Engine code that uses assets by id: loader, `world.ts` (builds a map: layers, collision, entities, props, depth sorting), characters, dialogue, interaction, scaling, `rules.ts` (feet box and interaction range, shared with the validator) | Yes |
 | `src/content/` | Text the game shows: `about.ts` (the village's About me) and `projects.ts` (the Dungeon's case studies). Both are drafts for the owner to check; the repo is public | Yes |
 | `src/preview/` | The art preview page (`art-preview.html`) | Yes |
@@ -51,6 +51,7 @@ npm run preview             # serve dist/ at http://localhost:4173 (art preview:
 `art-preview.html` is a small map with the player, an NPC and a sign, built from the manifest. Use it to judge art in context:
 
 - **Walk:** WASD or arrows. **Talk / read:** E, Space or Enter. **Close:** Esc.
+- **Touch screens:** a direction pad (bottom left; slide your thumb round it, 8 directions) and an A button (bottom right) appear instead; tap the dialogue or A to page through it. Test on a phone with `npm run dev -- --host`.
 - **Zoom:** `−` / `+` (or the keys `-` `+`), **Fit** (`0`) returns to the automatic zoom. Check new art at ×3 and at the default zoom.
 - **Grid (G):** the 16 px tile grid. **Collision (C):** colliding tiles (rose) and physics boxes.
 - **Map:** the picker switches between the Starting Village (default), the Dungeon and the small test area; `?map=map.dungeon` in the URL opens one directly. Walking through a portal (the village cellar, the dungeon stairs) changes map too, and the picker follows.

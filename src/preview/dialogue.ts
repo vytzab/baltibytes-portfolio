@@ -24,7 +24,7 @@ export const PREVIEW_DIALOGUE: Record<string, Dialogue> = {
     lines: [
       `Welcome to the Starting Village! This is where ${ABOUT.name} lives and works.`,
       'The notice board on the square says who they are. The workshop by the path is where they tinker.',
-      'The old cellar at the top of the north path leads down to the Dungeon. Every project is kept there in a chest of its own.',
+      'The old cellar at the top of the north path leads down to the Dungeon. Every project is kept there in a chest of its own; the keeper will show you around.',
       'Further out are the other places: skills, experience and the way to get in touch. They aren\'t built yet.',
     ],
   },
@@ -33,8 +33,8 @@ export const PREVIEW_DIALOGUE: Record<string, Dialogue> = {
   'village-sign': { speaker: 'Sign', lines: ['STARTING VILLAGE — About me. Head up the path to the square.'] },
 };
 
-/** The Dungeon guide counts the chests you have opened, so it is built when you talk to her. */
-function dungeonGuide(): Dialogue {
+/** The keeper counts the chests you have opened, so his lines are built when you talk to him. */
+function dungeonKeeper(): Dialogue {
   const opened = PROJECTS.filter((p) => openedCaseStudies().has(p.id)).length;
   const total = PROJECTS.length;
   const progress =
@@ -43,12 +43,12 @@ function dungeonGuide(): Dialogue {
       : opened < total
         ? `You've opened ${opened} of ${total} chests. The banners over the vaults show which project is which.`
         : `You've opened all ${total} chests. That's every project. The stairs behind you lead back up to the village.`;
-  return { speaker: 'Guide', lines: ['Welcome to the Dungeon, where the projects are kept.', progress] };
+  return { speaker: 'Keeper', lines: ['Mind the steps! I keep the projects down here, one in every vault.', progress] };
 }
 
 /** Text for a dialogue id, or undefined if there is none. */
 export function dialogueFor(id: string): Dialogue | undefined {
-  if (id === 'dungeon-guide') return dungeonGuide();
+  if (id === 'dungeon-keeper') return dungeonKeeper();
   return PREVIEW_DIALOGUE[id];
 }
 

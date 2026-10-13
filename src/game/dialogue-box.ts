@@ -62,6 +62,8 @@ export class DialogueBox {
     const last = this.index === this.dialogue.lines.length - 1;
     this.speakerEl.textContent = this.dialogue.speaker;
     this.textEl.textContent = this.dialogue.lines[this.index] ?? '';
-    this.root.querySelector('.dialogue__hint')!.textContent = last ? 'Space ✕' : 'Space ▸';
+    // Name the button the visitor actually has: the on-screen A on touch screens, Space otherwise.
+    const key = document.body.classList.contains('has-touch-controls') ? 'A' : 'Space';
+    this.root.querySelector('.dialogue__hint')!.textContent = `${key} ${last ? '✕' : '▸'}`;
   }
 }

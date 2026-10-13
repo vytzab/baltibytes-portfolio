@@ -5,6 +5,7 @@ import * as Phaser from 'phaser';
 import { manifest } from '../game/assets/loader.ts';
 import { CaseStudyPanel } from '../game/case-study.ts';
 import { DialogueBox } from '../game/dialogue-box.ts';
+import { TouchControls } from '../game/touch-controls.ts';
 import { MAX_ZOOM, keepPixelPerfect, type PixelScale } from '../game/pixel-scale.ts';
 import { ArtPreviewScene } from './ArtPreviewScene.ts';
 import { renderGallery } from './gallery.ts';
@@ -17,7 +18,8 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const maps = manifest.assets.filter((a) => a.category === 'map').map((a) => a.id);
 const requested = new URLSearchParams(location.search).get('map');
 const initialMap = requested && maps.includes(requested) ? requested : 'map.village';
-const scene = new ArtPreviewScene(new DialogueBox($('dialogue')), new CaseStudyPanel($('case-study')), reduceMotion, initialMap);
+const touch = new TouchControls($('touch-controls'));
+const scene = new ArtPreviewScene(new DialogueBox($('dialogue')), new CaseStudyPanel($('case-study')), reduceMotion, initialMap, touch);
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,

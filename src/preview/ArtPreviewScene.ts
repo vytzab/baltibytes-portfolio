@@ -8,6 +8,7 @@ import { animationFrames } from '../game/assets/manifest.ts';
 import type { CaseStudyPanel } from '../game/case-study.ts';
 import type { Character, Facing } from '../game/character.ts';
 import type { DialogueBox } from '../game/dialogue-box.ts';
+import type { TouchControls } from '../game/touch-controls.ts';
 import { InteractionPrompt, type Interactable } from '../game/interaction.ts';
 import { markCaseStudyOpened, openedCaseStudies } from '../game/progress.ts';
 import { buildWorld, type CaseStudyProp } from '../game/world.ts';
@@ -33,6 +34,7 @@ export class ArtPreviewScene extends Phaser.Scene {
   private readonly dialogue: DialogueBox;
   private readonly caseStudy: CaseStudyPanel;
   private readonly reduceMotion: boolean;
+  private readonly touch: TouchControls | null;
   private mapId: string;
   private arrive: string | undefined;
   /** Called at the end of every create(), including after a map change. */
@@ -50,12 +52,17 @@ export class ArtPreviewScene extends Phaser.Scene {
   private gridOverlay!: Phaser.GameObjects.Graphics;
   private collisionOverlay!: Phaser.GameObjects.Graphics;
 
-  constructor(dialogue: DialogueBox, caseStudy: CaseStudyPanel, reduceMotion: boolean, mapId: string) {
+  constructor(dialogue: DialogueBox, caseStudy: CaseStudyPanel, reduceMotion: boolean, mapId: string, touch: TouchControls | null = null) {
     super({ key: 'art-preview' });
     this.dialogue = dialogue;
     this.caseStudy = caseStudy;
     this.reduceMotion = reduceMotion;
     this.mapId = mapId;
+    this.touch = touch;
+    // The on-screen A button does what E, Space or Enter do.
+    if (touch) touch.onAction = () => {
+      if (!this.caseStudy.isOpen) this.pending = 'act';
+    };
   }
 
   /** Swaps to another map, keeping the page (toolbar, dialogue box) as it is. */
@@ -138,8 +145,13 @@ export class ArtPreviewScene extends Phaser.Scene {
       return;
     }
 
-    const dx = Number(pressed(this.keys.right)) - Number(pressed(this.keys.left));
-    const dy = Number(pressed(this.keys.down)) - Number(pressed(this.keys.up));
+    // Keys win when both are used; otherwise the touch pad steers.
+    let dx = Number(pressed(this.keys.right)) - Number(pressed(this.keys.left));
+    let dy = Number(pressed(this.keys.down)) - Number(pressed(this.keys.up));
+    if (dx === 0 && dy === 0 && this.touch) {
+      dx = this.touch.dx;
+      dy = this.touch.dy;
+    }
     const velocity = new Phaser.Math.Vector2(dx, dy).normalize().scale(SPEED);
     body.setVelocity(velocity.x, velocity.y);
     if (dx === 0 && dy === 0) this.player.play('idle', this.player.facing);
