@@ -24,7 +24,11 @@ export type AssetType = 'image' | 'spritesheet' | 'tilemap';
  */
 export type Transparency = 'opaque' | 'transparent' | 'mixed';
 
-export type AssetStatus = 'placeholder' | 'production';
+/**
+ * placeholder: stand-in art to be replaced. draft: real art waiting for the owner's approval.
+ * production: approved final art.
+ */
+export type AssetStatus = 'placeholder' | 'draft' | 'production';
 
 export type Origin = 'code-generated' | 'hand-drawn' | 'ai-assisted' | 'third-party';
 
@@ -38,6 +42,14 @@ export interface Size {
 }
 
 /** One animation = one row of the sheet, starting at column 0 (see art/ART_BIBLE.md). */
+/** A collision box in image pixels, measured from the image's top-left corner. */
+export interface SolidBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export interface AnimationSpec {
   name: string;
   row: number;
@@ -79,6 +91,11 @@ export interface AssetEntry {
   animations?: AnimationSpec[];
   /** Required for image and spritesheet. */
   transparency?: Transparency;
+  /**
+   * Where a prop is solid, as boxes in image pixels (per frame for sheets). Usually just its
+   * footprint at the base (a trunk, two posts), so characters can walk behind the rest.
+   */
+  solid?: SolidBox[];
   /** Allow semi-transparent pixels. Off by default: pixel art has hard edges. */
   softAlpha?: boolean;
   /** Palette id; when set, every visible pixel must be a colour from it. */

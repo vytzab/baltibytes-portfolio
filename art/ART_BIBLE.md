@@ -2,7 +2,7 @@
 
 The visual rules for every piece of art in the game. Anyone (the owner, a hired artist, or someone using an image-generation tool and cleaning up its output) should be able to make an asset that fits by following this page. The commands and file workflow are in [README.md](README.md).
 
-Status: **v0, provisional.** The rules were tested with code-drawn placeholder art in the art preview (`art-preview.html`). Rules marked *(tentative)* should be confirmed with the first production art.
+Status: **v0, provisional.** The rules were tested in the art preview (`art-preview.html`): the terrain and props are placeholders; the player and guide (v2, 24 × 32) are the first real character art, as drafts awaiting approval. Rules marked *(tentative)* should be confirmed with more production art.
 
 ## 1. Direction and identity
 
@@ -35,14 +35,27 @@ The five locations share one palette and style; each has its own accent:
 | Asset | Size (px) | Rules |
 |---|---|---|
 | Tile | **16 × 16** | Ground and decoration tiles. Ground tiles tile seamlessly in every direction. |
-| Character / NPC frame | **16 × 24** | Body about 20 px tall, feet on the bottom row, horizontally centred, 4 px of headroom for hats and hair. Origin = bottom centre. |
-| Large creature or vehicle | 32 × 32 frames | Only when 16 × 24 truly can't fit it; feet on the bottom row. |
-| Objects and props | Multiples of 8, footprint ideally a whole number of tiles | Signs, chests, lamps: usually 16 × 16 or 16 × 32. Buildings: multiples of 16. |
+| Character / NPC frame | **24 × 32** | Figure 26–29 px tall (player 26, guide 29 with her bun), about 12–16 px wide plus accessories; head about 14 × 14. Feet on the bottom row, body centred on the line between columns 11 and 12. Origin = bottom centre. Collision is separate: a 10 × 6 box at the feet, whatever the frame size. |
+| Large creature or vehicle | 32 × 32 frames | Only when 24 × 32 truly can't fit it; feet on the bottom row. |
+| Objects and props | Multiples of 8, footprint ideally a whole number of tiles | Signs, chests, lamps: usually 16 × 16 or 16 × 32. Trees 32 × 48 to 32 × 56. Buildings: multiples of 16 (the workshop is 80 × 80, its door 28 px tall so characters fit through it). |
 | UI frames | 9-slice with **8 px** corners | `ui.dialogue-box` is 24 × 24 (8 px corners, 8 px stretchable edges). |
 | UI icons | 8 × 8 or 16 × 16 | The "!" prompt is 9 × 9 (odd, so the "!" has a centre column). |
 | Portraits *(tentative)* | 48 × 48 | For dialogue, if wanted. None exist yet. |
 
-**Why 16 × 24 for characters.** Tested in the preview, 16 × 24 reads clearly at ×4–×6 zoom: the face, facing direction and walk cycle are easy to read. It's also only half a tile taller than a tile, so characters stay in scale with doors and fences. 16 × 32 made figures look tall next to 16 px props, and 16 × 16 left no room for expressive heads. Keep 16 × 24 unless the first production characters prove otherwise; changing it later only means new sheets and manifest entries.
+**Why 24 × 32 for characters** (changed from 16 × 24 on 2026-10-13). The 16 × 24 placeholders had a 20 px body: 4 rows of face, 1 px eyes, no room for layered clothes, and nothing could stick out of the silhouette. 24 × 32 is the smallest frame that fits what makes a character recognisable at ×3–×6: a 14 px head with 2 px eyes, glasses or a fringe; a jacket over a shirt; and accessories that leave the body outline, like a backpack in profile or a coat flaring at the hem. 16 × 32 was considered and rejected: a 16 px width can't hold a profile backpack or a flared coat. The figures are about 1.6–1.8 tiles tall, a usual cozy-RPG proportion; tiles, props and collision were not changed.
+
+**Chibi proportions:** the head is about half the figure's height, so faces read at real size. Everyone shares this proportion; tell characters apart by silhouette (hair shape, accessories, garment outline), not by height alone.
+
+### Tiles or props?
+
+- **Tiles** for anything flat or knee-high that repeats: ground, paths, water, flowers, pebbles, fences, bushes, rocks. They go on the ground or decor layer, under every character.
+- **Props** (objects placed by their feet) for anything a character can stand behind: trees, buildings, arches, lamps, notice boards, stacked crates. Props are depth-sorted with the characters by the y of their base, so a character north of a tree trunk disappears behind the crown and one south of it is drawn in front.
+- **Collision is not painted.** A prop is solid only where its manifest `solid` boxes say: usually its footprint at the base (a trunk, two post feet, a building's walls and roof depth). Map-wide blockers (a forest edge, an invisible wall) are rectangles in the map's `collision` layer, so scenery can be moved without breaking where you can walk.
+- Draw props with **room at the base for collision**: two posts need a gap of at least 16 px between their solid boxes for a character (10 px feet) to pass comfortably.
+
+### Edges between surfaces
+
+Paths and water never meet grass at a straight tile edge. Edge tiles show a ragged 2–4 px grass fringe (12 per surface: 4 sides, 4 outer corners, 4 inner corners), with a dark trodden rim on paths and a sand bank plus foam on water. The fringe is 3 px deep where it meets the next tile, so any edge tile joins any other. Surfaces must be at least 2 tiles wide wherever they have grass on both sides. The village map generator picks the right edge tile automatically and refuses layouts that would need anything else.
 
 ## 4. Pixels and scaling
 
@@ -66,7 +79,8 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
   - cloth: `denim` → `denim-light`, `brick` → `rose` → `blush`, `heather`, `gold` → `gold-light`
 - **3–4 colours per material** is plenty for a 16 px object.
 - **No pure black or white.** `ink` (deep plum) is the darkest colour, `paper` the lightest.
-- **Reserved meanings:** `brick` marks what wants attention (the "!" prompt, a speaker's name), so keep big brick areas rare. `heather` is for magic and skills (Skill Tower, portal).
+- **Reserved meanings:** `brick` marks what wants attention (the "!" prompt, a speaker's name), so keep big brick areas rare (small accents like headphone cups or a book cover are fine). `heather` is for magic, skills and guides (Skill Tower, portal, the guide's coat).
+- **Character colour plans:** give each character one dominant garment hue no other character uses, plus one warm accent. Player: denim blue with a mustard backpack. Guide: heather coat with a gold scarf. Avoid large green or sand garments, which vanish against grass and paths.
 - **Changing the palette:** propose it, update the JSON, rerun `npm run art:generate` (for the .gpl/.png), bump the id when it's a breaking change (`baltibytes-v1`) and update assets' `palette` fields.
 
 ## 6. Outlines, light, shadow and contrast
@@ -82,7 +96,9 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 - **One animation per row,** frames left to right starting at column 0, every frame the same size, no gaps or padding (margin 0, spacing 0).
 - **Character rows**, in this order: `idle-down`, `idle-left`, `idle-right`, `idle-up`, `walk-down`, `walk-left`, `walk-right`, `walk-up`. NPCs that don't walk have only the four idle rows. Store right-facing rows explicitly, even when they're mirrors, so asymmetric details (a bag on one shoulder) stay possible.
 - **Animation names** are `state-direction` in kebab-case. Later states (`talk-down`, `wave-down`, `sit-left` …) follow the same pattern. In code the key is `<asset id>:<name>`, e.g. `char.player:walk-left`.
-- **Timing:** idle 4 frames at 3 fps (a blink on the last frame); walk 4 frames at 8 fps (contact, passing, contact with the other foot, passing). Pick fps per animation in the manifest.
+- **Timing:** idle 4 frames at 3 fps (still, still, a 1 px breath, a blink); walk 4 frames at 8 fps (contact, passing, contact with the other foot, passing). Pick fps per animation in the manifest.
+- **Walk poses:** on contact frames the upper body dips 1 px (bent knees) and arms swing against the legs; feet never leave the bottom row and the head never shifts sideways within a direction. Side views swing the near arm forward and back. Secondary motion (a scarf tail, a coat hem) sways 1 px against the step.
+- **Character parts:** characters are built from parts (head, body, near arm, legs) in `tools/art/characters/`, each part hand-drawn as a text grid, and stacked by `compose.ts`. A new character copies `player.ts` and redraws the grids; the layout above comes for free.
 - Every frame used by an animation must contain something (the validator flags empty frames).
 - **Ambient loops** (water, flags, torches) must look fine frozen on their first frame, which is what visitors who ask for reduced motion get.
 
@@ -91,7 +107,7 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 - **PNG**, 8-bit RGBA, transparent background where the manifest says `transparent`. No JPEG, WebP or SVG for art.
 - **Names:** lowercase kebab-case (`npc-guide.png`, `dialogue-box.png`), in the folder for the category (`characters/`, `tiles/`, `maps/`, `objects/`, `portraits/`, `ui/`, `effects/`).
 - **Ids:** `<prefix>.<name>`, where prefix is `char`, `tiles`, `map`, `obj`, `portrait`, `ui` or `fx`. An id is permanent once code uses it. Replace the file, keep the id.
-- **Maps:** Tiled JSON with CSV layers and **embedded** tilesets; each tileset's name is its manifest id (`tiles.terrain`); collision is a boolean tile property `collides`. Objects that place things are points at the feet position with string properties `sprite` (a manifest id) and `dialogue` (a text id).
+- **Maps:** Tiled JSON with CSV layers and **embedded** tilesets; each tileset's name is its manifest id (`tiles.terrain`); a map may use several tilesets. Layers: `ground` and `decor` (tiles), `entities` (points at the feet: type `spawn`, `npc`, `sign` or `prop`, with string properties `sprite`, a manifest id, and optionally `dialogue`, a text id), `collision` (solid rectangles). Tile collision is a boolean tile property `collides`.
 - **Editor sources** (`.aseprite`, `.pxo`, `.kra`) live in `art/source/<category>/` with the same name as the PNG.
 
 ## 9. Originality and provenance
@@ -103,11 +119,12 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 
 ## 10. Consistency checklist (per asset)
 
-- [ ] Right size (§3), feet on the bottom row for anything that stands
+- [ ] Right size (§3), feet on the bottom row for anything that stands, in every frame
 - [ ] Top-down three-quarter view, light from the top-left
 - [ ] Only `baltibytes-v0` colours, with 3–4 per material
 - [ ] 1 px `ink` outline (not on ground tiles); no anti-aliasing, alpha 0 or 255
 - [ ] No painted ground shadow (the game adds `fx.shadow`)
+- [ ] Props: `solid` boxes cover the footprint only, and leave passages at least 16 px wide
 - [ ] Rows and names follow §7; every animated frame filled
 - [ ] Looks right next to existing assets in the art preview, at ×3 and at the default zoom, on grass and on path
 - [ ] Interactive? It has a shape cue, not just colour

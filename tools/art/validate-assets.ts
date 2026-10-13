@@ -13,7 +13,9 @@ import {
   type AssetCategory,
   type AssetEntry,
   type AnimationSpec,
+  type SolidBox,
 } from '../../src/game/assets/manifest.ts';
+import { FEET, INTERACT_RANGE } from '../../src/game/rules.ts';
 import { readPng, rgbToHex, type RgbaImage } from './png.ts';
 import { PALETTE_DIR, loadPalette } from './palette.ts';
 
@@ -28,7 +30,7 @@ export interface ValidateOptions {
   assetRoot: string;
   manifestPath?: string;
   paletteDir?: string;
-  /** Treat placeholder assets as errors (for a future release gate). */
+  /** Treat anything not yet production (placeholder or draft) as an error: a release gate. */
   noPlaceholders?: boolean;
 }
 
@@ -36,6 +38,7 @@ export interface ValidateResult {
   issues: Issue[];
   assetCount: number;
   placeholders: string[];
+  drafts: string[];
 }
 
 const ID_RE = /^[a-z]+\.[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -43,7 +46,7 @@ const SEGMENT_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const NAME_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TYPES = ['image', 'spritesheet', 'tilemap'] as const;
-const STATUSES = ['placeholder', 'production'] as const;
+const STATUSES = ['placeholder', 'draft', 'production'] as const;
 const TRANSPARENCIES = ['opaque', 'transparent', 'mixed'] as const;
 const ORIGINS = ['code-generated', 'hand-drawn', 'ai-assisted', 'third-party'] as const;
 /** Files in the asset root that aren't assets. */
@@ -67,13 +70,13 @@ export function validateAssets(options: ValidateOptions): ValidateResult {
     manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
   } catch (e) {
     error('manifest', `cannot read ${manifestPath}: ${(e as Error).message}`);
-    return { issues, assetCount: 0, placeholders: [] };
+    return { issues, assetCount: 0, placeholders: [], drafts: [] };
   }
   const m = manifest as { version?: unknown; assets?: unknown };
   if (m.version !== 1) error('manifest', `"version" must be 1, found ${JSON.stringify(m.version)}`);
   if (!Array.isArray(m.assets)) {
     error('manifest', '"assets" must be an array');
-    return { issues, assetCount: 0, placeholders: [] };
+    return { issues, assetCount: 0, placeholders: [], drafts: [] };
   }
   const entries = m.assets as AssetEntry[];
 
@@ -83,6 +86,7 @@ export function validateAssets(options: ValidateOptions): ValidateResult {
   const listedFiles = new Set<string>();
   const palettes = new Map<string, Set<string> | null>();
   const placeholders: string[] = [];
+  const drafts: string[] = [];
 
   entries.forEach((entry, index) => {
     const label = isText(entry?.id) ? entry.id : `assets[${index}]`;
@@ -110,10 +114,11 @@ export function validateAssets(options: ValidateOptions): ValidateResult {
     if (category === 'map' && entry.type !== 'tilemap') err('maps must have type "tilemap"');
     if (category !== 'map' && entry.type === 'tilemap') err('only category "map" can have type "tilemap"');
     if (category === 'tileset' && entry.type !== 'spritesheet') err('tilesets must have type "spritesheet" (the grid is the tile size)');
-    if (!STATUSES.includes(entry.status)) err(`status must be "placeholder" or "production", found ${JSON.stringify(entry.status)}`);
-    if (entry.status === 'placeholder') {
-      placeholders.push(label);
-      if (options.noPlaceholders) err('is still a placeholder (--no-placeholders)');
+    if (!STATUSES.includes(entry.status)) err(`status must be one of ${STATUSES.join(', ')}, found ${JSON.stringify(entry.status)}`);
+    if (entry.status === 'placeholder') placeholders.push(label);
+    if (entry.status === 'draft') drafts.push(label);
+    if (options.noPlaceholders && (entry.status === 'placeholder' || entry.status === 'draft')) {
+      err(`is still a ${entry.status} (--no-placeholders)`);
     }
     if (!isText(entry.usage)) err('missing "usage": say where and how the game uses it');
 
@@ -185,6 +190,10 @@ export function validateAssets(options: ValidateOptions): ValidateResult {
       if (entry.type !== 'spritesheet') err('only spritesheets can have animations');
       else checkAnimationSpecs(entry.animations, err);
     }
+    if (entry.solid !== undefined) {
+      if (!isImage) err('only images and spritesheets can have "solid" boxes');
+      else checkSolid(entry, err);
+    }
     if (entry.palette !== undefined && !palettes.has(entry.palette)) {
       try {
         const palette = loadPalette(entry.palette, paletteDir);
@@ -212,7 +221,7 @@ export function validateAssets(options: ValidateOptions): ValidateResult {
   }
 
   if (entries.length === 0) warn('manifest', 'no assets listed');
-  return { issues, assetCount: entries.length, placeholders };
+  return { issues, assetCount: entries.length, placeholders, drafts };
 }
 
 function checkAnimationSpecs(animations: AnimationSpec[], err: (m: string) => void): void {
@@ -227,6 +236,19 @@ function checkAnimationSpecs(animations: AnimationSpec[], err: (m: string) => vo
     if (!isPosInt(a?.frames)) err(`${label}: "frames" must be a whole number ≥ 1`);
     if (typeof a?.fps !== 'number' || a.fps <= 0 || a.fps > 60) err(`${label}: "fps" must be between 1 and 60`);
     if (typeof a?.loop !== 'boolean') err(`${label}: "loop" must be true or false`);
+  });
+}
+
+function checkSolid(entry: AssetEntry, err: (m: string) => void): void {
+  if (!Array.isArray(entry.solid) || entry.solid.length === 0) return err('"solid" must be a non-empty array of boxes');
+  const fw = entry.grid?.width ?? entry.width ?? 0;
+  const fh = entry.grid?.height ?? entry.height ?? 0;
+  entry.solid.forEach((b: SolidBox, i) => {
+    const label = `solid box ${i}`;
+    if (!Number.isInteger(b?.x) || !Number.isInteger(b?.y) || b.x < 0 || b.y < 0 || !isPosInt(b?.width) || !isPosInt(b?.height)) {
+      return err(`${label}: needs whole-number x, y ≥ 0 and width, height ≥ 1`);
+    }
+    if (b.x + b.width > fw || b.y + b.height > fh) err(`${label} (${b.x},${b.y} ${b.width}×${b.height}) sticks out of the ${fw}×${fh} ${entry.grid ? 'frame' : 'image'}`);
   });
 }
 
@@ -331,6 +353,7 @@ function firstPixel(image: RgbaImage, test: (rgb: string, a: number) => boolean)
 }
 
 interface TiledTileset {
+  tiles?: Array<{ id?: number; properties?: Array<{ name?: string; value?: unknown }> }>;
   name?: string;
   source?: string;
   image?: string;
@@ -352,8 +375,22 @@ interface TiledLayer {
   height?: number;
   data?: unknown;
   encoding?: string;
-  objects?: Array<{ name?: string; properties?: Array<{ name?: string; value?: unknown }> }>;
+  objects?: TiledObject[];
 }
+
+interface TiledObject {
+  name?: string;
+  type?: string;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+  point?: boolean;
+  properties?: Array<{ name?: string; value?: unknown }>;
+}
+
+/** Object layers the game understands: things placed by their feet, and solid rectangles. */
+const ENTITY_TYPES = ['spawn', 'npc', 'sign', 'prop'] as const;
 
 function checkTilemap(entry: AssetEntry, file: string, byId: Map<string, AssetEntry>, err: (m: string) => void): void {
   let map: {
@@ -418,6 +455,133 @@ function checkTilemap(entry: AssetEntry, file: string, byId: Map<string, AssetEn
         }
       }
     }
+  }
+  checkPlacementAndReach(map, byId, err);
+}
+
+type Rect = { x: number; y: number; width: number; height: number; what: string };
+const overlaps = (a: Rect, b: Rect) => a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
+const propValue = (obj: TiledObject, name: string) => {
+  const v = obj.properties?.find((p) => p.name === name)?.value;
+  return typeof v === 'string' ? v : undefined;
+};
+
+/**
+ * Checks what the game will do with the map's objects, the way the game does it: entities stand
+ * with their feet at (x, y); props and signs are solid where their manifest "solid" boxes say;
+ * NPCs are solid at their feet; "collision" layers hold solid rectangles; tiles with the
+ * "collides" property are solid. Then walks the player's feet box from the spawn (2 px steps)
+ * and makes sure the spawn is free and everything with dialogue can be reached.
+ */
+function checkPlacementAndReach(
+  map: { width?: number; height?: number; tilewidth?: number; tileheight?: number; layers?: TiledLayer[]; tilesets?: TiledTileset[] },
+  byId: Map<string, AssetEntry>,
+  err: (m: string) => void,
+): void {
+  const tw = map.tilewidth ?? 0;
+  const th = map.tileheight ?? 0;
+  const W = (map.width ?? 0) * tw;
+  const H = (map.height ?? 0) * th;
+  if (!W || !H) return;
+
+  const solids: Rect[] = [];
+  const talkTo: Array<{ name: string; x: number; y: number }> = [];
+  let spawn: { x: number; y: number } | null = null;
+
+  for (const layer of map.layers ?? []) {
+    if (layer.type !== 'objectgroup') continue;
+    const isCollision = layer.name === 'collision';
+    for (const obj of layer.objects ?? []) {
+      const label = `object "${obj.name}" in layer "${layer.name}"`;
+      const x = obj.x ?? NaN;
+      const y = obj.y ?? NaN;
+      if (isCollision) {
+        if (obj.point || !isPosInt(Math.round(obj.width ?? 0)) || !isPosInt(Math.round(obj.height ?? 0))) {
+          err(`${label}: collision objects must be rectangles with a size`);
+          continue;
+        }
+        if (x < 0 || y < 0 || x + obj.width! > W || y + obj.height! > H) err(`${label}: rectangle sticks out of the ${W}×${H} map`);
+        solids.push({ x, y, width: obj.width!, height: obj.height!, what: label });
+        continue;
+      }
+      if (!ENTITY_TYPES.includes(obj.type as (typeof ENTITY_TYPES)[number])) {
+        err(`${label}: type "${obj.type}" is not one of ${ENTITY_TYPES.join(', ')} (rectangles go in a layer named "collision")`);
+        continue;
+      }
+      if (!(x >= 0 && x <= W && y >= 0 && y <= H)) {
+        err(`${label}: position ${x},${y} is outside the ${W}×${H} map`);
+        continue;
+      }
+      const sprite = propValue(obj, 'sprite');
+      const asset = sprite ? byId.get(sprite) : undefined;
+      if (obj.type !== 'spawn' && !sprite) err(`${label}: needs a "sprite" property`);
+      if (obj.type === 'spawn') {
+        if (spawn) err(`${label}: a map has one spawn`);
+        spawn = { x, y };
+      } else if (obj.type === 'npc') {
+        solids.push({ x: x - FEET.width / 2, y: y - FEET.height, width: FEET.width, height: FEET.height, what: label });
+      } else if (asset) {
+        const fw = asset.grid?.width ?? asset.width ?? 0;
+        const fh = asset.grid?.height ?? asset.height ?? 0;
+        for (const b of asset.solid ?? []) solids.push({ x: x - fw / 2 + b.x, y: y - fh + b.y, width: b.width, height: b.height, what: `${label} (${sprite})` });
+      }
+      if (obj.type !== 'spawn' && propValue(obj, 'dialogue')) talkTo.push({ name: obj.name ?? '?', x, y });
+    }
+  }
+
+  // Colliding tiles, from each tileset's "collides" property.
+  const collidingGids = new Set<number>();
+  for (const ts of map.tilesets ?? []) {
+    for (const t of ts.tiles ?? []) {
+      if (t.properties?.some((p) => p.name === 'collides' && p.value === true) && Number.isInteger(t.id)) collidingGids.add((ts.firstgid ?? 1) + t.id!);
+    }
+  }
+  const solidTile = new Set<number>();
+  for (const layer of map.layers ?? []) {
+    if (layer.type !== 'tilelayer' || !Array.isArray(layer.data)) continue;
+    (layer.data as number[]).forEach((g, i) => collidingGids.has(g & GID_MASK) && solidTile.add(i));
+  }
+
+  const blockedBy = (fx: number, fy: number): string | null => {
+    const feet: Rect = { x: fx - FEET.width / 2, y: fy - FEET.height, width: FEET.width, height: FEET.height, what: 'player' };
+    if (feet.x < 0 || feet.y < 0 || feet.x + feet.width > W || feet.y + feet.height > H) return 'the edge of the map';
+    for (let ty = Math.floor(feet.y / th); ty <= Math.floor((feet.y + feet.height - 1) / th); ty++) {
+      for (let tx = Math.floor(feet.x / tw); tx <= Math.floor((feet.x + feet.width - 1) / tw); tx++) {
+        if (solidTile.has(ty * (map.width ?? 0) + tx)) return `a colliding tile at ${tx},${ty}`;
+      }
+    }
+    return solids.find((r) => overlaps(feet, r))?.what ?? null;
+  };
+
+  if (!spawn) {
+    if (talkTo.length) err('the map has things to talk to but no "spawn" object, so reachability can\'t be checked');
+    return;
+  }
+  const start: { x: number; y: number } = spawn;
+  const blocker = blockedBy(start.x, start.y);
+  if (blocker) return err(`the spawn at ${start.x},${start.y} is blocked by ${blocker}: the player would start stuck`);
+
+  // Flood fill over feet positions, 2 px apart, from the spawn.
+  const STEP = 2;
+  const seen = new Set<string>();
+  const reached: Array<[number, number]> = [];
+  const queue: Array<[number, number]> = [[start.x, start.y]];
+  seen.add(`${start.x},${start.y}`);
+  while (queue.length) {
+    const [cx, cy] = queue.pop()!;
+    reached.push([cx, cy]);
+    for (const [dx, dy] of [[STEP, 0], [-STEP, 0], [0, STEP], [0, -STEP]] as const) {
+      const nx = cx + dx;
+      const ny = cy + dy;
+      const key = `${nx},${ny}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      if (!blockedBy(nx, ny)) queue.push([nx, ny]);
+    }
+  }
+  for (const t of talkTo) {
+    const ok = reached.some(([x, y]) => Math.hypot(x - t.x, y - t.y) <= INTERACT_RANGE);
+    if (!ok) err(`"${t.name}" can't be reached: no free spot within ${INTERACT_RANGE} px of it is walkable from the spawn`);
   }
 }
 

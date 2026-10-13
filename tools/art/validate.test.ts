@@ -63,14 +63,24 @@ function fixture(): Fixture {
   return fx;
 }
 
+/** A 6 × 4 tile map (96 × 64 px): the player spawns on the left, a talking NPC stands on the right. */
 function tiledMap() {
   return {
-    orientation: 'orthogonal', infinite: false, width: 2, height: 1, tilewidth: 16, tileheight: 16,
+    orientation: 'orthogonal', infinite: false, width: 6, height: 4, tilewidth: 16, tileheight: 16,
     layers: [
-      { name: 'ground', type: 'tilelayer', width: 2, height: 1, data: [1, 2] },
-      { name: 'entities', type: 'objectgroup', objects: [{ name: 'hero', properties: [{ name: 'sprite', value: 'char.hero' }] }] },
+      { name: 'ground', type: 'tilelayer', width: 6, height: 4, data: Array.from({ length: 24 }, () => 1) },
+      {
+        name: 'entities', type: 'objectgroup', objects: [
+          { name: 'hero', type: 'npc', point: true, x: 72, y: 40, properties: [{ name: 'sprite', value: 'char.hero' }, { name: 'dialogue', value: 'hello' }] },
+          { name: 'start', type: 'spawn', point: true, x: 16, y: 40 },
+        ] as Array<Record<string, any>>,
+      },
+      { name: 'collision', type: 'objectgroup', objects: [] as Array<Record<string, any>> },
     ],
-    tilesets: [{ firstgid: 1, name: 'tiles.ground', image: '../tiles/ground.png', imagewidth: 32, imageheight: 16, tilewidth: 16, tileheight: 16, tilecount: 2, columns: 2, margin: 0, spacing: 0 }],
+    tilesets: [{
+      firstgid: 1, name: 'tiles.ground', image: '../tiles/ground.png', imagewidth: 32, imageheight: 16, tilewidth: 16, tileheight: 16, tilecount: 2, columns: 2, margin: 0, spacing: 0,
+      tiles: [{ id: 1, properties: [{ name: 'collides', type: 'bool', value: true }] }],
+    }],
   };
 }
 
@@ -214,7 +224,7 @@ test('map refers to a tileset that is not in the manifest', () => withFixture((f
 
 test('map uses a tile the tileset does not have', () => withFixture((fx) => {
   const map = tiledMap();
-  map.layers[0]!.data = [1, 3];
+  map.layers[0]!.data![1] = 3;
   writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
   expectError(fx.run(), 'map.test', /cell 1 uses tile 3, but the tilesets only go up to 2/);
 }));
@@ -226,8 +236,59 @@ test('map object uses an unknown sprite', () => withFixture((fx) => {
   expectError(fx.run(), 'map.test', /sprite "char\.ghost", which is not in the manifest/);
 }));
 
-test('--no-placeholders turns placeholders into errors', () => withFixture((fx) => {
+test('--no-placeholders turns placeholders and drafts into errors', () => withFixture((fx) => {
   fx.manifest.assets[0]!.status = 'placeholder';
+  fx.manifest.assets[1]!.status = 'draft';
   assert.deepEqual(fx.run(), []);
-  expectError(fx.run({ noPlaceholders: true }), 'char.hero', /still a placeholder/);
+  const issues = fx.run({ noPlaceholders: true });
+  expectError(issues, 'char.hero', /still a placeholder/);
+  expectError(issues, 'tiles.ground', /still a draft/);
+}));
+
+test('unknown status', () => withFixture((fx) => {
+  fx.manifest.assets[0]!.status = 'final';
+  expectError(fx.run(), 'char.hero', /status must be one of placeholder, draft, production/);
+}));
+
+test('solid box outside the frame', () => withFixture((fx) => {
+  fx.manifest.assets[0]!.solid = [{ x: 10, y: 10, width: 8, height: 8 }];
+  expectError(fx.run(), 'char.hero', /solid box 0 \(10,10 8×8\) sticks out of the 16×16 frame/);
+}));
+
+test('spawn inside a collision rectangle', () => withFixture((fx) => {
+  const map = tiledMap();
+  map.layers[2]!.objects!.push({ name: 'rock', type: 'solid', x: 8, y: 30, width: 16, height: 16 });
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
+  expectError(fx.run(), 'map.test', /spawn at 16,40 is blocked by object "rock"/);
+}));
+
+test('NPC walled off by collision rectangles', () => withFixture((fx) => {
+  const map = tiledMap();
+  map.layers[2]!.objects!.push({ name: 'wall', type: 'solid', x: 40, y: 0, width: 8, height: 64 });
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
+  expectError(fx.run(), 'map.test', /"hero" can't be reached/);
+}));
+
+test('NPC walled off by colliding tiles', () => withFixture((fx) => {
+  const map = tiledMap();
+  for (let row = 0; row < 4; row++) map.layers[0]!.data![row * 6 + 3] = 2;
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
+  expectError(fx.run(), 'map.test', /"hero" can't be reached/);
+}));
+
+test('the same wall with a gap is fine', () => withFixture((fx) => {
+  const map = tiledMap();
+  for (let row = 0; row < 3; row++) map.layers[0]!.data![row * 6 + 3] = 2;
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
+  assert.deepEqual(fx.run(), []);
+}));
+
+test('unknown object type and point collision objects', () => withFixture((fx) => {
+  const map = tiledMap();
+  map.layers[1]!.objects!.push({ name: 'thing', type: 'chest', point: true, x: 10, y: 10 });
+  map.layers[2]!.objects!.push({ name: 'dot', type: 'solid', point: true, x: 5, y: 5 });
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
+  const issues = fx.run();
+  expectError(issues, 'map.test', /type "chest" is not one of spawn, npc, sign, prop/);
+  expectError(issues, 'map.test', /collision objects must be rectangles/);
 }));

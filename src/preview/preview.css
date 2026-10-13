@@ -7,6 +7,7 @@
   --paper: #fdf6e3;
   --brick: #a8483c;
   --moss: #467a3c;
+  --gold: #e3a840;
   --font-pixel: 'Pixelify Sans', ui-monospace, monospace;
   /* CSS pixels per game pixel; set by src/game/pixel-scale.ts. */
   --px: 4px;
@@ -72,6 +73,7 @@ html, body {
 }
 .toolbar button:focus-visible, .toolbar label:focus-within { outline: 2px solid var(--paper); outline-offset: 2px; }
 .toolbar output { min-width: 7ch; }
+.toolbar select { font: inherit; color: var(--ink); background: var(--paper); border: 1px solid var(--bark); border-radius: 2px; }
 .badge { background: var(--brick); color: var(--paper); padding: 2px 8px; border-radius: 3px; }
 .muted { opacity: 0.8; }
 
@@ -136,6 +138,7 @@ html, body {
 .card h3 { font: 16px var(--font-pixel); margin: 0 0 8px; display: flex; gap: 8px; align-items: center; }
 .status { font-size: 12px; padding: 1px 6px; border-radius: 3px; }
 .status--placeholder { background: var(--brick); color: var(--paper); }
+.status--draft { background: var(--gold); color: var(--ink); }
 .status--production { background: var(--moss); color: var(--paper); }
 .card dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 8px 0 0; }
 .card dt { opacity: 0.75; }
@@ -150,6 +153,12 @@ html, body {
   background: repeating-conic-gradient(#5a4a58 0% 25%, #6e5e6c 0% 50%) 0 0 / 16px 16px;
 }
 .sheet img { display: block; image-rendering: pixelated; }
+
+/* Animation players: ×1 (true game pixels) beside ×4, on grass so contrast can be judged. */
+.anims { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.anim { margin: 0; display: grid; grid-template-columns: auto auto; align-items: end; gap: 6px; padding: 6px; background: #6aa04a; border-radius: 3px; }
+.anim canvas { image-rendering: pixelated; display: block; }
+.anim figcaption { grid-column: 1 / -1; font-size: 12px; color: var(--ink); }
 .sheet::after {
   content: '';
   position: absolute;

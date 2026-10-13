@@ -138,3 +138,25 @@ export function shadedEllipse(
     }
   }
 }
+
+/**
+ * Adds a 1 px outline around everything drawn so far: each transparent pixel next to a filled
+ * one (4-neighbours) becomes `hex`. Props are painted with fills, then outlined in one pass.
+ */
+export function outline(canvas: PixelCanvas, hex: string): void {
+  const filled = (x: number, y: number) => canvas.isSet(x, y);
+  const edge: Array<[number, number]> = [];
+  for (let y = 0; y < canvas.height; y++) {
+    for (let x = 0; x < canvas.width; x++) {
+      if (!filled(x, y) && (filled(x - 1, y) || filled(x + 1, y) || filled(x, y - 1) || filled(x, y + 1))) edge.push([x, y]);
+    }
+  }
+  for (const [x, y] of edge) canvas.set(x, y, hex);
+}
+
+/** Reads a pixel as a lowercase hex, or null when transparent. */
+export function getHex(canvas: PixelCanvas, x: number, y: number): string | null {
+  if (!canvas.isSet(x, y)) return null;
+  const i = (y * canvas.width + x) * 4;
+  return '#' + [0, 1, 2].map((k) => canvas.data[i + k]!.toString(16).padStart(2, '0')).join('');
+}

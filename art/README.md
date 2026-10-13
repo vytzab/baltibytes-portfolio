@@ -21,8 +21,11 @@ How art gets into the game: where files live, how they're described, checked and
 | `art/source/` | Editor files for production art (`.aseprite`, `.pxo`, `.kra`), mirroring `src/assets/` folders. Create it when the first one exists. | Yes |
 | `art/inbox/` | Scratch space for raw imports: tool outputs, sketches, downloads waiting for review | **No** (git-ignored) |
 | `tools/art/` | The generator, the validator and their tests | Yes |
-| `tools/art/placeholders/` | Code that draws the placeholder art | Yes |
-| `src/game/` | Engine code that uses assets by id: loader, characters, dialogue, interaction, scaling | Yes |
+| `tools/art/placeholders/` | Code that draws the placeholder terrain, props, UI and map | Yes |
+| `tools/art/village/` | The Starting Village: `tiles.ts` (village tileset: edges, cobbles, plants), `props.ts` (workshop, trees, arch, notice board, lamp, crates), `map.ts` (the village layout as text, written as Tiled JSON with edges chosen automatically) | Yes |
+| `tools/art/characters/` | The characters: `player.ts` and `guide.ts` hold every pixel as hand-drawn text grids (head, body, arm, legs per direction); `compose.ts` stacks them into 24 × 32 frames and sheets | Yes |
+| `src/game/` | Engine code that uses assets by id: loader, `world.ts` (builds a map: layers, collision, entities, props, depth sorting), characters, dialogue, interaction, scaling, `rules.ts` (feet box and interaction range, shared with the validator) | Yes |
+| `src/content/` | Text the game shows, e.g. `about.ts` (the village's About me; placeholder lines marked TODO) | Yes |
 | `src/preview/` | The art preview page (`art-preview.html`) | Yes |
 
 Folders under `src/assets/` are created when their first asset arrives.
@@ -34,8 +37,8 @@ npm install                 # once, and whenever package-lock.json changes
 npm run dev                 # dev server with hot reload; open http://localhost:5173/art-preview.html
 npm run dev -- --host       # same, reachable from a phone on the same Wi-Fi (use the printed network URL)
 npm run art:validate        # check the manifest against the files (also part of build and check)
-npm run art:validate -- --no-placeholders   # also fail on placeholders (a future release gate)
-npm run art:generate        # redraw all code-generated placeholder art + palette files
+npm run art:validate -- --no-placeholders   # also fail on placeholder or draft art (a future release gate)
+npm run art:generate        # redraw all code-drawn art (characters, placeholders) + palette files
 npm test                    # validator tests (deliberately broken fixtures)
 npm run check               # type-check + validate + tests: run before every commit
 npm run build               # validate + type-check + production build into dist/ (what Cloudflare runs)
@@ -49,8 +52,9 @@ npm run preview             # serve dist/ at http://localhost:4173 (art preview:
 - **Walk:** WASD or arrows. **Talk / read:** E, Space or Enter. **Close:** Esc.
 - **Zoom:** `−` / `+` (or the keys `-` `+`), **Fit** (`0`) returns to the automatic zoom. Check new art at ×3 and at the default zoom.
 - **Grid (G):** the 16 px tile grid. **Collision (C):** colliding tiles (rose) and physics boxes.
-- **Assets:** every manifest entry with its image enlarged on a checkerboard (transparent areas show as checks) and its frame grid drawn over it, plus status, size, animations and provenance.
-- The red badge counts placeholder assets.
+- **Map:** the picker switches between the Starting Village (default) and the small test area; `?map=map.art-preview` in the URL opens one directly.
+- **Assets:** every manifest entry with its image enlarged on a checkerboard (transparent areas show as checks) and its frame grid drawn over it, plus status, size, animations and provenance. Every animation also plays on grass at ×1 (one game pixel per CSS pixel) next to ×4, so you can judge it at native and enlarged size.
+- The red badge counts placeholder and draft assets.
 - It honours "reduce motion": the prompt stops bobbing.
 
 ## Manifest fields
@@ -61,7 +65,7 @@ npm run preview             # serve dist/ at http://localhost:4173 (art preview:
   "path": "characters/player.png",        // relative to src/assets/; folder matches category
   "category": "character",                // character | tileset | map | object | portrait | ui | effect
   "type": "spritesheet",                  // image | spritesheet | tilemap
-  "status": "placeholder",                // placeholder | production
+  "status": "draft",                      // placeholder (stand-in) | draft (real art awaiting approval) | production
   "usage": "Player character…",           // where and how the game uses it
   "width": 64, "height": 192,             // image size in px (image, spritesheet)
   "grid": { "width": 16, "height": 24 },  // frame size (sheets) or tile size (tilesets, maps)
@@ -69,6 +73,7 @@ npm run preview             # serve dist/ at http://localhost:4173 (art preview:
     { "name": "walk-down", "row": 4, "frames": 4, "fps": 8, "loop": true }
   ],
   "transparency": "transparent",          // opaque | transparent (every frame) | mixed
+  "solid": [{ "x": 12, "y": 50, "width": 8, "height": 6 }], // props: collision boxes in image px (per frame)
   "softAlpha": false,                     // optional; true allows semi-transparent pixels (rare)
   "palette": "baltibytes-v0",             // optional; enforces palette colours
   "provenance": {
@@ -94,7 +99,10 @@ npm run preview             # serve dist/ at http://localhost:4173 (art preview:
 - Transparency: `opaque` assets have no transparent pixels; every frame of a `transparent` asset has some (this catches art exported on a white background); no semi-transparent pixels unless `softAlpha`.
 - Palette: every visible pixel is a palette colour, when `palette` is set.
 - Provenance: origin, author, date and an accepted licence; tool for generated work; https source for third-party; attribution for CC-BY.
+- Solid boxes: whole numbers, inside the image (or frame).
 - Maps: orthogonal, finite, CSV layers, embedded tilesets named after a tileset id with matching size and image path, tile numbers within range, and `sprite` properties that name real assets.
+- Map objects: entity types are `spawn`, `npc`, `sign` or `prop`, inside the map, with a `sprite`; `collision` objects are rectangles inside the map.
+- **Walkability:** the spawn must be free, and every NPC, sign and prop with `dialogue` must be reachable from it. The validator walks the player's 10 × 6 feet box from the spawn in 2 px steps against colliding tiles, collision rectangles, prop and sign `solid` boxes and NPC feet, the same rules the game uses (`src/game/world.ts`), so a misplaced tree can't trap the player or wall off the guide.
 
 It **cannot** judge whether art is good, readable, on-model or consistent in style. That's what the preview and the checklist in ART_BIBLE §10 are for. Errors exit with code 1, so `npm run build` (and any future CI) stops.
 
@@ -110,11 +118,19 @@ It **cannot** judge whether art is good, readable, on-model or consistent in sty
 6. Review in the art preview (`npm run dev` → `/art-preview.html`), on grass and path, at ×3 and default zoom, and in the Assets panel.
 7. `npm run check` and `npm run build`, then commit (the PNG, the source file and the manifest change together).
 
+### Change a character
+
+Edit the grids in `tools/art/characters/<name>.ts` (one character per pixel; the `legend` at the top maps letters to palette colours), then `npm run art:generate` and look at the sheet in the Assets panel and the character in the scene. `compose.ts` refuses parts that change size between poses, so frames can't jump. To hand a character over to a pixel editor instead: export the sheet PNG, keep the 24 × 32 grid and row order, remove it from `generate-placeholders.ts`, and change its provenance to `hand-drawn`.
+
+### Approve art
+
+When the owner approves a draft (or placeholder), set its `status` to `production`. `npm run art:validate -- --no-placeholders` passes only when everything is production.
+
 ### Replace an asset (e.g. placeholder → production)
 
 1. Keep the **id and path**. Overwrite the PNG with the new one.
 2. If the size, frame size or animation rows changed, update `width`, `height`, `grid`, `animations` in the manifest. Keep animation **names** the same so game code doesn't change.
-3. Update `status` to `production` and `provenance` (origin, author, date, licence, tool or source).
+3. Update `status` (`draft` until the owner approves it, then `production`) and `provenance` (origin, author, date, licence, tool or source).
 4. If the asset was code-generated, remove it from `tools/art/generate-placeholders.ts` so `npm run art:generate` doesn't overwrite it.
 5. Validate, review in the preview, check, build, commit.
 
@@ -126,7 +142,13 @@ Edit the entry in `manifest.json`, then `npm run art:validate`. The id never cha
 
 ### Change or add a map
 
-Open `src/assets/maps/<name>.json` in Tiled (the preview map is generated, so edit `tools/art/placeholders/map.ts` for that one instead). Keep tilesets embedded and named after their ids, layers in CSV, collision as the `collides` tile property. Save, validate, check in the preview.
+Both current maps are generated: edit the text layout in `tools/art/village/map.ts` (or `tools/art/placeholders/map.ts` for the test area) and run `npm run art:generate`. Path and pond edges are picked automatically; the generator stops with a message if a path or pond is only 1 tile wide somewhere.
+
+To hand a map over to Tiled instead: remove its `writeMap` line from `generate-placeholders.ts`, then edit `src/assets/maps/<name>.json` in Tiled. Keep tilesets embedded and named after their ids, layers in CSV, `collides` as a tile property, entities as points in `entities`, blockers as rectangles in `collision`. Place edge tiles by hand (or set up a Tiled terrain set). Save, `npm run art:validate` (it checks walkability too), check in the preview.
+
+### Add a prop
+
+Draw it in `tools/art/village/props.ts` (or a pixel editor), add its manifest entry with `solid` boxes for its footprint, and place it in a map as a `prop` point at its feet with a `sprite` property (add `dialogue` to make it talk). Animated props are sprite sheets with an animation; the game plays the first one (frame 0 when motion is reduced).
 
 ### Before committing
 
@@ -153,7 +175,7 @@ For image-generation tools, add: "pixel art, 16×16 sprite, limited palette, har
 
 1. Save the raw output in `art/inbox/` (ignored by git). Note the tool, model and prompt.
 2. Open it in a pixel editor. Find the true pixel size (generated "pixel art" is usually drawn with blocks of several screen pixels, often uneven).
-3. Scale it down with **nearest-neighbour** to the target size (16 × 24, 16 × 16 …), or, better, redraw it on a new canvas at the target size using the output as a reference layer.
+3. Scale it down with **nearest-neighbour** to the target size (24 × 32 characters, 16 × 16 tiles …), or, better, redraw it on a new canvas at the target size using the output as a reference layer.
 4. Convert to the palette: in Pixelorama/LibreSprite/GIMP load `baltibytes-v0.gpl` and switch to indexed colour with **no dithering**, then fix stray pixels by hand.
 5. Remove the background (fully transparent, alpha 0) and any semi-transparent edge pixels; add the 1 px ink outline; check light direction.
 6. Save the cleaned editor file in `art/source/`, export the PNG to `src/assets/`, add the manifest entry with `"origin": "ai-assisted"` (or `hand-drawn`), the tool, and the prompt in `notes`.

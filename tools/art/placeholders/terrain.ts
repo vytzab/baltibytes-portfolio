@@ -22,9 +22,9 @@ export const TERRAIN_TILES = [
 
 export type TerrainTileName = (typeof TERRAIN_TILES)[number]['name'];
 
-type C = (name: string) => string;
+export type C = (name: string) => string;
 
-function grass(t: PixelCanvas, c: C, seed: number, tufts: number): void {
+export function grass(t: PixelCanvas, c: C, seed: number, tufts: number): void {
   t.rect(0, 0, TILE, TILE, c('grass'));
   const rnd = seededRandom(seed);
   for (let i = 0; i < tufts; i++) {
@@ -39,7 +39,7 @@ function grass(t: PixelCanvas, c: C, seed: number, tufts: number): void {
   if (tufts > 4) t.set(4 + Math.floor(rnd() * 8), 3 + Math.floor(rnd() * 8), c('leaf-light'));
 }
 
-function path(t: PixelCanvas, c: C): void {
+export function path(t: PixelCanvas, c: C): void {
   t.rect(0, 0, TILE, TILE, c('sand'));
   const rnd = seededRandom(31);
   for (let i = 0; i < 7; i++) {
@@ -54,7 +54,7 @@ function path(t: PixelCanvas, c: C): void {
   }
 }
 
-function water(t: PixelCanvas, c: C): void {
+export function water(t: PixelCanvas, c: C): void {
   t.rect(0, 0, TILE, TILE, c('sea'));
   t.rect(0, 13, TILE, 3, c('sea-deep'));
   const waves: Array<[number, number]> = [[2, 3], [9, 6], [4, 10]];

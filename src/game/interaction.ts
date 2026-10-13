@@ -1,5 +1,6 @@
 // Finds the nearest thing the player can interact with and shows the "!" prompt above it.
 import * as Phaser from 'phaser';
+import { INTERACT_RANGE } from './rules.ts';
 
 export interface Interactable {
   /** Feet position (where the object touches the ground). */
@@ -12,8 +13,6 @@ export interface Interactable {
   onInteract?: (playerX: number, playerY: number) => void;
 }
 
-/** How close (game pixels, feet to feet) the player must be: a bit over one tile. */
-const RANGE = 22;
 const PROMPT_GAP = 2;
 
 export class InteractionPrompt {
@@ -33,7 +32,7 @@ export class InteractionPrompt {
   /** Call every frame with the player's feet position; returns what is in reach, if anything. */
   update(px: number, py: number, enabled: boolean): Interactable | null {
     let best: Interactable | null = null;
-    let bestDistance = RANGE;
+    let bestDistance = INTERACT_RANGE;
     if (enabled) {
       for (const t of this.targets) {
         const d = Phaser.Math.Distance.Between(px, py, t.x, t.y);

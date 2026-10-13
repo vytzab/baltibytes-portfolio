@@ -6,13 +6,13 @@
       "path": "characters/player.png",
       "category": "character",
       "type": "spritesheet",
-      "status": "placeholder",
-      "usage": "Player character in every scene: idle and walk in four directions.",
-      "width": 64,
-      "height": 192,
+      "status": "draft",
+      "usage": "Player character: idle and walk in four directions.",
+      "width": 96,
+      "height": 256,
       "grid": {
-        "width": 16,
-        "height": 24
+        "width": 24,
+        "height": 32
       },
       "animations": [
         {
@@ -79,23 +79,24 @@
         "author": "Claude (AI assistant) for Vytautas Z",
         "created": "2026-10-13",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/placeholders/characters.ts"
+        "tool": "tools/art/characters/compose.ts",
+        "source": "tools/art/characters/player.ts",
+        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
       },
-      "notes": "Origin bottom-centre (feet). Right-facing rows are mirrors of left in the placeholder; production art may differ."
+      "notes": "v2 design: young engineer with a cowlick, denim jacket, headphones round the neck, mustard backpack. Body ~26 px tall; origin bottom-centre (feet); collision is a 10 \u00d7 6 box at the feet. Right-facing rows mirror the left-facing ones."
     },
     {
       "id": "char.npc-guide",
       "path": "characters/npc-guide.png",
       "category": "character",
       "type": "spritesheet",
-      "status": "placeholder",
-      "usage": "Guide NPC in the art preview; turns to face the player when spoken to.",
-      "width": 64,
-      "height": 96,
+      "status": "draft",
+      "usage": "Guide NPC (one per location later): idle and walk in four directions; turns to face the player when spoken to.",
+      "width": 96,
+      "height": 256,
       "grid": {
-        "width": 16,
-        "height": 24
+        "width": 24,
+        "height": 32
       },
       "animations": [
         {
@@ -125,6 +126,34 @@
           "frames": 4,
           "fps": 3,
           "loop": true
+        },
+        {
+          "name": "walk-down",
+          "row": 4,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-left",
+          "row": 5,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-right",
+          "row": 6,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-up",
+          "row": 7,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
         }
       ],
       "transparency": "transparent",
@@ -134,10 +163,11 @@
         "author": "Claude (AI assistant) for Vytautas Z",
         "created": "2026-10-13",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/placeholders/characters.ts"
+        "tool": "tools/art/characters/compose.ts",
+        "source": "tools/art/characters/guide.ts",
+        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
       },
-      "notes": "Same body template as the player, recoloured."
+      "notes": "v2 design: silver bun, round glasses, long heather coat, gold scarf, red book. Body ~29 px tall; origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
     },
     {
       "id": "tiles.terrain",
@@ -165,6 +195,32 @@
       "notes": "Tiles 0-4 are opaque ground; 5-9 are decoration on a transparent background. No autotile transitions yet."
     },
     {
+      "id": "tiles.village",
+      "path": "tiles/village.png",
+      "category": "tileset",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "Starting Village tiles that extend tiles.terrain: grass edges for paths and the pond (12 each, chosen automatically by the map generator), pond water, cobbles, clover, tulips, daisies, tall grass, pebbles, a north\u2013south fence, reeds, lilies, mushrooms.",
+      "width": 128,
+      "height": 80,
+      "grid": {
+        "width": 16,
+        "height": 16
+      },
+      "transparency": "mixed",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/village/tiles.ts",
+        "notes": "Edge tiles reuse the terrain set's path texture so they match it."
+      },
+      "notes": "37 tiles in an 8 \u00d7 5 sheet; the last 3 cells are empty. Collision is the 'collides' tile property in each map's tileset."
+    },
+    {
       "id": "map.art-preview",
       "path": "maps/art-preview.json",
       "category": "map",
@@ -186,6 +242,27 @@
       }
     },
     {
+      "id": "map.village",
+      "path": "maps/village.json",
+      "category": "map",
+      "type": "tilemap",
+      "status": "draft",
+      "usage": "The Starting Village (About me): entrance arch, workshop, cobbled square with the notice board and the guide, pond, flower garden, forest edge.",
+      "grid": {
+        "width": 16,
+        "height": 16
+      },
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/village/map.ts",
+        "notes": "Generated Tiled JSON; opens in Tiled. Collision rectangles for the forest edge are in the 'collision' object layer."
+      }
+    },
+    {
       "id": "obj.sign",
       "path": "objects/sign.png",
       "category": "object",
@@ -203,6 +280,234 @@
         "license": "owner",
         "tool": "tools/art/generate-placeholders.ts",
         "source": "tools/art/placeholders/props.ts"
+      },
+      "solid": [
+        {
+          "x": 5,
+          "y": 10,
+          "width": 6,
+          "height": 6
+        }
+      ]
+    },
+    {
+      "id": "obj.house",
+      "path": "objects/house.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "The workshop in the Starting Village: plank walls, shingle roof, chimney, flower boxes, a '</>' plaque over the door. Interacting at the door shows its dialogue.",
+      "width": 80,
+      "height": 80,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 4,
+          "y": 24,
+          "width": 72,
+          "height": 56
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/village/props.ts"
+      },
+      "notes": "Solid over the whole building footprint (walls and the roof's depth), so nobody walks into the roof from behind."
+    },
+    {
+      "id": "obj.tree-pine",
+      "path": "objects/tree-pine.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "Pine tree: forest edges and accents.",
+      "width": 32,
+      "height": 56,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 12,
+          "y": 50,
+          "width": 8,
+          "height": 6
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/village/props.ts"
+      },
+      "notes": "Solid at the trunk only; characters pass behind the crown."
+    },
+    {
+      "id": "obj.tree-birch",
+      "path": "objects/tree-birch.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "Birch tree: forest edges and accents.",
+      "width": 32,
+      "height": 48,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 12,
+          "y": 42,
+          "width": 8,
+          "height": 6
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/village/props.ts"
+      },
+      "notes": "Solid at the trunk only."
+    },
+    {
+      "id": "obj.arch",
+      "path": "objects/arch.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "Welcome arch at the village entrance: the village's focal point. Characters walk through between the posts.",
+      "width": 64,
+      "height": 48,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 6,
+          "y": 41,
+          "width": 8,
+          "height": 7
+        },
+        {
+          "x": 50,
+          "y": 41,
+          "width": 8,
+          "height": 7
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/village/props.ts"
+      },
+      "notes": "Two solid boxes, one per post foot; the 36 px between them is the way in."
+    },
+    {
+      "id": "obj.noticeboard",
+      "path": "objects/noticeboard.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "Notice board on the village square; holds the About me text.",
+      "width": 32,
+      "height": 32,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 4,
+          "y": 26,
+          "width": 25,
+          "height": 6
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/village/props.ts"
+      },
+      "notes": "One box across both posts, so nobody walks under the board."
+    },
+    {
+      "id": "obj.lamp",
+      "path": "objects/lamp.png",
+      "category": "object",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "Lamp post with a flickering flame; frame 0 is shown when motion is reduced.",
+      "width": 64,
+      "height": 32,
+      "grid": {
+        "width": 16,
+        "height": 32
+      },
+      "animations": [
+        {
+          "name": "flicker",
+          "row": 0,
+          "frames": 4,
+          "fps": 4,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 5,
+          "y": 28,
+          "width": 6,
+          "height": 4
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/village/props.ts"
+      }
+    },
+    {
+      "id": "obj.crates",
+      "path": "objects/crates.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "Crates and a barrel beside the workshop.",
+      "width": 32,
+      "height": 24,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 1,
+          "y": 14,
+          "width": 30,
+          "height": 10
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/village/props.ts"
       }
     },
     {

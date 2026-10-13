@@ -1,10 +1,12 @@
-// The art preview: one small map with a player, an NPC and a sign. Everything it shows comes from
-// the manifest (assets), the map's object layer (placement) and PREVIEW_DIALOGUE (text).
+// The art preview: walk around a map (the Starting Village, or the small test area) with the
+// player, talk to whoever is there. Everything it shows comes from the manifest (assets), the
+// map (placement, collision; see src/game/world.ts) and PREVIEW_DIALOGUE (text).
 import * as Phaser from 'phaser';
-import { createTilemap, preloadAssets, registerAnimations } from '../game/assets/loader.ts';
-import { Character, type Facing } from '../game/character.ts';
+import { preloadAssets, registerAnimations } from '../game/assets/loader.ts';
+import type { Character, Facing } from '../game/character.ts';
 import type { DialogueBox } from '../game/dialogue-box.ts';
-import { InteractionPrompt, type Interactable } from '../game/interaction.ts';
+import { InteractionPrompt } from '../game/interaction.ts';
+import { buildWorld } from '../game/world.ts';
 import { PREVIEW_DIALOGUE } from './dialogue.ts';
 
 /** Walking speed in game pixels per second: about 4.5 tiles a second. */
@@ -20,17 +22,12 @@ interface Keys {
 
 const ACT_CODES = new Set(['KeyE', 'Space', 'Enter', 'NumpadEnter']);
 
-type MapObject = Phaser.Types.Tilemaps.TiledObject;
-
-function prop(obj: MapObject, name: string): string | undefined {
-  const props = obj.properties as Array<{ name: string; value: unknown }> | undefined;
-  const value = props?.find((p) => p.name === name)?.value;
-  return typeof value === 'string' ? value : undefined;
-}
-
 export class ArtPreviewScene extends Phaser.Scene {
   private readonly dialogue: DialogueBox;
   private readonly reduceMotion: boolean;
+  private mapId: string;
+  /** Called at the end of every create(), including after a map change. */
+  onCreated: (() => void) | null = null;
   private player!: Character;
   private prompt!: InteractionPrompt;
   private keys!: Keys;
@@ -40,58 +37,42 @@ export class ArtPreviewScene extends Phaser.Scene {
   private gridOverlay!: Phaser.GameObjects.Graphics;
   private collisionOverlay!: Phaser.GameObjects.Graphics;
 
-  constructor(dialogue: DialogueBox, reduceMotion: boolean) {
+  constructor(dialogue: DialogueBox, reduceMotion: boolean, mapId: string) {
     super({ key: 'art-preview' });
     this.dialogue = dialogue;
     this.reduceMotion = reduceMotion;
+    this.mapId = mapId;
+  }
+
+  /** Swaps to another map, keeping the page (toolbar, dialogue box) as it is. */
+  showMap(mapId: string): void {
+    this.dialogue.close();
+    this.scene.restart({ mapId });
   }
 
   preload(): void {
     preloadAssets(this);
   }
 
+  init(data: { mapId?: string }): void {
+    this.mapId = data.mapId ?? this.mapId;
+  }
+
   create(): void {
     registerAnimations(this);
-    const { map, layers } = createTilemap(this, 'map.art-preview');
-    this.layers = layers;
-    // Tile layers sit below everything that is depth-sorted by y (characters, props: depth ≥ 0).
-    layers.forEach((layer, i) => layer.setDepth(-10 + i));
-    this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-    const objects = map.getObjectLayer('entities')?.objects ?? [];
-    const spawn = objects.find((o) => o.type === 'spawn');
-    this.player = new Character(this, spawn?.x ?? 0, spawn?.y ?? 0, (spawn && prop(spawn, 'sprite')) ?? 'char.player', { movable: true });
-    this.player.sprite.setCollideWorldBounds(true);
-    for (const layer of layers) this.physics.add.collider(this.player.sprite, layer);
-
-    const interactables: Interactable[] = [];
-    for (const obj of objects) {
-      const x = obj.x ?? 0;
-      const y = obj.y ?? 0;
-      const sprite = prop(obj, 'sprite');
-      const dialogueId = prop(obj, 'dialogue');
-      if (!sprite || !dialogueId) continue;
-      if (obj.type === 'npc') {
-        const npc = new Character(this, x, y, sprite, { movable: false });
-        npc.sync();
-        this.physics.add.collider(this.player.sprite, npc.sprite);
-        interactables.push({ x, y, height: npc.sprite.height, dialogueId, onInteract: (px, py) => npc.face(px, py) });
-      } else if (obj.type === 'sign') {
-        const image = this.add.image(x, y, sprite).setOrigin(0.5, 1).setDepth(y);
-        // Solid only at the post, so the player can stand right in front of the board.
-        const post = this.add.zone(x, y - 3, 6, 6);
-        this.physics.add.existing(post, true);
-        this.physics.add.collider(this.player.sprite, post);
-        interactables.push({ x, y, height: image.height, dialogueId });
-      }
-    }
-    this.prompt = new InteractionPrompt(this, interactables, this.reduceMotion);
+    const world = buildWorld(this, this.mapId, { reduceMotion: this.reduceMotion });
+    const { map } = world;
+    this.layers = world.layers;
+    this.player = world.player;
+    this.prompt = new InteractionPrompt(this, world.interactables, this.reduceMotion);
 
     const camera = this.cameras.main;
     camera.startFollow(this.player.sprite, true);
     camera.setRoundPixels(true);
     this.fitCamera(map);
-    this.scale.on(Phaser.Scale.Events.RESIZE, () => this.fitCamera(map));
+    const onResize = () => this.fitCamera(map);
+    this.scale.on(Phaser.Scale.Events.RESIZE, onResize);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.scale.off(Phaser.Scale.Events.RESIZE, onResize));
 
     this.gridOverlay = this.add.graphics().setDepth(Number.MAX_SAFE_INTEGER - 1).setVisible(false);
     this.gridOverlay.lineStyle(1, GRID_COLOR, 0.25);
@@ -114,6 +95,7 @@ export class ArtPreviewScene extends Phaser.Scene {
       if (ACT_CODES.has(e.code)) this.pending = 'act';
       else if (e.code === 'Escape') this.pending = 'close';
     });
+    this.onCreated?.();
   }
 
   update(): void {

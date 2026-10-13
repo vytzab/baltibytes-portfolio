@@ -2,12 +2,11 @@
 // animation names: `idle-<facing>` and, for walkers, `walk-<facing>`.
 import * as Phaser from 'phaser';
 import { animationKey } from './assets/manifest.ts';
+import { FEET } from './rules.ts';
 
 export type Facing = 'down' | 'left' | 'right' | 'up';
 export type CharacterState = 'idle' | 'walk';
 
-/** Collision box at the feet, so characters can walk "behind" the top of things. */
-const FEET = { width: 10, height: 6 } as const;
 const SHADOW_ALPHA = 0.25;
 
 export class Character {

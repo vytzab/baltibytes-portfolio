@@ -7,10 +7,15 @@ import { dirname, join } from 'node:path';
 import { PixelCanvas } from './draw.ts';
 import { writePng } from './png.ts';
 import { PALETTE_DIR, colorsByName, loadPalette, type Palette } from './palette.ts';
-import { characterSheet } from './placeholders/characters.ts';
+import { characterSheet } from './characters/compose.ts';
+import { GUIDE } from './characters/guide.ts';
+import { PLAYER } from './characters/player.ts';
 import { terrainTileset } from './placeholders/terrain.ts';
 import { dialogueBox, interactPrompt, shadow, sign } from './placeholders/props.ts';
 import { previewMap } from './placeholders/map.ts';
+import { villageTileset } from './village/tiles.ts';
+import { arch, birch, crates, house, lamp, noticeBoard, pine } from './village/props.ts';
+import { villageMap } from './village/map.ts';
 
 const ASSETS = join(import.meta.dirname, '../../src/assets');
 const PALETTE_ID = 'baltibytes-v0';
@@ -42,45 +47,33 @@ function writeSwatch(p: Palette): void {
   writePng(join(PALETTE_DIR, `${p.id}.png`), canvas);
 }
 
-console.log('Generating placeholder art:');
-out('characters/player.png', characterSheet(
-  {
-    outline: c('ink'),
-    blush: c('blush'),
-    hair: { base: c('bark'), shade: c('bark-dark') },
-    skin: { base: c('skin'), shade: c('skin-shade') },
-    shirt: { base: c('denim-light'), shade: c('denim') },
-    belt: { base: c('bark-dark') },
-    trousers: { base: c('bark-dark'), shade: c('plum') },
-    boots: { base: c('bark'), shade: c('bark-dark') },
-  },
-  true,
-  'char.player',
-));
-out('characters/npc-guide.png', characterSheet(
-  {
-    outline: c('ink'),
-    blush: c('blush'),
-    hair: { base: c('stone-light'), shade: c('stone') },
-    skin: { base: c('skin-shade'), shade: c('bark') },
-    shirt: { base: c('moss'), shade: c('moss-dark') },
-    belt: { base: c('gold') },
-    trousers: { base: c('wood'), shade: c('bark') },
-    boots: { base: c('bark-dark'), shade: c('plum') },
-  },
-  false,
-  'char.npc-guide',
-));
+console.log('Generating code-drawn art:');
+out('characters/player.png', characterSheet(PLAYER, c));
+out('characters/npc-guide.png', characterSheet(GUIDE, c));
 out('tiles/terrain.png', terrainTileset(c));
 out('objects/sign.png', sign(c));
 out('ui/dialogue-box.png', dialogueBox(c));
 out('ui/prompt.png', interactPrompt(c));
 out('effects/shadow.png', shadow(c));
 
-const mapPath = join(ASSETS, 'maps/art-preview.json');
-mkdirSync(dirname(mapPath), { recursive: true });
-writeFileSync(mapPath, JSON.stringify(previewMap('tiles.terrain', '../tiles/terrain.png'), null, 1) + '\n');
-console.log('  src/assets/maps/art-preview.json');
+// Starting Village
+out('tiles/village.png', villageTileset(c));
+out('objects/house.png', house(c));
+out('objects/tree-pine.png', pine(c));
+out('objects/tree-birch.png', birch(c));
+out('objects/arch.png', arch(c));
+out('objects/noticeboard.png', noticeBoard(c));
+out('objects/lamp.png', lamp(c));
+out('objects/crates.png', crates(c));
+
+function writeMap(path: string, map: object): void {
+  const full = join(ASSETS, path);
+  mkdirSync(dirname(full), { recursive: true });
+  writeFileSync(full, JSON.stringify(map, null, 1) + '\n');
+  console.log(`  src/assets/${path}`);
+}
+writeMap('maps/art-preview.json', previewMap('tiles.terrain', '../tiles/terrain.png'));
+writeMap('maps/village.json', villageMap({ terrain: { id: 'tiles.terrain', image: '../tiles/terrain.png' }, village: { id: 'tiles.village', image: '../tiles/village.png' } }));
 
 writeGpl(palette);
 writeSwatch(palette);
