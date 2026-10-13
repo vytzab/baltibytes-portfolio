@@ -1,18 +1,17 @@
-// The art preview: walk around the maps (the Starting Village, the Dungeon, the small test area)
-// with the player, talk to whoever is there, walk through portals between maps, and open the
-// Dungeon's case studies. Everything it shows comes from the manifest (assets), the maps
+// The art preview: walk around the maps (village, Dungeon, Skill Tower, Guild Hall, test area)
+// with the player, talk to whoever is there, walk through portals between maps, and open info
+// panels: the Dungeon's case studies, the Skill Tower's skills, the Guild Hall's experience. Everything it shows comes from the manifest (assets), the maps
 // (placement, collision, portals; see src/game/world.ts) and src/content (text).
 import * as Phaser from 'phaser';
 import { asset, preloadAssets, registerAnimations } from '../game/assets/loader.ts';
 import { animationFrames } from '../game/assets/manifest.ts';
-import type { CaseStudyPanel } from '../game/case-study.ts';
+import type { InfoPanel } from '../game/info-panel.ts';
 import type { Character, Facing } from '../game/character.ts';
 import type { DialogueBox } from '../game/dialogue-box.ts';
 import type { TouchControls } from '../game/touch-controls.ts';
 import { InteractionPrompt, type Interactable } from '../game/interaction.ts';
 import { markCaseStudyOpened, openedCaseStudies } from '../game/progress.ts';
 import { buildWorld, type CaseStudyProp } from '../game/world.ts';
-import { projectById } from '../content/projects.ts';
 import { dialogueFor } from './dialogue.ts';
 
 /** Walking speed in game pixels per second: about 4.5 tiles a second. */
@@ -32,7 +31,7 @@ const ACT_CODES = new Set(['KeyE', 'Space', 'Enter', 'NumpadEnter']);
 
 export class ArtPreviewScene extends Phaser.Scene {
   private readonly dialogue: DialogueBox;
-  private readonly caseStudy: CaseStudyPanel;
+  private readonly panel: InfoPanel;
   private readonly reduceMotion: boolean;
   private readonly touch: TouchControls | null;
   private mapId: string;
@@ -52,23 +51,29 @@ export class ArtPreviewScene extends Phaser.Scene {
   private gridOverlay!: Phaser.GameObjects.Graphics;
   private collisionOverlay!: Phaser.GameObjects.Graphics;
 
-  constructor(dialogue: DialogueBox, caseStudy: CaseStudyPanel, reduceMotion: boolean, mapId: string, touch: TouchControls | null = null) {
+  constructor(dialogue: DialogueBox, panel: InfoPanel, reduceMotion: boolean, mapId: string, touch: TouchControls | null = null) {
     super({ key: 'art-preview' });
     this.dialogue = dialogue;
-    this.caseStudy = caseStudy;
+    this.panel = panel;
+    // Reading a project's case study (from its chest, or via a link from a skill) opens its chest.
+    panel.onShow = (key) => {
+      if (!key.startsWith('project:')) return;
+      markCaseStudyOpened(key.slice('project:'.length));
+      if (this.scene.isActive()) this.refreshChests();
+    };
     this.reduceMotion = reduceMotion;
     this.mapId = mapId;
     this.touch = touch;
     // The on-screen A button does what E, Space or Enter do.
     if (touch) touch.onAction = () => {
-      if (!this.caseStudy.isOpen) this.pending = 'act';
+      if (!this.panel.isOpen) this.pending = 'act';
     };
   }
 
   /** Swaps to another map, keeping the page (toolbar, dialogue box) as it is. */
   showMap(mapId: string, arrive?: string): void {
     this.dialogue.close();
-    this.caseStudy.close();
+    this.panel.close();
     this.scene.restart({ mapId, arrive });
   }
 
@@ -122,7 +127,7 @@ export class ArtPreviewScene extends Phaser.Scene {
     // Stop Space and Enter from scrolling the page or pressing a focused toolbar button.
     kb.addCapture([K.SPACE, K.ENTER]);
     kb.on('keydown', (e: KeyboardEvent) => {
-      if (e.repeat || this.caseStudy.isOpen) return;
+      if (e.repeat || this.panel.isOpen) return;
       if (ACT_CODES.has(e.code)) this.pending = 'act';
       else if (e.code === 'Escape') this.pending = 'close';
     });
@@ -135,7 +140,7 @@ export class ArtPreviewScene extends Phaser.Scene {
     const action = this.pending;
     this.pending = null;
 
-    if (this.dialogue.isOpen || this.caseStudy.isOpen || this.travelling) {
+    if (this.dialogue.isOpen || this.panel.isOpen || this.travelling) {
       body.setVelocity(0, 0);
       this.player.play('idle', this.player.facing);
       if (this.dialogue.isOpen && action === 'act') this.dialogue.advance();
@@ -168,21 +173,22 @@ export class ArtPreviewScene extends Phaser.Scene {
 
   private interact(target: Interactable): void {
     target.onInteract?.(this.player.sprite.x, this.player.sprite.y);
-    if (target.caseStudy) {
-      const project = projectById(target.caseStudy);
-      if (!project) return console.warn(`No project "${target.caseStudy}"`);
+    if (target.panel) {
       // While the panel is open, the keyboard belongs to it: no game keys, no captured keys.
       const kb = this.input.keyboard!;
       kb.enabled = false;
       kb.disableGlobalCapture();
-      markCaseStudyOpened(project.id);
-      this.refreshChests();
-      this.caseStudy.open(project, () => {
+      const opened = this.panel.open(target.panel, () => {
         kb.enabled = true;
         kb.enableGlobalCapture();
         kb.resetKeys();
         this.pending = null;
       });
+      if (!opened) {
+        kb.enabled = true;
+        kb.enableGlobalCapture();
+        console.warn(`No panel "${target.panel}"`);
+      }
       return;
     }
     const text = target.dialogueId ? dialogueFor(target.dialogueId) : undefined;

@@ -11,6 +11,12 @@ import { characterSheet } from './characters/compose.ts';
 import { GUIDE } from './characters/guide.ts';
 import { PLAYER } from './characters/player.ts';
 import { KEEPER } from './characters/keeper.ts';
+import { SAGE } from './characters/sage.ts';
+import { GUILDMASTER } from './characters/guildmaster.ts';
+import { INTERIOR_TILES, COLUMNS as INTERIOR_COLUMNS, interiorTileset } from './interior/tiles.ts';
+import { bookshelf, hearth, lectern, plaque, table } from './interior/props.ts';
+import { guildMap, towerMap } from './interior/maps.ts';
+import { DUNGEON_TILES, COLUMNS as DUNGEON_COLUMNS } from './dungeon/tiles.ts';
 import { terrainTileset } from './placeholders/terrain.ts';
 import { dialogueBox, interactPrompt, shadow, sign } from './placeholders/props.ts';
 import { previewMap } from './placeholders/map.ts';
@@ -55,6 +61,8 @@ console.log('Generating code-drawn art:');
 out('characters/player.png', characterSheet(PLAYER, c));
 out('characters/npc-guide.png', characterSheet(GUIDE, c));
 out('characters/npc-keeper.png', characterSheet(KEEPER, c));
+out('characters/npc-sage.png', characterSheet(SAGE, c));
+out('characters/npc-guildmaster.png', characterSheet(GUILDMASTER, c));
 out('tiles/terrain.png', terrainTileset(c));
 out('objects/sign.png', sign(c));
 out('ui/dialogue-box.png', dialogueBox(c));
@@ -78,6 +86,14 @@ out('objects/torch.png', torch(c));
 out('objects/chest.png', chest(c));
 out('objects/stairs-up.png', stairsUp(c));
 
+// Skill Tower and Guild Hall
+out('tiles/interior.png', interiorTileset(c));
+out('objects/bookshelf.png', bookshelf(c));
+out('objects/lectern.png', lectern(c));
+out('objects/hearth.png', hearth(c));
+out('objects/table.png', table(c));
+out('objects/plaque.png', plaque(c));
+
 function writeMap(path: string, map: object): void {
   const full = join(ASSETS, path);
   mkdirSync(dirname(full), { recursive: true });
@@ -86,6 +102,12 @@ function writeMap(path: string, map: object): void {
 }
 writeMap('maps/art-preview.json', previewMap('tiles.terrain', '../tiles/terrain.png'));
 writeMap('maps/dungeon.json', dungeonMap({ dungeon: { id: 'tiles.dungeon', image: '../tiles/dungeon.png' }, village: { id: 'tiles.village', image: '../tiles/village.png' } }));
+const indoorTilesets = [
+  { key: 'dungeon', id: 'tiles.dungeon', image: '../tiles/dungeon.png', columns: DUNGEON_COLUMNS, tiles: DUNGEON_TILES },
+  { key: 'interior', id: 'tiles.interior', image: '../tiles/interior.png', columns: INTERIOR_COLUMNS, tiles: INTERIOR_TILES },
+];
+writeMap('maps/tower.json', towerMap(indoorTilesets));
+writeMap('maps/guildhall.json', guildMap(indoorTilesets));
 writeMap('maps/village.json', villageMap({ terrain: { id: 'tiles.terrain', image: '../tiles/terrain.png' }, village: { id: 'tiles.village', image: '../tiles/village.png' } }));
 
 writeGpl(palette);

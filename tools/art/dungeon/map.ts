@@ -8,7 +8,8 @@ import { checkGrid, type Grid } from '../draw.ts';
 import { TILE } from '../placeholders/terrain.ts';
 import { COLUMNS as VILLAGE_COLUMNS, VILLAGE_TILES } from '../village/tiles.ts';
 import { PROJECTS } from '../../../src/content/projects.ts';
-import { COLUMNS, DUNGEON_TILES, RIM } from './tiles.ts';
+import { COLUMNS, DUNGEON_TILES } from './tiles.ts';
+import { wallTile as sharedWallTile } from '../maps/indoor.ts';
 
 const WALLS: Grid = [
   '##########################',
@@ -91,7 +92,7 @@ function entities(): Placed[] {
   ];
   PROJECTS.forEach((p, i) => {
     const v = VAULTS[i]!;
-    list.push({ name: `chest-${p.id}`, type: 'prop', x: v.x, y: v.chestY, props: { sprite: 'obj.chest', caseStudy: p.id } });
+    list.push({ name: `chest-${p.id}`, type: 'prop', x: v.x, y: v.chestY, props: { sprite: 'obj.chest', panel: `project:${p.id}` } });
     v.torches.forEach((x, k) => list.push({ name: `torch-${p.id}-${k}`, type: 'prop', x, y: v.torchY, props: { sprite: 'obj.torch' } }));
   });
   // Torches along the hall's north wall.
@@ -99,16 +100,7 @@ function entities(): Placed[] {
   return list;
 }
 
-function wallTile(x: number, y: number): string {
-  const at = (dx: number, dy: number) => WALLS[y + dy]?.[x + dx] ?? '#';
-  if (at(0, 1) === '.') return 'wall-face-lower';
-  if (at(0, 1) === '#' && at(0, 2) === '.') return 'wall-face-upper';
-  let mask = 0;
-  if (at(0, -1) === '.') mask |= RIM.n;
-  if (at(1, 0) === '.') mask |= RIM.e;
-  if (at(-1, 0) === '.') mask |= RIM.w;
-  return `wall-top-${mask}`;
-}
+const wallTile = (x: number, y: number) => sharedWallTile(WALLS, x, y);
 
 /** Deterministic floor variety: mostly plain, some split stones, a few cracks and mossy stones. */
 function floorTile(x: number, y: number): string {

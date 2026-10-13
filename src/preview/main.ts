@@ -3,7 +3,7 @@ import '@fontsource/pixelify-sans/400.css';
 import './preview.css';
 import * as Phaser from 'phaser';
 import { manifest } from '../game/assets/loader.ts';
-import { CaseStudyPanel } from '../game/case-study.ts';
+import { InfoPanel } from '../game/info-panel.ts';
 import { DialogueBox } from '../game/dialogue-box.ts';
 import { TouchControls } from '../game/touch-controls.ts';
 import { MAX_ZOOM, keepPixelPerfect, type PixelScale } from '../game/pixel-scale.ts';
@@ -19,7 +19,7 @@ const maps = manifest.assets.filter((a) => a.category === 'map').map((a) => a.id
 const requested = new URLSearchParams(location.search).get('map');
 const initialMap = requested && maps.includes(requested) ? requested : 'map.village';
 const touch = new TouchControls($('touch-controls'));
-const scene = new ArtPreviewScene(new DialogueBox($('dialogue')), new CaseStudyPanel($('case-study')), reduceMotion, initialMap, touch);
+const scene = new ArtPreviewScene(new DialogueBox($('dialogue')), new InfoPanel($('info-panel')), reduceMotion, initialMap, touch);
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -73,7 +73,13 @@ scene.onCreated = () => {
 };
 
 const mapSelect = $<HTMLSelectElement>('map-select');
-const mapNames: Record<string, string> = { 'map.village': 'Starting Village', 'map.dungeon': 'Dungeon', 'map.art-preview': 'Test area' };
+const mapNames: Record<string, string> = {
+  'map.village': 'Starting Village',
+  'map.dungeon': 'Dungeon',
+  'map.tower': 'Skill Tower',
+  'map.guildhall': 'Guild Hall',
+  'map.art-preview': 'Test area',
+};
 mapSelect.innerHTML = maps.map((id) => `<option value="${id}">${mapNames[id] ?? id}</option>`).join('');
 mapSelect.value = initialMap;
 const rememberMap = (id: string) => {
@@ -103,7 +109,7 @@ galleryButton.addEventListener('click', () => {
 
 window.addEventListener('keydown', (e) => {
   if (e.target instanceof HTMLInputElement || e.target instanceof HTMLSelectElement || e.ctrlKey || e.metaKey || e.altKey) return;
-  if (!$('case-study').hidden) return; // the case study has the keyboard
+  if (!$('info-panel').hidden) return; // the info panel has the keyboard
   const toggle = (box: HTMLInputElement) => {
     box.checked = !box.checked;
     box.dispatchEvent(new Event('change'));

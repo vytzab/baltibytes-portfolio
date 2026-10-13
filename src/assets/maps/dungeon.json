@@ -1188,9 +1188,9 @@
        "value": "obj.chest"
       },
       {
-       "name": "caseStudy",
+       "name": "panel",
        "type": "string",
-       "value": "ninelight"
+       "value": "project:ninelight"
       }
      ]
     },
@@ -1250,9 +1250,9 @@
        "value": "obj.chest"
       },
       {
-       "name": "caseStudy",
+       "name": "panel",
        "type": "string",
-       "value": "portio"
+       "value": "project:portio"
       }
      ]
     },
@@ -1312,9 +1312,9 @@
        "value": "obj.chest"
       },
       {
-       "name": "caseStudy",
+       "name": "panel",
        "type": "string",
-       "value": "mealplanner"
+       "value": "project:mealplanner"
       }
      ]
     },
@@ -1374,9 +1374,9 @@
        "value": "obj.chest"
       },
       {
-       "name": "caseStudy",
+       "name": "panel",
        "type": "string",
-       "value": "scoretracker"
+       "value": "project:scoretracker"
       }
      ]
     },
@@ -1417,9 +1417,9 @@
        "value": "obj.chest"
       },
       {
-       "name": "caseStudy",
+       "name": "panel",
        "type": "string",
-       "value": "video-studio"
+       "value": "project:video-studio"
       }
      ]
     },

@@ -8,9 +8,9 @@ export interface Interactable {
   y: number;
   /** Height of its sprite, so the prompt floats just above it. */
   height: number;
-  /** Text to show (a key into the scene's dialogue), or a project whose case study opens. */
+  /** Text to show (a key into the scene's dialogue), or an info-panel document to open (panel-docs.ts). */
   dialogueId?: string;
-  caseStudy?: string;
+  panel?: string;
   /** Called when the player starts talking, e.g. to turn an NPC towards them. */
   onInteract?: (playerX: number, playerY: number) => void;
 }

@@ -55,6 +55,10 @@ The five locations share one palette and style; each has its own accent:
 
 ### Edges between surfaces
 
+### Indoor floors
+
+Stone buildings share the dungeon tileset's walls and banners. The Skill Tower keeps flagstones; the Guild Hall has warm floorboards (`tiles.interior`), and rugs mark where people gather (the tower's star rug, the hall's runner).
+
 ### Walls indoors
 
 Indoors (the Dungeon), a wall with floor to its south shows its **face**: two tiles of brick, an upper course with a lit lip under the wall top and a lower course with a dark skirting where it meets the floor. Every other wall shows its **top**: dark, with an ink edge and a lit line on each side that meets floor (16 rim combinations). Walls need to be at least 2 tiles thick above any floor so the face fits. Banners, torches and anything else hung on a wall go on the lower face course. The dungeon map generator picks tops, faces and rims from a plain `#`/`.` layout.
@@ -86,7 +90,7 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 - **3–4 colours per material** is plenty for a 16 px object.
 - **No pure black or white.** `ink` (deep plum) is the darkest colour, `paper` the lightest.
 - **Reserved meanings:** `brick` marks what wants attention (the "!" prompt, a speaker's name), so keep big brick areas rare (small accents like headphone cups or a book cover are fine). `heather` is for magic, skills and guides (Skill Tower, portal, the guide's coat).
-- **Character colour plans:** give each character one dominant garment hue no other character uses, plus one warm accent. Player: denim blue with a mustard backpack. Guide: heather coat with a gold scarf. Keeper (Dungeon): moss-green hooded cloak with a brick tunic and a gold lantern. Avoid large green or sand garments, which vanish against grass and paths.
+- **Character colour plans:** give each character one dominant garment hue no other character uses, plus one warm accent. Player: denim blue with a mustard backpack. Guide: heather coat with a gold scarf. Keeper (Dungeon): moss-green hooded cloak with a brick tunic and a gold lantern. Sage (Skill Tower): heather hat, teal robe, gold trim. Guildmaster (Guild Hall): cream shirt, leather apron, grey moustache. Each also has a silhouette of their own (cowlick, bun, hood point, hat brim, bald and broad). Avoid large green or sand garments, which vanish against grass and paths.
 - **Changing the palette:** propose it, update the JSON, rerun `npm run art:generate` (for the .gpl/.png), bump the id when it's a breaking change (`baltibytes-v1`) and update assets' `palette` fields.
 
 ## 6. Outlines, light, shadow and contrast
@@ -113,7 +117,7 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 - **PNG**, 8-bit RGBA, transparent background where the manifest says `transparent`. No JPEG, WebP or SVG for art.
 - **Names:** lowercase kebab-case (`npc-guide.png`, `dialogue-box.png`), in the folder for the category (`characters/`, `tiles/`, `maps/`, `objects/`, `portraits/`, `ui/`, `effects/`).
 - **Ids:** `<prefix>.<name>`, where prefix is `char`, `tiles`, `map`, `obj`, `portrait`, `ui` or `fx`. An id is permanent once code uses it. Replace the file, keep the id.
-- **Maps:** Tiled JSON with CSV layers and **embedded** tilesets; each tileset's name is its manifest id (`tiles.terrain`); a map may use several tilesets. Layers: `ground` and `decor` (tiles), `entities` (points at the feet: type `spawn`, `arrive` (named, where a portal from another map lets you out; optional `facing`), `npc`, `sign` or `prop`, with string properties `sprite`, a manifest id, and optionally `dialogue`, a text id, or `caseStudy`, a project id; plus `portal` rectangles with `to`, a map id, and `arrive`, an arrival name in that map), `collision` (solid rectangles). Tile collision is a boolean tile property `collides`.
+- **Maps:** Tiled JSON with CSV layers and **embedded** tilesets; each tileset's name is its manifest id (`tiles.terrain`); a map may use several tilesets. Layers: `ground` and `decor` (tiles), `entities` (points at the feet: type `spawn`, `arrive` (named, where a portal from another map lets you out; optional `facing`), `npc`, `sign` or `prop`, with string properties `sprite`, a manifest id, and optionally `dialogue`, a text id, or `panel`, an info-panel document: `project:<id>`, `skills:<id>`, `role:<id>` or `experience`; plus `portal` rectangles with `to`, a map id, and `arrive`, an arrival name in that map), `collision` (solid rectangles). Tile collision is a boolean tile property `collides`.
 - **Editor sources** (`.aseprite`, `.pxo`, `.kra`) live in `art/source/<category>/` with the same name as the PNG.
 
 ## 9. Originality and provenance

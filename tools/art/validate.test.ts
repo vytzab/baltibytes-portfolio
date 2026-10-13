@@ -325,9 +325,23 @@ test('portal behind a wall', () => withFixture((fx) => {
   expectError(fx.run(), 'map.test', /portal "door" can't be reached/);
 }));
 
-test('case study that is not a project', () => withFixture((fx) => {
+test('panel that is not in the content', () => withFixture((fx) => {
   const map = tiledMap();
-  map.layers[1]!.objects!.push({ name: 'chest', type: 'prop', point: true, x: 48, y: 40, properties: [{ name: 'sprite', value: 'char.hero' }, { name: 'caseStudy', value: 'secret-project' }] });
+  map.layers[1]!.objects!.push(
+    { name: 'chest', type: 'prop', point: true, x: 48, y: 40, properties: [{ name: 'sprite', value: 'char.hero' }, { name: 'panel', value: 'project:secret-project' }] },
+    { name: 'tome', type: 'prop', point: true, x: 56, y: 40, properties: [{ name: 'sprite', value: 'char.hero' }, { name: 'panel', value: 'skills' }] },
+  );
   writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
-  expectError(fx.run(), 'map.test', /caseStudy "secret-project" is not a project/);
+  const issues = fx.run();
+  expectError(issues, 'map.test', /panel "project:secret-project" is not something in src\/content/);
+  expectError(issues, 'map.test', /panel "skills" is not something in src\/content/);
+}));
+
+test('panels for a real project, skill category, role and the overview are fine', () => withFixture((fx) => {
+  const map = tiledMap();
+  map.layers[1]!.objects!.push(
+    ...['project:portio', 'skills:languages', 'role:independent', 'experience'].map((panel, i) => ({ name: `p${i}`, type: 'prop', point: true, x: 40 + i * 4, y: 56, properties: [{ name: 'sprite', value: 'char.hero' }, { name: 'panel', value: panel }] })),
+  );
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
+  assert.deepEqual(fx.run(), []);
 }));

@@ -25,11 +25,28 @@ export const PREVIEW_DIALOGUE: Record<string, Dialogue> = {
       `Welcome to the Starting Village! This is where ${ABOUT.name} lives and works.`,
       'The notice board on the square says who they are. The workshop by the path is where they tinker.',
       'The old cellar at the top of the north path leads down to the Dungeon. Every project is kept there in a chest of its own; the keeper will show you around.',
-      'Further out are the other places: skills, experience and the way to get in touch. They aren\'t built yet.',
+      'The road east leads to the Skill Tower, and the road west to the Guild Hall, where the work history is kept.',
+      'The way to get in touch isn\'t built yet.',
     ],
   },
   'village-board': { speaker: 'Notice board', lines: [`${ABOUT.name} · ${ABOUT.tagline}`, ...ABOUT.bio] },
   'village-workshop': { speaker: 'Workshop', lines: ABOUT.workshop },
+  'village-sign-west': { speaker: 'Signpost', lines: ['← GUILD HALL — Experience'] },
+  'village-sign-east': { speaker: 'Signpost', lines: ['SKILL TOWER — Skills →'] },
+  'tower-sage': {
+    speaker: 'Sage',
+    lines: [
+      'Welcome to the Skill Tower. Every lectern holds a book of skills: languages, Android, the web, back ends, AI, and how the work gets done.',
+      'Each skill names the projects it was used in. Choose one to open its case study, without walking all the way to the Dungeon.',
+    ],
+  },
+  'guild-master': {
+    speaker: 'Guildmaster',
+    lines: [
+      'Welcome to the Guild Hall! The plaques on the wall are the roles held so far, one each.',
+      'The records board by the door has the whole story at a glance.',
+    ],
+  },
   'village-sign': { speaker: 'Sign', lines: ['STARTING VILLAGE — About me. Head up the path to the square.'] },
 };
 

@@ -254,6 +254,174 @@
       "notes": "Pointed green hood, ginger beard, brick tunic, keys on the belt, lantern in hand (it swings when he walks). Body ~27 px tall; origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
     },
     {
+      "id": "char.npc-sage",
+      "path": "characters/npc-sage.png",
+      "category": "character",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "The Skill Tower's sage (Skills): idle and walk in four directions; turns to face the player when spoken to.",
+      "width": 96,
+      "height": 256,
+      "grid": {
+        "width": 24,
+        "height": 32
+      },
+      "animations": [
+        {
+          "name": "idle-down",
+          "row": 0,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-left",
+          "row": 1,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-right",
+          "row": 2,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-up",
+          "row": 3,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "walk-down",
+          "row": 4,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-left",
+          "row": 5,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-right",
+          "row": 6,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-up",
+          "row": 7,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/characters/compose.ts",
+        "source": "tools/art/characters/sage.ts",
+        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
+      },
+      "notes": "Wide-brimmed pointed heather hat with a gold star, long dark hair, teal robe with gold trim, a glowing orb. Body ~29 px tall; origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
+    },
+    {
+      "id": "char.npc-guildmaster",
+      "path": "characters/npc-guildmaster.png",
+      "category": "character",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "The Guild Hall's guildmaster (Experience): idle and walk in four directions; turns to face the player when spoken to.",
+      "width": 96,
+      "height": 256,
+      "grid": {
+        "width": 24,
+        "height": 32
+      },
+      "animations": [
+        {
+          "name": "idle-down",
+          "row": 0,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-left",
+          "row": 1,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-right",
+          "row": 2,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-up",
+          "row": 3,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "walk-down",
+          "row": 4,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-left",
+          "row": 5,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-right",
+          "row": 6,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-up",
+          "row": 7,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/characters/compose.ts",
+        "source": "tools/art/characters/guildmaster.ts",
+        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
+      },
+      "notes": "Bald, grey moustache and brows, rolled sleeves, leather apron, a ledger. Shortest and widest of the cast (~25 px). Origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
+    },
+    {
       "id": "tiles.terrain",
       "path": "tiles/terrain.png",
       "category": "tileset",
@@ -330,6 +498,30 @@
       "notes": "The map generator picks wall tops, faces and rims from the wall layout. Banners hang on lower wall faces (decor layer) and collide like the wall."
     },
     {
+      "id": "tiles.interior",
+      "path": "tiles/interior.png",
+      "category": "tileset",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "Indoor floors and rugs for the Skill Tower and the Guild Hall: three plank floors, a heather rug in 9 pieces plus a star centre, books, scrolls. Walls and banners come from tiles.dungeon.",
+      "width": 128,
+      "height": 32,
+      "grid": {
+        "width": 16,
+        "height": 16
+      },
+      "transparency": "mixed",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/interior/tiles.ts"
+      }
+    },
+    {
       "id": "map.art-preview",
       "path": "maps/art-preview.json",
       "category": "map",
@@ -390,6 +582,48 @@
         "tool": "tools/art/generate-placeholders.ts",
         "source": "tools/art/dungeon/map.ts",
         "notes": "Generated Tiled JSON; vault order and banner colours follow src/content/projects.ts."
+      }
+    },
+    {
+      "id": "map.tower",
+      "path": "maps/tower.json",
+      "category": "map",
+      "type": "tilemap",
+      "status": "draft",
+      "usage": "The Skill Tower (Skills): a round stone room with bookshelves, the sage on a star rug and a lectern for each skill category. Reached by the village's east road.",
+      "grid": {
+        "width": 16,
+        "height": 16
+      },
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/interior/maps.ts",
+        "notes": "Generated Tiled JSON; lecterns follow src/content/skills.ts."
+      }
+    },
+    {
+      "id": "map.guildhall",
+      "path": "maps/guildhall.json",
+      "category": "map",
+      "type": "tilemap",
+      "status": "draft",
+      "usage": "The Guild Hall (Experience): a timbered hall with a hearth, the guildmaster, a plaque for each role, long tables and the records board. Reached by the village's west road.",
+      "grid": {
+        "width": 16,
+        "height": 16
+      },
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/interior/maps.ts",
+        "notes": "Generated Tiled JSON; plaques follow src/content/experience.ts."
       }
     },
     {
@@ -778,6 +1012,158 @@
         "source": "tools/art/dungeon/props.ts"
       },
       "notes": "Not solid: the player walks onto it."
+    },
+    {
+      "id": "obj.bookshelf",
+      "path": "objects/bookshelf.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "Bookshelf against a wall (Skill Tower).",
+      "width": 32,
+      "height": 32,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 1,
+          "y": 24,
+          "width": 30,
+          "height": 8
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/interior/props.ts"
+      }
+    },
+    {
+      "id": "obj.lectern",
+      "path": "objects/lectern.png",
+      "category": "object",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "Lectern with an open tome in the Skill Tower; each opens one skill category. Gold motes rise off the page (frame 0 when motion is reduced).",
+      "width": 64,
+      "height": 24,
+      "grid": {
+        "width": 16,
+        "height": 24
+      },
+      "animations": [
+        {
+          "name": "glint",
+          "row": 0,
+          "frames": 4,
+          "fps": 4,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 5,
+          "y": 18,
+          "width": 6,
+          "height": 5
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/interior/props.ts"
+      }
+    },
+    {
+      "id": "obj.hearth",
+      "path": "objects/hearth.png",
+      "category": "object",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "Stone hearth set into the Guild Hall's back wall; the fire flickers (frame 0 when motion is reduced).",
+      "width": 192,
+      "height": 48,
+      "grid": {
+        "width": 48,
+        "height": 48
+      },
+      "animations": [
+        {
+          "name": "fire",
+          "row": 0,
+          "frames": 4,
+          "fps": 6,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/interior/props.ts"
+      },
+      "notes": "Not solid: it is part of a wall that already collides."
+    },
+    {
+      "id": "obj.table",
+      "path": "objects/table.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "Long guild table with mugs and bread.",
+      "width": 48,
+      "height": 24,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 1,
+          "y": 8,
+          "width": 46,
+          "height": 16
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/interior/props.ts"
+      }
+    },
+    {
+      "id": "obj.plaque",
+      "path": "objects/plaque.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "Wall plaque in the Guild Hall; each opens one role.",
+      "width": 16,
+      "height": 24,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/interior/props.ts"
+      },
+      "notes": "Hangs on a wall face; not solid."
     },
     {
       "id": "ui.dialogue-box",

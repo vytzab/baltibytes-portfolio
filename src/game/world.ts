@@ -7,7 +7,7 @@
 //   walk into to go to another map;
 // - signs and props are solid only where their manifest "solid" boxes say (a trunk, two posts),
 //   NPCs at their feet; anything with a "dialogue" property can be talked to, anything with a
-//   "caseStudy" property opens that project's case study;
+//   "panel" property opens that info-panel document ("project:portio", "skills:web", …);
 // - characters and props are depth-sorted by the y of their feet, so you walk behind a tree's
 //   crown but in front of its trunk.
 import * as Phaser from 'phaser';
@@ -24,7 +24,7 @@ export interface Portal {
   zone: Phaser.GameObjects.Zone;
 }
 
-/** A prop that shows a project's case study (a quest chest); the scene sets its open/closed look. */
+/** A prop that opens a project's case study (a quest chest); the scene sets its open/closed look. */
 export interface CaseStudyProp {
   projectId: string;
   object: Phaser.GameObjects.Sprite | Phaser.GameObjects.Image;
@@ -102,7 +102,8 @@ export function buildWorld(scene: Phaser.Scene, mapId: string, options: { reduce
     }
     const sprite = prop(obj, 'sprite');
     const dialogueId = prop(obj, 'dialogue');
-    const caseStudy = prop(obj, 'caseStudy');
+    const panel = prop(obj, 'panel');
+    const projectId = panel?.startsWith('project:') ? panel.slice('project:'.length) : undefined;
     if (!sprite || obj.type === 'spawn' || obj.type === 'arrive') continue;
 
     if (obj.type === 'npc') {
@@ -120,17 +121,16 @@ export function buildWorld(scene: Phaser.Scene, mapId: string, options: { reduce
     const first = entry.animations?.[0];
     const object = first ? scene.add.sprite(x, y, sprite, 0) : scene.add.image(x, y, sprite);
     object.setOrigin(0.5, 1).setDepth(y);
-    if (first && object instanceof Phaser.GameObjects.Sprite && !options.reduceMotion && !caseStudy && first.frames > 1) {
+    if (first && object instanceof Phaser.GameObjects.Sprite && !options.reduceMotion && !projectId && first.frames > 1) {
       // Start each lamp at a different point so neighbours don't flicker in step.
       object.play({ key: animationKey(sprite, first.name), startFrame: Math.floor(Math.random() * first.frames) });
     }
     const left = x - object.width / 2;
     const top = y - object.height;
     for (const b of entry.solid ?? []) addSolid(left + b.x, top + b.y, b.width, b.height);
-    if (caseStudy) {
-      caseStudies.push({ projectId: caseStudy, object, assetId: sprite });
-      interactables.push({ x, y, height: object.height, caseStudy });
-    } else if (dialogueId) interactables.push({ x, y, height: object.height, dialogueId });
+    if (projectId) caseStudies.push({ projectId, object, assetId: sprite });
+    if (panel) interactables.push({ x, y, height: object.height, panel });
+    else if (dialogueId) interactables.push({ x, y, height: object.height, dialogueId });
   }
   scene.physics.add.collider(player.sprite, solids);
 

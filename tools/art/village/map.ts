@@ -22,13 +22,13 @@ const GROUND: Grid = [
   '..,..........====.~~~~....',
   '.....==......==...........',
   '...;.==....#####....;.....',
-  '.....======#####..........',
-  '.,...======#####...,......',
+  '===========#####..........',
+  '===========#####...,......',
   '...........#####.......;..',
   '..,.........==............',
   '......;.....==.....,......',
-  '.,..........==............',
-  '........,...==......;.....',
+  '.,..........==============',
+  '........,...==============',
   '..;.........==........,...',
   '............==............',
   '.....,......==...;........',
@@ -53,8 +53,8 @@ const DECOR: Grid = [
   '..*..d...*......d|dtdt|..B',
   '.................|tdtd|...',
   '..B....g...*..p..FF..FF...',
-  '.......m..............*...',
-  '....*..........d..........',
+  '.......m..................',
+  '....*.....................',
   '..R....S...........R......',
   '..........*...*...m.......',
   '...g..............g.......',
@@ -91,6 +91,11 @@ const ENTITIES: Placed[] = [
   // The cellar at the top of the north path leads down to the Dungeon (Projects).
   { name: 'cellar', type: 'prop', x: px(14), y: px(3) + 8, sprite: 'obj.cellar' },
   { name: 'from-dungeon', type: 'arrive', x: px(14), y: px(5), sprite: '', facing: 'down' },
+  // Roads out of the forest: west to the Guild Hall (Experience), east to the Skill Tower (Skills).
+  { name: 'from-guild-hall', type: 'arrive', x: px(2), y: px(11) + 8, sprite: '', facing: 'right' },
+  { name: 'from-skill-tower', type: 'arrive', x: px(24), y: px(16) + 8, sprite: '', facing: 'left' },
+  { name: 'sign-west', type: 'sign', x: px(3) + 8, y: px(10), sprite: 'obj.sign', dialogue: 'village-sign-west' },
+  { name: 'sign-east', type: 'sign', x: px(15) + 8, y: px(15), sprite: 'obj.sign', dialogue: 'village-sign-east' },
   { name: 'notice-board', type: 'prop', x: px(13) + 8, y: px(10), sprite: 'obj.noticeboard', dialogue: 'village-board' },
   { name: 'workshop', type: 'prop', x: px(6), y: px(8), sprite: 'obj.house', dialogue: 'village-workshop' },
   { name: 'crates', type: 'prop', x: px(9) + 8, y: px(8), sprite: 'obj.crates' },
@@ -98,8 +103,8 @@ const ENTITIES: Placed[] = [
   { name: 'lamp-east', type: 'prop', x: px(16) + 8, y: px(10), sprite: 'obj.lamp' },
   // Trees: a forest edge along the north, west and east, thinning towards the entrance.
   ...[1, 3, 5, 9, 11, 17, 20, 23, 25].map((t, i) => ({ name: `tree-n${i}`, type: 'prop' as const, x: px(t), y: px(2) + 6, sprite: i % 3 === 1 ? 'obj.tree-birch' : 'obj.tree-pine' })),
-  ...[5, 8, 11, 14, 17].map((t, i) => ({ name: `tree-w${i}`, type: 'prop' as const, x: px(1), y: px(t), sprite: i % 2 ? 'obj.tree-birch' : 'obj.tree-pine' })),
-  ...[5, 9, 12, 16].map((t, i) => ({ name: `tree-e${i}`, type: 'prop' as const, x: px(25), y: px(t), sprite: i % 2 ? 'obj.tree-pine' : 'obj.tree-birch' })),
+  ...[5, 8, 14, 17].map((t, i) => ({ name: `tree-w${i}`, type: 'prop' as const, x: px(1), y: px(t), sprite: i % 2 ? 'obj.tree-birch' : 'obj.tree-pine' })),
+  ...[5, 9, 12, 19].map((t, i) => ({ name: `tree-e${i}`, type: 'prop' as const, x: px(25), y: px(t), sprite: i % 2 ? 'obj.tree-pine' : 'obj.tree-birch' })),
   ...[3, 7, 18, 22].map((t, i) => ({ name: `tree-s${i}`, type: 'prop' as const, x: px(t), y: px(21), sprite: i % 2 ? 'obj.tree-birch' : 'obj.tree-pine' })),
   { name: 'pond-birch', type: 'prop', x: px(24), y: px(8), sprite: 'obj.tree-birch' },
   { name: 'square-birch', type: 'prop', x: px(9) + 8, y: px(14), sprite: 'obj.tree-birch' },
@@ -110,8 +115,10 @@ const ENTITIES: Placed[] = [
 /** The forest edge: solid strips round the map, with a gap for the entrance at the south. */
 const COLLISION = [
   { name: 'forest-north', x: 0, y: 0, width: px(26), height: 40 },
-  { name: 'forest-west', x: 0, y: 0, width: 24, height: px(21) },
-  { name: 'forest-east', x: px(26) - 24, y: 0, width: 24, height: px(21) },
+  { name: 'forest-west-north', x: 0, y: 0, width: 24, height: px(10) },
+  { name: 'forest-west-south', x: 0, y: px(12), width: 24, height: px(9) },
+  { name: 'forest-east-north', x: px(26) - 24, y: 0, width: 24, height: px(15) },
+  { name: 'forest-east-south', x: px(26) - 24, y: px(17), width: 24, height: px(4) },
   { name: 'forest-south-west', x: 0, y: px(21) - 12, width: px(11), height: 12 },
   { name: 'forest-south-east', x: px(15), y: px(21) - 12, width: px(11), height: 12 },
 ];
@@ -205,6 +212,11 @@ export function villageMap(tilesets: { terrain: { id: string; image: string }; v
     visible: true,
     properties: props({ sprite: e.sprite || undefined, dialogue: e.dialogue, facing: e.facing }),
   }));
+  // The roads leave the map through the gaps in the forest edge.
+  entities.push(
+    { id: nextId++, name: 'to-guild-hall', type: 'portal', point: false, x: 0, y: px(10) + 2, width: 6, height: px(2) - 4, rotation: 0, visible: true, properties: props({ to: 'map.guildhall', arrive: 'from-village' }) },
+    { id: nextId++, name: 'to-skill-tower', type: 'portal', point: false, x: px(26) - 6, y: px(15) + 2, width: 6, height: px(2) - 4, rotation: 0, visible: true, properties: props({ to: 'map.tower', arrive: 'from-village' }) },
+  );
   // Walking into the cellar's dark doorway takes you down to the Dungeon.
   entities.push({
     id: nextId++, name: 'to-dungeon', type: 'portal', point: false, x: px(14) - 9, y: 40, width: 18, height: 8, rotation: 0, visible: true,

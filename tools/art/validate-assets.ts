@@ -17,6 +17,8 @@ import {
 } from '../../src/game/assets/manifest.ts';
 import { FEET, INTERACT_RANGE } from '../../src/game/rules.ts';
 import { PROJECTS } from '../../src/content/projects.ts';
+import { SKILL_CATEGORIES } from '../../src/content/skills.ts';
+import { ROLES } from '../../src/content/experience.ts';
 import { readPng, rgbToHex, type RgbaImage } from './png.ts';
 import { PALETTE_DIR, loadPalette } from './palette.ts';
 
@@ -400,7 +402,13 @@ interface TiledObject {
 
 /** Object layers the game understands: things placed by their feet, and solid rectangles. */
 const ENTITY_TYPES = ['spawn', 'arrive', 'npc', 'sign', 'prop', 'portal'] as const;
-const PROJECT_IDS = new Set(PROJECTS.map((p) => p.id));
+/** What a "panel" property may open: "project:<id>", "skills:<id>", "role:<id>" or "experience". */
+const PANEL_TARGETS = new Set([
+  ...PROJECTS.map((p) => `project:${p.id}`),
+  ...SKILL_CATEGORIES.map((c) => `skills:${c.id}`),
+  ...ROLES.map((r) => `role:${r.id}`),
+  'experience',
+]);
 
 /** What other maps need to know about a map: where you can arrive, and where its portals lead. */
 interface MapInfo {
@@ -554,9 +562,11 @@ function checkPlacementAndReach(
       const sprite = propValue(obj, 'sprite');
       const asset = sprite ? byId.get(sprite) : undefined;
       if (obj.type !== 'spawn' && !sprite) err(`${label}: needs a "sprite" property`);
-      const caseStudy = propValue(obj, 'caseStudy');
-      if (caseStudy !== undefined && !PROJECT_IDS.has(caseStudy)) err(`${label}: caseStudy "${caseStudy}" is not a project in src/content/projects.ts`);
-      if (caseStudy) talkTo.push({ name: obj.name ?? '?', x, y });
+      const panel = propValue(obj, 'panel');
+      if (panel !== undefined && !PANEL_TARGETS.has(panel)) {
+        err(`${label}: panel "${panel}" is not something in src/content (use project:<id>, skills:<id>, role:<id> or experience)`);
+      }
+      if (panel) talkTo.push({ name: obj.name ?? '?', x, y });
       if (obj.type === 'spawn') {
         if (spawn) err(`${label}: a map has one spawn`);
         spawn = { x, y };
