@@ -16,6 +16,9 @@ import { previewMap } from './placeholders/map.ts';
 import { villageTileset } from './village/tiles.ts';
 import { arch, birch, crates, house, lamp, noticeBoard, pine } from './village/props.ts';
 import { villageMap } from './village/map.ts';
+import { dungeonTileset } from './dungeon/tiles.ts';
+import { cellar, chest, stairsUp, torch } from './dungeon/props.ts';
+import { dungeonMap } from './dungeon/map.ts';
 
 const ASSETS = join(import.meta.dirname, '../../src/assets');
 const PALETTE_ID = 'baltibytes-v0';
@@ -65,6 +68,13 @@ out('objects/arch.png', arch(c));
 out('objects/noticeboard.png', noticeBoard(c));
 out('objects/lamp.png', lamp(c));
 out('objects/crates.png', crates(c));
+out('objects/cellar.png', cellar(c));
+
+// Dungeon
+out('tiles/dungeon.png', dungeonTileset(c));
+out('objects/torch.png', torch(c));
+out('objects/chest.png', chest(c));
+out('objects/stairs-up.png', stairsUp(c));
 
 function writeMap(path: string, map: object): void {
   const full = join(ASSETS, path);
@@ -73,6 +83,7 @@ function writeMap(path: string, map: object): void {
   console.log(`  src/assets/${path}`);
 }
 writeMap('maps/art-preview.json', previewMap('tiles.terrain', '../tiles/terrain.png'));
+writeMap('maps/dungeon.json', dungeonMap({ dungeon: { id: 'tiles.dungeon', image: '../tiles/dungeon.png' }, village: { id: 'tiles.village', image: '../tiles/village.png' } }));
 writeMap('maps/village.json', villageMap({ terrain: { id: 'tiles.terrain', image: '../tiles/terrain.png' }, village: { id: 'tiles.village', image: '../tiles/village.png' } }));
 
 writeGpl(palette);

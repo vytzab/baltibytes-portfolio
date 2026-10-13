@@ -16,6 +16,7 @@ import {
   type SolidBox,
 } from '../../src/game/assets/manifest.ts';
 import { FEET, INTERACT_RANGE } from '../../src/game/rules.ts';
+import { PROJECTS } from '../../src/content/projects.ts';
 import { readPng, rgbToHex, type RgbaImage } from './png.ts';
 import { PALETTE_DIR, loadPalette } from './palette.ts';
 
@@ -208,11 +209,19 @@ export function validateAssets(options: ValidateOptions): ValidateResult {
     if (isImage) checkImage(entry, file, palettes.get(entry.palette ?? '') ?? null, err);
   });
 
-  // Maps last: they refer to tilesets and sprites by id.
+  // Maps last: they refer to tilesets and sprites by id, and portals refer to other maps.
+  const maps = new Map<string, MapInfo>();
   for (const entry of entries) {
     if (entry?.type !== 'tilemap' || !isText(entry.path) || !listedFiles.has(entry.path)) continue;
     const file = join(assetRoot, entry.path);
-    if (existsSync(file)) checkTilemap(entry, file, byId, (msg) => error(entry.id ?? entry.path, msg));
+    if (existsSync(file)) maps.set(entry.id, checkTilemap(entry, file, byId, (msg) => error(entry.id ?? entry.path, msg)));
+  }
+  for (const [mapId, info] of maps) {
+    for (const portal of info.portals) {
+      const target = maps.get(portal.to);
+      if (!target) error(mapId, `${portal.label} leads to "${portal.to}", which is not a map in the manifest`);
+      else if (!target.arrivals.has(portal.arrive)) error(mapId, `${portal.label} arrives at "${portal.arrive}", but ${portal.to} has no "arrive" object with that name`);
+    }
   }
 
   // Every file in the asset folder needs a manifest entry (that's where its provenance lives).
@@ -390,9 +399,17 @@ interface TiledObject {
 }
 
 /** Object layers the game understands: things placed by their feet, and solid rectangles. */
-const ENTITY_TYPES = ['spawn', 'npc', 'sign', 'prop'] as const;
+const ENTITY_TYPES = ['spawn', 'arrive', 'npc', 'sign', 'prop', 'portal'] as const;
+const PROJECT_IDS = new Set(PROJECTS.map((p) => p.id));
 
-function checkTilemap(entry: AssetEntry, file: string, byId: Map<string, AssetEntry>, err: (m: string) => void): void {
+/** What other maps need to know about a map: where you can arrive, and where its portals lead. */
+interface MapInfo {
+  arrivals: Set<string>;
+  portals: Array<{ label: string; to: string; arrive: string }>;
+}
+
+function checkTilemap(entry: AssetEntry, file: string, byId: Map<string, AssetEntry>, err: (m: string) => void): MapInfo {
+  const info: MapInfo = { arrivals: new Set(), portals: [] };
   let map: {
     orientation?: string;
     infinite?: boolean;
@@ -406,7 +423,8 @@ function checkTilemap(entry: AssetEntry, file: string, byId: Map<string, AssetEn
   try {
     map = JSON.parse(readFileSync(file, 'utf8'));
   } catch (e) {
-    return err(`cannot parse ${entry.path} as JSON: ${(e as Error).message}`);
+    err(`cannot parse ${entry.path} as JSON: ${(e as Error).message}`);
+    return info;
   }
   if (map.orientation !== 'orthogonal') err(`map orientation must be "orthogonal", found "${map.orientation}"`);
   if (map.infinite) err('infinite maps are not supported: in Tiled, Map → Map Properties → untick Infinite');
@@ -456,7 +474,8 @@ function checkTilemap(entry: AssetEntry, file: string, byId: Map<string, AssetEn
       }
     }
   }
-  checkPlacementAndReach(map, byId, err);
+  checkPlacementAndReach(map, byId, err, info);
+  return info;
 }
 
 type Rect = { x: number; y: number; width: number; height: number; what: string };
@@ -477,6 +496,7 @@ function checkPlacementAndReach(
   map: { width?: number; height?: number; tilewidth?: number; tileheight?: number; layers?: TiledLayer[]; tilesets?: TiledTileset[] },
   byId: Map<string, AssetEntry>,
   err: (m: string) => void,
+  info: MapInfo,
 ): void {
   const tw = map.tilewidth ?? 0;
   const th = map.tileheight ?? 0;
@@ -487,6 +507,8 @@ function checkPlacementAndReach(
   const solids: Rect[] = [];
   const talkTo: Array<{ name: string; x: number; y: number }> = [];
   let spawn: { x: number; y: number } | null = null;
+  const arrivals: Array<{ name: string; x: number; y: number }> = [];
+  const portals: Rect[] = [];
 
   for (const layer of map.layers ?? []) {
     if (layer.type !== 'objectgroup') continue;
@@ -512,9 +534,29 @@ function checkPlacementAndReach(
         err(`${label}: position ${x},${y} is outside the ${W}×${H} map`);
         continue;
       }
+      if (obj.type === 'portal') {
+        const to = propValue(obj, 'to');
+        const arrive = propValue(obj, 'arrive');
+        if (obj.point || !(obj.width! > 0) || !(obj.height! > 0)) err(`${label}: a portal is a rectangle the player walks into`);
+        else if (x + obj.width! > W || y + obj.height! > H) err(`${label}: rectangle sticks out of the ${W}×${H} map`);
+        if (!to || !arrive) err(`${label}: a portal needs "to" (a map id) and "arrive" (an arrive object in that map)`);
+        else info.portals.push({ label, to, arrive });
+        portals.push({ x, y, width: obj.width ?? 0, height: obj.height ?? 0, what: obj.name ?? '?' });
+        continue;
+      }
+      if (obj.type === 'arrive') {
+        if (!obj.name) err(`${label}: an arrive object needs a name (portals refer to it)`);
+        else if (info.arrivals.has(obj.name)) err(`${label}: two arrive objects share the name "${obj.name}"`);
+        else info.arrivals.add(obj.name);
+        arrivals.push({ name: obj.name ?? '?', x, y });
+        continue;
+      }
       const sprite = propValue(obj, 'sprite');
       const asset = sprite ? byId.get(sprite) : undefined;
       if (obj.type !== 'spawn' && !sprite) err(`${label}: needs a "sprite" property`);
+      const caseStudy = propValue(obj, 'caseStudy');
+      if (caseStudy !== undefined && !PROJECT_IDS.has(caseStudy)) err(`${label}: caseStudy "${caseStudy}" is not a project in src/content/projects.ts`);
+      if (caseStudy) talkTo.push({ name: obj.name ?? '?', x, y });
       if (obj.type === 'spawn') {
         if (spawn) err(`${label}: a map has one spawn`);
         spawn = { x, y };
@@ -553,13 +595,18 @@ function checkPlacementAndReach(
     return solids.find((r) => overlaps(feet, r))?.what ?? null;
   };
 
-  if (!spawn) {
-    if (talkTo.length) err('the map has things to talk to but no "spawn" object, so reachability can\'t be checked');
+  // Start where the player starts: the spawn, or (for maps you only reach through a portal) the first arrival.
+  const start: { x: number; y: number; what: string } | null = spawn ? { ...(spawn as { x: number; y: number }), what: 'the spawn' } : arrivals[0] ? { ...arrivals[0], what: `arrival "${arrivals[0].name}"` } : null;
+  if (!start) {
+    if (talkTo.length || portals.length) err('the map has things to reach but no "spawn" or "arrive" object, so reachability can\'t be checked');
     return;
   }
-  const start: { x: number; y: number } = spawn;
   const blocker = blockedBy(start.x, start.y);
-  if (blocker) return err(`the spawn at ${start.x},${start.y} is blocked by ${blocker}: the player would start stuck`);
+  if (blocker) return err(`${start.what} at ${start.x},${start.y} is blocked by ${blocker}: the player would start stuck`);
+  for (const a of arrivals) {
+    const b = blockedBy(a.x, a.y);
+    if (b) err(`arrival "${a.name}" at ${a.x},${a.y} is blocked by ${b}: players coming through a portal would be stuck`);
+  }
 
   // Flood fill over feet positions, 2 px apart, from the spawn.
   const STEP = 2;
@@ -581,7 +628,15 @@ function checkPlacementAndReach(
   }
   for (const t of talkTo) {
     const ok = reached.some(([x, y]) => Math.hypot(x - t.x, y - t.y) <= INTERACT_RANGE);
-    if (!ok) err(`"${t.name}" can't be reached: no free spot within ${INTERACT_RANGE} px of it is walkable from the spawn`);
+    if (!ok) err(`"${t.name}" can't be reached: no free spot within ${INTERACT_RANGE} px of it is walkable from ${start.what}`);
+  }
+  for (const p of portals) {
+    const ok = reached.some(([x, y]) => overlaps({ x: x - FEET.width / 2, y: y - FEET.height, width: FEET.width, height: FEET.height, what: '' }, p));
+    if (!ok) err(`portal "${p.what}" can't be reached: no walkable spot from ${start.what} touches it`);
+  }
+  for (const a of arrivals) {
+    // Arrivals rarely sit on the 2 px lattice from the start; anything within a step counts.
+    if (!reached.some(([x, y]) => Math.abs(x - a.x) <= 2 && Math.abs(y - a.y) <= 2)) err(`arrival "${a.name}" is cut off from ${start.what}`);
   }
 }
 

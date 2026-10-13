@@ -55,6 +55,12 @@ The five locations share one palette and style; each has its own accent:
 
 ### Edges between surfaces
 
+### Walls indoors
+
+Indoors (the Dungeon), a wall with floor to its south shows its **face**: two tiles of brick, an upper course with a lit lip under the wall top and a lower course with a dark skirting where it meets the floor. Every other wall shows its **top**: dark, with an ink edge and a lit line on each side that meets floor (16 rim combinations). Walls need to be at least 2 tiles thick above any floor so the face fits. Banners, torches and anything else hung on a wall go on the lower face course. The dungeon map generator picks tops, faces and rims from a plain `#`/`.` layout.
+
+### Paths and water
+
 Paths and water never meet grass at a straight tile edge. Edge tiles show a ragged 2–4 px grass fringe (12 per surface: 4 sides, 4 outer corners, 4 inner corners), with a dark trodden rim on paths and a sand bank plus foam on water. The fringe is 3 px deep where it meets the next tile, so any edge tile joins any other. Surfaces must be at least 2 tiles wide wherever they have grass on both sides. The village map generator picks the right edge tile automatically and refuses layouts that would need anything else.
 
 ## 4. Pixels and scaling
@@ -107,7 +113,7 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 - **PNG**, 8-bit RGBA, transparent background where the manifest says `transparent`. No JPEG, WebP or SVG for art.
 - **Names:** lowercase kebab-case (`npc-guide.png`, `dialogue-box.png`), in the folder for the category (`characters/`, `tiles/`, `maps/`, `objects/`, `portraits/`, `ui/`, `effects/`).
 - **Ids:** `<prefix>.<name>`, where prefix is `char`, `tiles`, `map`, `obj`, `portrait`, `ui` or `fx`. An id is permanent once code uses it. Replace the file, keep the id.
-- **Maps:** Tiled JSON with CSV layers and **embedded** tilesets; each tileset's name is its manifest id (`tiles.terrain`); a map may use several tilesets. Layers: `ground` and `decor` (tiles), `entities` (points at the feet: type `spawn`, `npc`, `sign` or `prop`, with string properties `sprite`, a manifest id, and optionally `dialogue`, a text id), `collision` (solid rectangles). Tile collision is a boolean tile property `collides`.
+- **Maps:** Tiled JSON with CSV layers and **embedded** tilesets; each tileset's name is its manifest id (`tiles.terrain`); a map may use several tilesets. Layers: `ground` and `decor` (tiles), `entities` (points at the feet: type `spawn`, `arrive` (named, where a portal from another map lets you out; optional `facing`), `npc`, `sign` or `prop`, with string properties `sprite`, a manifest id, and optionally `dialogue`, a text id, or `caseStudy`, a project id; plus `portal` rectangles with `to`, a map id, and `arrive`, an arrival name in that map), `collision` (solid rectangles). Tile collision is a boolean tile property `collides`.
 - **Editor sources** (`.aseprite`, `.pxo`, `.kra`) live in `art/source/<category>/` with the same name as the PNG.
 
 ## 9. Originality and provenance

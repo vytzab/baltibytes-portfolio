@@ -289,6 +289,45 @@ test('unknown object type and point collision objects', () => withFixture((fx) =
   map.layers[2]!.objects!.push({ name: 'dot', type: 'solid', point: true, x: 5, y: 5 });
   writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
   const issues = fx.run();
-  expectError(issues, 'map.test', /type "chest" is not one of spawn, npc, sign, prop/);
+  expectError(issues, 'map.test', /type "chest" is not one of spawn, arrive, npc, sign, prop, portal/);
   expectError(issues, 'map.test', /collision objects must be rectangles/);
+}));
+
+/** The fixture map plus a portal back into itself and the arrival it needs. */
+function mapWithPortal(portal: Record<string, unknown> = {}) {
+  const map = tiledMap();
+  map.layers[1]!.objects!.push(
+    { name: 'door', type: 'portal', x: 80, y: 8, width: 10, height: 8, properties: [{ name: 'to', value: 'map.test' }, { name: 'arrive', value: 'back' }], ...portal },
+    { name: 'back', type: 'arrive', point: true, x: 40, y: 40 },
+  );
+  return map;
+}
+
+test('a portal and its arrival are fine', () => withFixture((fx) => {
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(mapWithPortal()));
+  assert.deepEqual(fx.run(), []);
+}));
+
+test('portal to a map that does not exist', () => withFixture((fx) => {
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(mapWithPortal({ properties: [{ name: 'to', value: 'map.nowhere' }, { name: 'arrive', value: 'back' }] })));
+  expectError(fx.run(), 'map.test', /leads to "map\.nowhere", which is not a map in the manifest/);
+}));
+
+test('portal to an arrival that does not exist', () => withFixture((fx) => {
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(mapWithPortal({ properties: [{ name: 'to', value: 'map.test' }, { name: 'arrive', value: 'cellar' }] })));
+  expectError(fx.run(), 'map.test', /arrives at "cellar", but map\.test has no "arrive" object/);
+}));
+
+test('portal behind a wall', () => withFixture((fx) => {
+  const map = mapWithPortal();
+  map.layers[2]!.objects!.push({ name: 'wall', type: 'solid', x: 64, y: 0, width: 32, height: 24 });
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
+  expectError(fx.run(), 'map.test', /portal "door" can't be reached/);
+}));
+
+test('case study that is not a project', () => withFixture((fx) => {
+  const map = tiledMap();
+  map.layers[1]!.objects!.push({ name: 'chest', type: 'prop', point: true, x: 48, y: 40, properties: [{ name: 'sprite', value: 'char.hero' }, { name: 'caseStudy', value: 'secret-project' }] });
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
+  expectError(fx.run(), 'map.test', /caseStudy "secret-project" is not a project/);
 }));

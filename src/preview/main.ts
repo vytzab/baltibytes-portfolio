@@ -3,6 +3,7 @@ import '@fontsource/pixelify-sans/400.css';
 import './preview.css';
 import * as Phaser from 'phaser';
 import { manifest } from '../game/assets/loader.ts';
+import { CaseStudyPanel } from '../game/case-study.ts';
 import { DialogueBox } from '../game/dialogue-box.ts';
 import { MAX_ZOOM, keepPixelPerfect, type PixelScale } from '../game/pixel-scale.ts';
 import { ArtPreviewScene } from './ArtPreviewScene.ts';
@@ -16,7 +17,7 @@ const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const maps = manifest.assets.filter((a) => a.category === 'map').map((a) => a.id);
 const requested = new URLSearchParams(location.search).get('map');
 const initialMap = requested && maps.includes(requested) ? requested : 'map.village';
-const scene = new ArtPreviewScene(new DialogueBox($('dialogue')), reduceMotion, initialMap);
+const scene = new ArtPreviewScene(new DialogueBox($('dialogue')), new CaseStudyPanel($('case-study')), reduceMotion, initialMap);
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
@@ -70,16 +71,24 @@ scene.onCreated = () => {
 };
 
 const mapSelect = $<HTMLSelectElement>('map-select');
-const mapNames: Record<string, string> = { 'map.village': 'Starting Village', 'map.art-preview': 'Test area' };
+const mapNames: Record<string, string> = { 'map.village': 'Starting Village', 'map.dungeon': 'Dungeon', 'map.art-preview': 'Test area' };
 mapSelect.innerHTML = maps.map((id) => `<option value="${id}">${mapNames[id] ?? id}</option>`).join('');
 mapSelect.value = initialMap;
+const rememberMap = (id: string) => {
+  const url = new URL(location.href);
+  url.searchParams.set('map', id);
+  history.replaceState(null, '', url);
+};
 mapSelect.addEventListener('change', () => {
   scene.showMap(mapSelect.value);
-  const url = new URL(location.href);
-  url.searchParams.set('map', mapSelect.value);
-  history.replaceState(null, '', url);
+  rememberMap(mapSelect.value);
   mapSelect.blur(); // give the keys back to the game
 });
+// Walking through a portal changes the map too: keep the picker and the URL in step.
+scene.onMapChanged = (id) => {
+  mapSelect.value = id;
+  rememberMap(id);
+};
 
 const gallery = $('gallery');
 const galleryButton = $('toggle-gallery');
@@ -92,6 +101,7 @@ galleryButton.addEventListener('click', () => {
 
 window.addEventListener('keydown', (e) => {
   if (e.target instanceof HTMLInputElement || e.target instanceof HTMLSelectElement || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (!$('case-study').hidden) return; // the case study has the keyboard
   const toggle = (box: HTMLInputElement) => {
     box.checked = !box.checked;
     box.dispatchEvent(new Event('change'));

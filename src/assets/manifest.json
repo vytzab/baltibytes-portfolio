@@ -221,6 +221,31 @@
       "notes": "37 tiles in an 8 \u00d7 5 sheet; the last 3 cells are empty. Collision is the 'collides' tile property in each map's tileset."
     },
     {
+      "id": "tiles.dungeon",
+      "path": "tiles/dungeon.png",
+      "category": "tileset",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "Dungeon (Projects) tiles: wall tops with a rim on every combination of sides that meet floor (16), upper and lower brick wall faces, four flagstone floors, a two-tile runner rug, rubble, cobwebs, and a banner per project colour.",
+      "width": 128,
+      "height": 64,
+      "grid": {
+        "width": 16,
+        "height": 16
+      },
+      "transparency": "mixed",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/dungeon/tiles.ts"
+      },
+      "notes": "The map generator picks wall tops, faces and rims from the wall layout. Banners hang on lower wall faces (decor layer) and collide like the wall."
+    },
+    {
       "id": "map.art-preview",
       "path": "maps/art-preview.json",
       "category": "map",
@@ -260,6 +285,27 @@
         "tool": "tools/art/generate-placeholders.ts",
         "source": "tools/art/village/map.ts",
         "notes": "Generated Tiled JSON; opens in Tiled. Collision rectangles for the forest edge are in the 'collision' object layer."
+      }
+    },
+    {
+      "id": "map.dungeon",
+      "path": "maps/dungeon.json",
+      "category": "map",
+      "type": "tilemap",
+      "status": "draft",
+      "usage": "The Dungeon (Projects): a torch-lit hall with five vaults, each holding a quest chest that opens a project's case study. Stairs lead back up to the village.",
+      "grid": {
+        "width": 16,
+        "height": 16
+      },
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/dungeon/map.ts",
+        "notes": "Generated Tiled JSON; vault order and banner colours follow src/content/projects.ts."
       }
     },
     {
@@ -509,6 +555,145 @@
         "tool": "tools/art/generate-placeholders.ts",
         "source": "tools/art/village/props.ts"
       }
+    },
+    {
+      "id": "obj.cellar",
+      "path": "objects/cellar.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "Cellar entrance in the village: a stone arch in a grassy mound; walking into the doorway goes down to the Dungeon.",
+      "width": 48,
+      "height": 48,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 0,
+          "y": 34,
+          "width": 15,
+          "height": 14
+        },
+        {
+          "x": 33,
+          "y": 34,
+          "width": 15,
+          "height": 14
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/dungeon/props.ts"
+      },
+      "notes": "The 18 px between the two solid boxes is the doorway; the map's portal sits inside it."
+    },
+    {
+      "id": "obj.torch",
+      "path": "objects/torch.png",
+      "category": "object",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "Wall torch on dungeon wall faces; the flame flickers (frame 0 when motion is reduced).",
+      "width": 64,
+      "height": 24,
+      "grid": {
+        "width": 16,
+        "height": 24
+      },
+      "animations": [
+        {
+          "name": "flicker",
+          "row": 0,
+          "frames": 4,
+          "fps": 6,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/dungeon/props.ts"
+      },
+      "notes": "Not solid: it hangs on a wall that already collides."
+    },
+    {
+      "id": "obj.chest",
+      "path": "objects/chest.png",
+      "category": "object",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "Quest chest in each dungeon vault. Interacting opens the project's case study; it shows open once the visitor has read it.",
+      "width": 24,
+      "height": 48,
+      "grid": {
+        "width": 24,
+        "height": 24
+      },
+      "animations": [
+        {
+          "name": "closed",
+          "row": 0,
+          "frames": 1,
+          "fps": 1,
+          "loop": false
+        },
+        {
+          "name": "open",
+          "row": 1,
+          "frames": 1,
+          "fps": 1,
+          "loop": false
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 2,
+          "y": 12,
+          "width": 20,
+          "height": 12
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/dungeon/props.ts"
+      },
+      "notes": "Two states as one-frame animations, so the game can pick 'closed' or 'open' by name."
+    },
+    {
+      "id": "obj.stairs-up",
+      "path": "objects/stairs-up.png",
+      "category": "object",
+      "type": "image",
+      "status": "draft",
+      "usage": "Stairs up out of the dungeon, brightening towards daylight; the bottom step is the portal back to the village.",
+      "width": 32,
+      "height": 32,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/dungeon/props.ts"
+      },
+      "notes": "Not solid: the player walks onto it."
     },
     {
       "id": "ui.dialogue-box",

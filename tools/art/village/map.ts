@@ -15,9 +15,9 @@ const GROUND: Grid = [
   '..,.......;.......,.......',
   '.;....,........,.....;....',
   '....,......;......,.......',
-  '..........,.......~~~~....',
-  '.;...............~~l~~~.,.',
-  '.......,.........~~lll~...',
+  '..........,..==...~~~~....',
+  '.;...........==..~~l~~~.,.',
+  '.......,.....==..~~lll~...',
   '....;........====~~~r~~.;.',
   '..,..........====.~~~~....',
   '.....==......==...........',
@@ -75,11 +75,12 @@ const px = (tiles: number) => tiles * TILE;
 /** Props stand on the map with their feet (bottom centre) at x, y in pixels. */
 interface Placed {
   name: string;
-  type: 'spawn' | 'npc' | 'sign' | 'prop';
+  type: 'spawn' | 'arrive' | 'npc' | 'sign' | 'prop';
   x: number;
   y: number;
   sprite: string;
   dialogue?: string;
+  facing?: string;
 }
 
 const ENTITIES: Placed[] = [
@@ -87,13 +88,16 @@ const ENTITIES: Placed[] = [
   { name: 'guide', type: 'npc', x: px(15) + 8, y: px(12), sprite: 'char.npc-guide', dialogue: 'village-guide' },
   { name: 'welcome-sign', type: 'sign', x: px(10) + 8, y: px(20) + 4, sprite: 'obj.sign', dialogue: 'village-sign' },
   { name: 'welcome-arch', type: 'prop', x: px(13), y: px(18), sprite: 'obj.arch' },
+  // The cellar at the top of the north path leads down to the Dungeon (Projects).
+  { name: 'cellar', type: 'prop', x: px(14), y: px(3) + 8, sprite: 'obj.cellar' },
+  { name: 'from-dungeon', type: 'arrive', x: px(14), y: px(5), sprite: '', facing: 'down' },
   { name: 'notice-board', type: 'prop', x: px(13) + 8, y: px(10), sprite: 'obj.noticeboard', dialogue: 'village-board' },
   { name: 'workshop', type: 'prop', x: px(6), y: px(8), sprite: 'obj.house', dialogue: 'village-workshop' },
   { name: 'crates', type: 'prop', x: px(9) + 8, y: px(8), sprite: 'obj.crates' },
   { name: 'lamp-west', type: 'prop', x: px(10) + 8, y: px(10), sprite: 'obj.lamp' },
   { name: 'lamp-east', type: 'prop', x: px(16) + 8, y: px(10), sprite: 'obj.lamp' },
   // Trees: a forest edge along the north, west and east, thinning towards the entrance.
-  ...[1, 3, 5, 9, 11, 14, 17, 20, 23, 25].map((t, i) => ({ name: `tree-n${i}`, type: 'prop' as const, x: px(t), y: px(2) + 6, sprite: i % 3 === 1 ? 'obj.tree-birch' : 'obj.tree-pine' })),
+  ...[1, 3, 5, 9, 11, 17, 20, 23, 25].map((t, i) => ({ name: `tree-n${i}`, type: 'prop' as const, x: px(t), y: px(2) + 6, sprite: i % 3 === 1 ? 'obj.tree-birch' : 'obj.tree-pine' })),
   ...[5, 8, 11, 14, 17].map((t, i) => ({ name: `tree-w${i}`, type: 'prop' as const, x: px(1), y: px(t), sprite: i % 2 ? 'obj.tree-birch' : 'obj.tree-pine' })),
   ...[5, 9, 12, 16].map((t, i) => ({ name: `tree-e${i}`, type: 'prop' as const, x: px(25), y: px(t), sprite: i % 2 ? 'obj.tree-pine' : 'obj.tree-birch' })),
   ...[3, 7, 18, 22].map((t, i) => ({ name: `tree-s${i}`, type: 'prop' as const, x: px(t), y: px(21), sprite: i % 2 ? 'obj.tree-birch' : 'obj.tree-pine' })),
@@ -188,7 +192,7 @@ export function villageMap(tilesets: { terrain: { id: string; image: string }; v
     Object.entries(p)
       .filter((kv): kv is [string, string] => kv[1] !== undefined)
       .map(([name, value]) => ({ name, type: 'string', value }));
-  const entities = ENTITIES.map((e) => ({
+  const entities: object[] = ENTITIES.map((e) => ({
     id: nextId++,
     name: e.name,
     type: e.type,
@@ -199,8 +203,13 @@ export function villageMap(tilesets: { terrain: { id: string; image: string }; v
     height: 0,
     rotation: 0,
     visible: true,
-    properties: props({ sprite: e.sprite, dialogue: e.dialogue }),
+    properties: props({ sprite: e.sprite || undefined, dialogue: e.dialogue, facing: e.facing }),
   }));
+  // Walking into the cellar's dark doorway takes you down to the Dungeon.
+  entities.push({
+    id: nextId++, name: 'to-dungeon', type: 'portal', point: false, x: px(14) - 9, y: 40, width: 18, height: 8, rotation: 0, visible: true,
+    properties: props({ to: 'map.dungeon', arrive: 'from-village' }),
+  });
   const collision = COLLISION.map((r) => ({ id: nextId++, name: r.name, type: 'solid', x: r.x, y: r.y, width: r.width, height: r.height, rotation: 0, visible: true }));
 
   const tileLayer = (id: number, name: string, data: number[]) => ({ id, name, type: 'tilelayer', width, height, x: 0, y: 0, opacity: 1, visible: true, data });

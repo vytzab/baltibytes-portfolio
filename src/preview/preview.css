@@ -168,3 +168,59 @@ html, body {
     linear-gradient(to right, rgb(253 246 227 / 0.45) 1px, transparent 1px) 0 0 / var(--gw) var(--gh),
     linear-gradient(to bottom, rgb(253 246 227 / 0.45) 1px, transparent 1px) 0 0 / var(--gw) var(--gh);
 }
+
+/* Case study: a pixel-framed panel (the dialogue 9-slice) holding readable HTML text.
+   The project's accent colours the tabs and the kind line. */
+.case-study {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
+  --accent: var(--plum);
+}
+.case-study[hidden] { display: none; }
+.case-study[data-accent='brick'] { --accent: #a8483c; }
+.case-study[data-accent='denim'] { --accent: #3d5a8c; }
+.case-study[data-accent='moss'] { --accent: #2f5233; }
+.case-study[data-accent='gold'] { --accent: #6a412e; }
+.case-study[data-accent='heather'] { --accent: #6f5590; }
+.case-study__frame {
+  position: relative;
+  width: min(100%, 640px);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  border-style: solid;
+  border-width: calc(var(--px) * 8);
+  border-image: var(--frame-image) 8 fill / calc(var(--px) * 8) stretch;
+  image-rendering: pixelated;
+  padding: 4px 12px;
+  color: var(--ink);
+  font: 16px/1.5 system-ui, sans-serif;
+}
+.case-study__header { padding-right: 40px; }
+.case-study__kind { margin: 0; font-size: 13px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+.case-study h2 { font: 28px/1.2 var(--font-pixel); margin: 4px 0; }
+.case-study__tagline { margin: 0 0 12px; }
+.case-study__close {
+  position: absolute; top: 4px; right: 8px; width: 36px; height: 36px;
+  font: 18px var(--font-pixel); color: var(--ink); background: var(--paper); border: 2px solid var(--bark); border-radius: 3px; cursor: pointer;
+}
+.case-study__tabs { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 2px solid var(--bark); }
+.case-study__tabs button {
+  font: 15px var(--font-pixel); color: var(--ink); background: transparent; border: 2px solid transparent; border-bottom: none;
+  padding: 6px 10px; min-height: 36px; cursor: pointer; border-radius: 3px 3px 0 0;
+}
+.case-study__tabs button[aria-selected='true'] { background: var(--paper); border-color: var(--bark); color: var(--accent); margin-bottom: -2px; }
+.case-study button:focus-visible, .case-study a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.case-study__body { padding: 8px 0; min-height: 120px; }
+.case-study__body ul { padding-left: 20px; }
+.case-study__footer { border-top: 1px solid var(--bark); padding-top: 8px; font-size: 14px; }
+.case-study__footer p { margin: 4px 0; }
+.case-study__stack { list-style: none; display: flex; flex-wrap: wrap; gap: 4px; padding: 0; margin: 6px 0; }
+.case-study__stack li { background: var(--paper); border: 1px solid var(--bark); border-radius: 3px; padding: 0 6px; font-size: 13px; }
+.case-study__muted { color: var(--bark); font-style: italic; }
+.case-study__hint { text-align: right; font: 12px var(--font-pixel); color: var(--bark); }
+.case-study a { color: var(--accent); }

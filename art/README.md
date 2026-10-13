@@ -23,9 +23,10 @@ How art gets into the game: where files live, how they're described, checked and
 | `tools/art/` | The generator, the validator and their tests | Yes |
 | `tools/art/placeholders/` | Code that draws the placeholder terrain, props, UI and map | Yes |
 | `tools/art/village/` | The Starting Village: `tiles.ts` (village tileset: edges, cobbles, plants), `props.ts` (workshop, trees, arch, notice board, lamp, crates), `map.ts` (the village layout as text, written as Tiled JSON with edges chosen automatically) | Yes |
+| `tools/art/dungeon/` | The Dungeon: `tiles.ts` (walls with faces and rimmed tops, flagstones, rug, cobwebs, a banner per project colour), `props.ts` (torch, quest chest, exit stairs, and the village's cellar entrance), `map.ts` (walls as `#`/`.` text; vaults follow `src/content/projects.ts`) | Yes |
 | `tools/art/characters/` | The characters: `player.ts` and `guide.ts` hold every pixel as hand-drawn text grids (head, body, arm, legs per direction); `compose.ts` stacks them into 24 × 32 frames and sheets | Yes |
 | `src/game/` | Engine code that uses assets by id: loader, `world.ts` (builds a map: layers, collision, entities, props, depth sorting), characters, dialogue, interaction, scaling, `rules.ts` (feet box and interaction range, shared with the validator) | Yes |
-| `src/content/` | Text the game shows, e.g. `about.ts` (the village's About me; placeholder lines marked TODO) | Yes |
+| `src/content/` | Text the game shows: `about.ts` (the village's About me) and `projects.ts` (the Dungeon's case studies). Both are drafts for the owner to check; the repo is public | Yes |
 | `src/preview/` | The art preview page (`art-preview.html`) | Yes |
 
 Folders under `src/assets/` are created when their first asset arrives.
@@ -52,7 +53,8 @@ npm run preview             # serve dist/ at http://localhost:4173 (art preview:
 - **Walk:** WASD or arrows. **Talk / read:** E, Space or Enter. **Close:** Esc.
 - **Zoom:** `−` / `+` (or the keys `-` `+`), **Fit** (`0`) returns to the automatic zoom. Check new art at ×3 and at the default zoom.
 - **Grid (G):** the 16 px tile grid. **Collision (C):** colliding tiles (rose) and physics boxes.
-- **Map:** the picker switches between the Starting Village (default) and the small test area; `?map=map.art-preview` in the URL opens one directly.
+- **Map:** the picker switches between the Starting Village (default), the Dungeon and the small test area; `?map=map.dungeon` in the URL opens one directly. Walking through a portal (the village cellar, the dungeon stairs) changes map too, and the picker follows.
+- **Case studies:** in the Dungeon, press E at a chest. Arrow keys switch sections, Esc closes. Opened chests stay open (stored in this browser only).
 - **Assets:** every manifest entry with its image enlarged on a checkerboard (transparent areas show as checks) and its frame grid drawn over it, plus status, size, animations and provenance. Every animation also plays on grass at ×1 (one game pixel per CSS pixel) next to ×4, so you can judge it at native and enlarged size.
 - The red badge counts placeholder and draft assets.
 - It honours "reduce motion": the prompt stops bobbing.
@@ -101,8 +103,9 @@ npm run preview             # serve dist/ at http://localhost:4173 (art preview:
 - Provenance: origin, author, date and an accepted licence; tool for generated work; https source for third-party; attribution for CC-BY.
 - Solid boxes: whole numbers, inside the image (or frame).
 - Maps: orthogonal, finite, CSV layers, embedded tilesets named after a tileset id with matching size and image path, tile numbers within range, and `sprite` properties that name real assets.
-- Map objects: entity types are `spawn`, `npc`, `sign` or `prop`, inside the map, with a `sprite`; `collision` objects are rectangles inside the map.
-- **Walkability:** the spawn must be free, and every NPC, sign and prop with `dialogue` must be reachable from it. The validator walks the player's 10 × 6 feet box from the spawn in 2 px steps against colliding tiles, collision rectangles, prop and sign `solid` boxes and NPC feet, the same rules the game uses (`src/game/world.ts`), so a misplaced tree can't trap the player or wall off the guide.
+- Map objects: entity types are `spawn`, `arrive`, `npc`, `sign`, `prop` (points inside the map; all but spawn and arrive need a `sprite`) and `portal` (rectangles with `to` and `arrive`); `collision` objects are rectangles inside the map. A `caseStudy` property must be a project id from `src/content/projects.ts`.
+- Portals: `to` must be a map in the manifest and `arrive` an `arrive` object in that map.
+- **Walkability:** the spawn (or, in a map you only enter through a portal, the first arrival) must be free; every arrival must be free and connected to it; every NPC, sign and prop with `dialogue` or `caseStudy` must be reachable, and every portal must be walkable into. The validator walks the player's 10 × 6 feet box from the spawn in 2 px steps against colliding tiles, collision rectangles, prop and sign `solid` boxes and NPC feet, the same rules the game uses (`src/game/world.ts`), so a misplaced tree can't trap the player or wall off the guide.
 
 It **cannot** judge whether art is good, readable, on-model or consistent in style. That's what the preview and the checklist in ART_BIBLE §10 are for. Errors exit with code 1, so `npm run build` (and any future CI) stops.
 
