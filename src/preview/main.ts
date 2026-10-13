@@ -1,54 +1,36 @@
-// Entry point of art-preview.html.
+// Entry point of art-preview.html: the game plus a development toolbar (map picker, zoom, grid and
+// collision overlays, asset list). Only served by `npm run dev`; the production build leaves it out.
 import '@fontsource/pixelify-sans/400.css';
+import '../game/game.css';
 import './preview.css';
-import * as Phaser from 'phaser';
 import { manifest } from '../game/assets/loader.ts';
-import { InfoPanel } from '../game/info-panel.ts';
-import { DialogueBox } from '../game/dialogue-box.ts';
-import { TouchControls } from '../game/touch-controls.ts';
-import { MAX_ZOOM, keepPixelPerfect, type PixelScale } from '../game/pixel-scale.ts';
-import { ArtPreviewScene } from './ArtPreviewScene.ts';
+import { startGame } from '../game/boot.ts';
+import { MAX_ZOOM, type PixelScale } from '../game/pixel-scale.ts';
 import { renderGallery } from './gallery.ts';
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 
-const parent = $('game');
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Which map to show: ?map=<id> in the URL, else the Starting Village.
 const maps = manifest.assets.filter((a) => a.category === 'map').map((a) => a.id);
 const requested = new URLSearchParams(location.search).get('map');
 const initialMap = requested && maps.includes(requested) ? requested : 'map.village';
-const touch = new TouchControls($('touch-controls'));
-const scene = new ArtPreviewScene(new DialogueBox($('dialogue')), new InfoPanel($('info-panel')), reduceMotion, initialMap, touch);
-
-const game = new Phaser.Game({
-  type: Phaser.AUTO,
-  parent,
-  pixelArt: true,
-  backgroundColor: '#2a1e2b',
-  width: 240,
-  height: 144,
-  scale: { mode: Phaser.Scale.NONE },
-  physics: { default: 'arcade', arcade: { debug: false } },
-  scene,
-});
 
 let zoomOverride: number | null = null;
 let current: PixelScale | null = null;
-let apply: () => PixelScale = () => current!;
-
-game.events.once(Phaser.Core.Events.READY, () => {
-  apply = keepPixelPerfect(game, parent, () => zoomOverride, (s) => {
+const { scene, rescale } = startGame({
+  ids: { game: 'game', dialogue: 'dialogue', panel: 'info-panel', touch: 'touch-controls' },
+  mapId: initialMap,
+  zoomOverride: () => zoomOverride,
+  onScale: (s) => {
     current = s;
     $('zoom').textContent = `×${s.zoom}${zoomOverride === null ? ' (fit)' : ''}`;
     $('view').textContent = `${s.width} × ${s.height} px · DPR ${window.devicePixelRatio}`;
-  });
-  apply();
+  },
 });
 
 function setZoom(z: number | null) {
   zoomOverride = z === null ? null : Math.max(1, Math.min(MAX_ZOOM, z));
-  apply();
+  rescale();
 }
 
 // Toolbar

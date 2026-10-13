@@ -1,18 +1,18 @@
-// The art preview: walk around the maps (village, Dungeon, Skill Tower, Guild Hall, test area)
-// with the player, talk to whoever is there, walk through portals between maps, and open info
-// panels: the Dungeon's case studies, the Skill Tower's skills, the Guild Hall's experience. Everything it shows comes from the manifest (assets), the maps
-// (placement, collision, portals; see src/game/world.ts) and src/content (text).
+// The game scene: walk around the maps with the player, talk to whoever is there, walk through
+// portals between maps, and open info panels (case studies, skills, experience, contact).
+// Everything it shows comes from the manifest (assets), the maps (placement, collision, portals;
+// see world.ts) and src/content (text). Used by the site (src/main.ts) and the art preview.
 import * as Phaser from 'phaser';
-import { asset, preloadAssets, registerAnimations } from '../game/assets/loader.ts';
-import { animationFrames } from '../game/assets/manifest.ts';
-import type { InfoPanel } from '../game/info-panel.ts';
-import type { Character, Facing } from '../game/character.ts';
-import type { DialogueBox } from '../game/dialogue-box.ts';
-import type { TouchControls } from '../game/touch-controls.ts';
-import { InteractionPrompt, type Interactable } from '../game/interaction.ts';
-import { markCaseStudyOpened, openedCaseStudies } from '../game/progress.ts';
-import { buildWorld, type CaseStudyProp } from '../game/world.ts';
-import { dialogueFor } from './dialogue.ts';
+import { asset, preloadAssets, registerAnimations } from './assets/loader.ts';
+import { animationFrames } from './assets/manifest.ts';
+import type { InfoPanel } from './info-panel.ts';
+import type { Character, Facing } from './character.ts';
+import type { DialogueBox } from './dialogue-box.ts';
+import type { TouchControls } from './touch-controls.ts';
+import { InteractionPrompt, type Interactable } from './interaction.ts';
+import { markCaseStudyOpened, openedCaseStudies } from './progress.ts';
+import { buildWorld, type CaseStudyProp } from './world.ts';
+import { dialogueFor } from '../content/dialogue.ts';
 
 /** Walking speed in game pixels per second: about 4.5 tiles a second. */
 const SPEED = 72;
@@ -29,7 +29,7 @@ interface Keys {
 
 const ACT_CODES = new Set(['KeyE', 'Space', 'Enter', 'NumpadEnter']);
 
-export class ArtPreviewScene extends Phaser.Scene {
+export class WorldScene extends Phaser.Scene {
   private readonly dialogue: DialogueBox;
   private readonly panel: InfoPanel;
   private readonly reduceMotion: boolean;
@@ -52,7 +52,7 @@ export class ArtPreviewScene extends Phaser.Scene {
   private collisionOverlay!: Phaser.GameObjects.Graphics;
 
   constructor(dialogue: DialogueBox, panel: InfoPanel, reduceMotion: boolean, mapId: string, touch: TouchControls | null = null) {
-    super({ key: 'art-preview' });
+    super({ key: 'world' });
     this.dialogue = dialogue;
     this.panel = panel;
     // Reading a project's case study (from its chest, or via a link from a skill) opens its chest.

@@ -6,20 +6,19 @@
     <!-- No favicon yet (docs/ARTWORK.md #8); this stops the browser requesting /favicon.ico. -->
     <link rel="icon" href="data:," />
     <title>Baltibytes</title>
-    <meta name="description" content="Software engineering portfolio of Vytautas Z, coming soon as a small pixel-art RPG." />
-    <style>
-      :root { --ink: #2a1e2b; --paper: #fdf6e3; --gold: #f6d67a; color-scheme: dark; }
-      body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: var(--ink); color: var(--paper); font: 18px/1.5 system-ui, sans-serif; }
-      main { max-width: 36rem; padding: 0 16px; }
-      h1 { color: var(--gold); font-weight: 600; }
-      a { color: var(--gold); }
-    </style>
+    <meta name="description" content="Software engineering portfolio of Vytautas Z, as a small, cozy pixel-art RPG: walk the village, open the project vaults, read the résumé." />
+    <meta name="theme-color" content="#2a1e2b" />
   </head>
   <body>
-    <main>
-      <h1>Baltibytes</h1>
-      <p>A software engineering portfolio, being built as a small, cozy pixel-art RPG. Check back soon.</p>
-      <p><a href="/art-preview.html">See the work-in-progress art preview</a> · <a href="/resume.html">Résumé</a></p>
-    </main>
+    <a class="skip-link" href="/resume.html">Skip the game: read the résumé</a>
+    <main id="game" aria-label="Baltibytes, a small pixel-art village. Walk with WASD or the arrow keys, talk with E, Space or Enter."></main>
+    <section id="dialogue" class="dialogue"></section>
+    <div id="info-panel" class="info-panel"></div>
+    <div id="touch-controls"></div>
+    <p class="help help--keys">WASD / arrows: walk · E / Space / Enter: talk · Esc: close</p>
+    <noscript>
+      <p class="noscript">This portfolio is a small game and needs JavaScript. <a href="/resume.html">Read the résumé instead.</a></p>
+    </noscript>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

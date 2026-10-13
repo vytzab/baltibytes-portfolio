@@ -30,7 +30,8 @@ How art gets into the game: where files live, how they're described, checked and
 | `src/game/` | Engine code that uses assets by id: loader, `world.ts` (builds a map: layers, collision, entities, props, depth sorting), characters, dialogue, interaction, scaling, `rules.ts` (feet box and interaction range, shared with the validator) | Yes |
 | `src/content/` | Text the game shows: `about.ts` (About me), `projects.ts` (case studies), `skills.ts` (Skill Tower), `experience.ts` (Guild Hall; placeholder roles), `contact.ts` (Exit Portal and résumé). All are drafts for the owner to check; the repo is public | Yes |
 | `src/resume/` | The résumé page (`resume.html`), rendered from `src/content` at build time by `vite.config.ts`: no JavaScript needed, print styles included | Yes |
-| `src/preview/` | The art preview page (`art-preview.html`) | Yes |
+| `src/main.ts` | The site's entry (`index.html`): starts the game in the Starting Village | Yes |
+| `src/preview/` | The art preview's toolbar and asset gallery (`art-preview.html`, dev only) | Yes |
 
 Folders under `src/assets/` are created when their first asset arrives.
 
@@ -38,7 +39,7 @@ Folders under `src/assets/` are created when their first asset arrives.
 
 ```bash
 npm install                 # once, and whenever package-lock.json changes
-npm run dev                 # dev server with hot reload; open http://localhost:5173/art-preview.html
+npm run dev                 # dev server with hot reload: the game at /, the art preview at /art-preview.html
 npm run dev -- --host       # same, reachable from a phone on the same Wi-Fi (use the printed network URL)
 npm run art:validate        # check the manifest against the files (also part of build and check)
 npm run art:validate -- --no-placeholders   # also fail on placeholder or draft art (a future release gate)
@@ -46,10 +47,12 @@ npm run art:generate        # redraw all code-drawn art (characters, placeholder
 npm test                    # validator tests (deliberately broken fixtures)
 npm run check               # type-check + validate + tests: run before every commit
 npm run build               # validate + type-check + production build into dist/ (what Cloudflare runs)
-npm run preview             # serve dist/ at http://localhost:4173 (art preview: /art-preview.html)
+npm run preview             # serve dist/ at http://localhost:4173 (the site as deployed: game and résumé)
 ```
 
 ## The art preview
+
+The art preview is a **development tool**: `npm run dev` serves it at `/art-preview.html`, but it is not in the production build, so the deployed site never shows it. It is the same game as the site (`src/game/boot.ts`, `WorldScene.ts`) plus a toolbar.
 
 `art-preview.html` is a small map with the player, an NPC and a sign, built from the manifest. Use it to judge art in context:
 
