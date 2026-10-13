@@ -24,20 +24,32 @@ export const DIALOGUE: Record<string, Dialogue> = {
     lines: [
       `Welcome to the Starting Village! This is where ${ABOUT.name} lives and works.`,
       'The notice board on the square says who they are. The workshop by the path is where they tinker.',
-      'The old cellar at the top of the north path leads down to the Dungeon. Every project is kept there in a chest of its own; the keeper will show you around.',
-      'The road east leads to the Skill Tower, and the road west to the Guild Hall, where the work history is kept.',
-      'And right by the gate stands the Exit Portal. That\'s the way to get in touch, or to pick up the résumé.',
+      'The old cellar at the top of the north path leads down to the Dungeon, where the projects are kept. It\'s locked for now, while the keeper catalogues them.',
+      'The roads lead west to the Guild Hall, where the work history is kept, and east to the Skill Tower. Both are closed for now.',
+      'And right by the gate stands the Exit Portal. That\'s the way to get in touch.',
     ],
   },
   'village-board': { speaker: 'Notice board', lines: [`${ABOUT.name} · ${ABOUT.tagline}`, ...ABOUT.bio] },
   'village-workshop': { speaker: 'Workshop', lines: ABOUT.workshop },
-  'village-sign-west': { speaker: 'Signpost', lines: ['← GUILD HALL — Experience'] },
-  'village-sign-east': { speaker: 'Signpost', lines: ['SKILL TOWER — Skills →'] },
+  'village-sign-west': { speaker: 'Signpost', lines: ['← GUILD HALL — Experience', 'A board is nailed across it: "Closed for now. Opening soon!"'] },
+  'village-sign-east': { speaker: 'Signpost', lines: ['SKILL TOWER — Skills →', 'A board is nailed across it: "Closed for now. Opening soon!"'] },
+  'locked-dungeon': {
+    speaker: 'Cellar door',
+    lines: ['The cellar door is locked.', 'A note is pinned to it: "Projects are being catalogued. Back soon!"'],
+  },
+  'locked-guildhall': {
+    speaker: 'Road',
+    lines: ['A barrier blocks the road to the Guild Hall.', '"Closed for now: the guild records are still being written up. Opening soon!"'],
+  },
+  'locked-tower': {
+    speaker: 'Road',
+    lines: ['A barrier blocks the road to the Skill Tower.', '"Closed for now: the skills are still being written down. Opening soon!"'],
+  },
   'portal-courier': {
     speaker: 'Courier',
     lines: [
       'Need to send word? I carry every letter that goes through the portal.',
-      'Step up to it and press E: there\'s the email address, the links, and the résumé to take with you.',
+      'Step up to it and press E: there\'s the email address and the links.',
     ],
   },
   'tower-sage': {

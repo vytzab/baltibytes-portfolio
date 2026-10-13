@@ -15,6 +15,7 @@ import { asset, createTilemap } from './assets/loader.ts';
 import { animationKey } from './assets/manifest.ts';
 import { Character, type Facing } from './character.ts';
 import type { Interactable } from './interaction.ts';
+import { LOCKED } from '../content/site.ts';
 
 export interface Portal {
   name: string;
@@ -95,6 +96,13 @@ export function buildWorld(scene: Phaser.Scene, mapId: string, options: { reduce
       const w = obj.width ?? 0;
       const h = obj.height ?? 0;
       if (!to || !arrive) continue;
+      // A closed place (content/site.ts): its entrance is a wall you can knock on.
+      const locked = LOCKED[to];
+      if (locked) {
+        addSolid(x, y, w, h);
+        interactables.push({ x: x + w / 2, y: y + h, height: h, dialogueId: locked });
+        continue;
+      }
       const zone = scene.add.zone(x + w / 2, y + h / 2, w, h);
       scene.physics.add.existing(zone, true);
       portals.push({ name: obj.name ?? '', to, arrive, zone });

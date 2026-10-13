@@ -20,5 +20,8 @@ export const ABOUT: About = {
     'TODO: What you like to build, and how you like to work.',
     'TODO: Something human: where you are, what you do away from the keyboard.',
   ],
-  workshop: ['The workshop is locked. Through the window: a desk, two monitors and a half-built keyboard.', 'TODO: what you are working on right now.'],
+  workshop: [
+    'The workshop is locked. Through the window: a desk, two monitors and a half-built keyboard.',
+    'A sign hangs on the door: "Work in progress! This website is being built right now, so new places open soon. Thanks for visiting!"',
+  ],
 };

@@ -1,8 +1,7 @@
 // Contact details for the Exit Portal and the résumé page.
 //
-// DRAFT (2026-10-13): the owner confirms each line. The email address only works once it exists
-// in the domain's email forwarding (Namecheap forwarding is set up in DNS; the alias is not
-// confirmed). Empty URLs are left out of the game and the résumé.
+// DRAFT (2026-10-13): the owner confirms each line. Empty URLs are left out of the game and the
+// résumé.
 
 export interface ContactLink {
   label: string;
@@ -12,7 +11,7 @@ export interface ContactLink {
 }
 
 export const CONTACT = {
-  email: 'hello@baltibytes.com', // TODO: confirm this address forwards to you
+  email: 'baltibytes@gmail.com',
   /** One line on what you're open to. */
   availability: 'TODO: e.g. "Open to software engineering roles, in Vilnius or remote."',
   location: 'TODO: e.g. Vilnius, Lithuania',
