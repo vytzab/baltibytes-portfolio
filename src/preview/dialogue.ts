@@ -26,13 +26,20 @@ export const PREVIEW_DIALOGUE: Record<string, Dialogue> = {
       'The notice board on the square says who they are. The workshop by the path is where they tinker.',
       'The old cellar at the top of the north path leads down to the Dungeon. Every project is kept there in a chest of its own; the keeper will show you around.',
       'The road east leads to the Skill Tower, and the road west to the Guild Hall, where the work history is kept.',
-      'The way to get in touch isn\'t built yet.',
+      'And right by the gate stands the Exit Portal. That\'s the way to get in touch, or to pick up the résumé.',
     ],
   },
   'village-board': { speaker: 'Notice board', lines: [`${ABOUT.name} · ${ABOUT.tagline}`, ...ABOUT.bio] },
   'village-workshop': { speaker: 'Workshop', lines: ABOUT.workshop },
   'village-sign-west': { speaker: 'Signpost', lines: ['← GUILD HALL — Experience'] },
   'village-sign-east': { speaker: 'Signpost', lines: ['SKILL TOWER — Skills →'] },
+  'portal-courier': {
+    speaker: 'Courier',
+    lines: [
+      'Need to send word? I carry every letter that goes through the portal.',
+      'Step up to it and press E: there\'s the email address, the links, and the résumé to take with you.',
+    ],
+  },
   'tower-sage': {
     speaker: 'Sage',
     lines: [

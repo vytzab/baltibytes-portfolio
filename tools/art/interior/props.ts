@@ -157,3 +157,48 @@ export function plaque(c: C): PixelCanvas {
   outline(t, c('ink'));
   return t;
 }
+
+/**
+ * 48 × 56 Exit Portal, 4 frames: a ring of stones with gold runes on a stepped dais, a swirl of
+ * heather and sea light turning inside (frame 0 is also the still frame). The art bible's one
+ * place for a glow, done with hard pixels so it still reads as pixel art.
+ */
+export function portal(c: C): PixelCanvas {
+  const sheet = new PixelCanvas(192, 56);
+  const cx = 23.5;
+  const cy = 24.5;
+  for (let f = 0; f < 4; f++) {
+    const t = new PixelCanvas(48, 56);
+    // Dais: two steps.
+    t.rect(4, 46, 40, 6, c('stone'));
+    t.rect(4, 46, 40, 1, c('stone-light'));
+    t.rect(8, 51, 32, 4, c('stone-dark'));
+    t.rect(8, 51, 32, 1, c('stone'));
+    for (let y = 0; y < 47; y++) {
+      for (let x = 0; x < 48; x++) {
+        const dx = x - cx;
+        const dy = y - cy;
+        const r = Math.hypot(dx, dy);
+        if (r <= 15) {
+          // The swirl: bands that turn with the angle and drift a quarter turn per frame.
+          const a = Math.atan2(dy, dx);
+          const band = Math.floor(((a + r * 0.32 + (f * Math.PI) / 2) / (Math.PI / 3)) % 3 + 3) % 3;
+          const hex = r < 3 ? 'paper' : r < 6 ? (band === 0 ? 'foam' : 'sea-light') : band === 0 ? 'heather' : band === 1 ? 'sea-light' : 'plum';
+          t.set(x, y, c(hex));
+        } else if (r <= 20) {
+          // Ring stones: lit towards the top-left, a joint every 30°.
+          const a = Math.atan2(dy, dx);
+          const joint = Math.abs(((a / (Math.PI / 6)) % 1) - 0.5) > 0.44;
+          const lit = dx + dy < -6;
+          t.set(x, y, joint ? c('stone-dark') : lit ? c('stone-light') : dx + dy > 8 ? c('stone-dark') : c('stone'));
+        }
+      }
+    }
+    // Runes on the ring glow in turn.
+    const runes: Array<[number, number]> = [[23, 6], [41, 24], [23, 43], [6, 24], [11, 11], [36, 11]];
+    runes.forEach(([x, y], i) => t.set(x, y, c(i % 4 === f ? 'paper' : 'gold-light')));
+    outline(t, c('ink'));
+    sheet.blit(t, f * 48, 0);
+  }
+  return sheet;
+}

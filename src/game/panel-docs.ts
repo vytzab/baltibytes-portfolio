@@ -1,16 +1,17 @@
 // Turns content (projects, skills, experience) into documents for the info panel, by key:
-// "project:<id>", "skills:<id>", "role:<id>" or "experience". Links between documents are keys
+// "project:<id>", "skills:<id>", "role:<id>", "experience" or "contact". Links between documents are keys
 // too, so a skill can point at the projects that used it and the records board at each role.
 import type { Accent } from '../content/projects.ts';
 import { PROJECTS, projectById } from '../content/projects.ts';
 import { skillCategoryById } from '../content/skills.ts';
 import { EXPERIENCE_OVERVIEW, ROLES, roleById } from '../content/experience.ts';
+import { CONTACT, contactLinks } from '../content/contact.ts';
 
 export interface PanelItem {
   label: string;
   note?: string;
-  /** Other documents this item leads to (shown as buttons). */
-  links?: Array<{ label: string; key: string }>;
+  /** Buttons: another document (key), a web or mail link (url), or text to copy (copy). */
+  links?: Array<{ label: string; key?: string; url?: string; copy?: string; newTab?: boolean }>;
 }
 
 export interface PanelSection {
@@ -94,6 +95,28 @@ export function docFor(key: string): PanelDoc | undefined {
       sections: [{ title: 'Highlights', bullets: r.highlights }],
       chips: r.stack,
       chipsLabel: 'Stack',
+    };
+  }
+
+  if (kind === 'contact') {
+    const resume: PanelItem['links'] = [{ label: 'Open the résumé', url: CONTACT.resume.page, newTab: true }];
+    if (CONTACT.resume.pdf) resume.push({ label: 'Download PDF', url: CONTACT.resume.pdf, newTab: true });
+    return {
+      key,
+      accent: 'heather',
+      kicker: 'Exit Portal',
+      title: 'Get in touch',
+      tagline: CONTACT.availability,
+      sections: [
+        {
+          title: 'Contact',
+          items: [
+            { label: 'Email', note: CONTACT.email, links: [{ label: 'Write an email', url: `mailto:${CONTACT.email}` }, { label: 'Copy address', copy: CONTACT.email }] },
+            ...contactLinks().map((l) => ({ label: l.label, note: l.text, links: [{ label: `Open ${l.label}`, url: l.url, newTab: true }] })),
+            { label: 'Résumé', note: 'One page: experience, projects, skills. Printable.', links: resume },
+          ],
+        },
+      ],
     };
   }
 

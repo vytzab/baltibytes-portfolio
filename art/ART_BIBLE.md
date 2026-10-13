@@ -21,7 +21,7 @@ The five locations share one palette and style; each has its own accent:
 | Dungeon | Projects (quests) | Cool stone (stone ramp) lit by warm torches (gold ramp). Adventurous, not scary. |
 | Skill Tower | Technical skills | Stone and heather (purple) accents, books, small floating glints. |
 | Guild Hall | Experience | Brick, dark wood, banners, a noticeboard. |
-| Exit Portal | Contact | A stone ring with a heather and sea-light glow; the one place a soft glow is allowed (§6). |
+| Exit Portal | Contact | A stone ring with a heather and sea-light swirl, in the glade by the village gate; the one place a soft glow is allowed (§6). The current portal uses hard pixels only. |
 
 ## 2. Perspective and camera
 
@@ -90,7 +90,7 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 - **3–4 colours per material** is plenty for a 16 px object.
 - **No pure black or white.** `ink` (deep plum) is the darkest colour, `paper` the lightest.
 - **Reserved meanings:** `brick` marks what wants attention (the "!" prompt, a speaker's name), so keep big brick areas rare (small accents like headphone cups or a book cover are fine). `heather` is for magic, skills and guides (Skill Tower, portal, the guide's coat).
-- **Character colour plans:** give each character one dominant garment hue no other character uses, plus one warm accent. Player: denim blue with a mustard backpack. Guide: heather coat with a gold scarf. Keeper (Dungeon): moss-green hooded cloak with a brick tunic and a gold lantern. Sage (Skill Tower): heather hat, teal robe, gold trim. Guildmaster (Guild Hall): cream shirt, leather apron, grey moustache. Each also has a silhouette of their own (cowlick, bun, hood point, hat brim, bald and broad). Avoid large green or sand garments, which vanish against grass and paths.
+- **Character colour plans:** give each character one dominant garment hue no other character uses, plus one warm accent. Player: denim blue with a mustard backpack. Guide: heather coat with a gold scarf. Keeper (Dungeon): moss-green hooded cloak with a brick tunic and a gold lantern. Sage (Skill Tower): heather hat, teal robe, gold trim. Guildmaster (Guild Hall): cream shirt, leather apron, grey moustache. Courier (Exit Portal): flat cap, brick-red jacket, satchel. Each also has a silhouette of their own (cowlick, bun, hood point, hat brim, bald and broad). Avoid large green or sand garments, which vanish against grass and paths.
 - **Changing the palette:** propose it, update the JSON, rerun `npm run art:generate` (for the .gpl/.png), bump the id when it's a breaking change (`baltibytes-v1`) and update assets' `palette` fields.
 
 ## 6. Outlines, light, shadow and contrast

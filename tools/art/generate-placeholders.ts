@@ -13,8 +13,9 @@ import { PLAYER } from './characters/player.ts';
 import { KEEPER } from './characters/keeper.ts';
 import { SAGE } from './characters/sage.ts';
 import { GUILDMASTER } from './characters/guildmaster.ts';
+import { COURIER } from './characters/courier.ts';
 import { INTERIOR_TILES, COLUMNS as INTERIOR_COLUMNS, interiorTileset } from './interior/tiles.ts';
-import { bookshelf, hearth, lectern, plaque, table } from './interior/props.ts';
+import { bookshelf, hearth, lectern, plaque, portal, table } from './interior/props.ts';
 import { guildMap, towerMap } from './interior/maps.ts';
 import { DUNGEON_TILES, COLUMNS as DUNGEON_COLUMNS } from './dungeon/tiles.ts';
 import { terrainTileset } from './placeholders/terrain.ts';
@@ -63,6 +64,7 @@ out('characters/npc-guide.png', characterSheet(GUIDE, c));
 out('characters/npc-keeper.png', characterSheet(KEEPER, c));
 out('characters/npc-sage.png', characterSheet(SAGE, c));
 out('characters/npc-guildmaster.png', characterSheet(GUILDMASTER, c));
+out('characters/npc-courier.png', characterSheet(COURIER, c));
 out('tiles/terrain.png', terrainTileset(c));
 out('objects/sign.png', sign(c));
 out('ui/dialogue-box.png', dialogueBox(c));
@@ -93,6 +95,9 @@ out('objects/lectern.png', lectern(c));
 out('objects/hearth.png', hearth(c));
 out('objects/table.png', table(c));
 out('objects/plaque.png', plaque(c));
+
+// Exit Portal
+out('objects/portal.png', portal(c));
 
 function writeMap(path: string, map: object): void {
   const full = join(ASSETS, path);

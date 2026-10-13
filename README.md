@@ -22,6 +22,10 @@ npm run build      # production build into dist/
 npm run preview    # serve the build at http://localhost:4173
 ```
 
+## Résumé
+
+A plain page at `/resume.html`, built from the same content as the game (`src/content`); it works without JavaScript and prints to PDF from the browser.
+
 ## Art
 
 All artwork is original. How it's made, checked and added: [art/README.md](art/README.md). The visual rules: [art/ART_BIBLE.md](art/ART_BIBLE.md). Every asset file is listed with its source and licence in [`src/assets/manifest.json`](src/assets/manifest.json).

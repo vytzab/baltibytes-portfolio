@@ -33,6 +33,8 @@ export class InfoPanel {
       if (target.closest('[data-back]')) return this.back();
       const link = target.closest<HTMLElement>('[data-open]');
       if (link?.dataset.open) return this.navigate(link.dataset.open);
+      const copy = target.closest<HTMLElement>('[data-copy]');
+      if (copy?.dataset.copy) return void this.copy(copy.dataset.copy);
       const tab = target.closest<HTMLElement>('[data-tab]');
       if (tab) this.select(Number(tab.dataset.tab), true);
     });
@@ -65,6 +67,28 @@ export class InfoPanel {
     const done = this.onClose;
     this.onClose = null;
     done?.();
+  }
+
+  /** Copies text and says so (also to screen readers, through the status line). */
+  private async copy(text: string): Promise<void> {
+    let ok = false;
+    try {
+      await navigator.clipboard.writeText(text);
+      ok = true;
+    } catch {
+      // No clipboard permission (or an old browser): fall back to a selected text field.
+      const field = document.createElement('textarea');
+      field.value = text;
+      field.setAttribute('readonly', '');
+      field.style.position = 'fixed';
+      field.style.opacity = '0';
+      this.root.append(field);
+      field.select();
+      ok = document.execCommand('copy');
+      field.remove();
+    }
+    const status = this.root.querySelector('.info-panel__status');
+    if (status) status.textContent = ok ? `Copied ${text}` : `Couldn't copy; the address is ${text}`;
   }
 
   private navigate(key: string): void {
@@ -144,7 +168,17 @@ export class InfoPanel {
       ? `<ul class="info-panel__items">${section.items
           .map(
             (it) => `<li><span class="info-panel__item-label">${escapeHtml(it.label)}</span>${it.note ? ` <span class="info-panel__item-note">${escapeHtml(it.note)}</span>` : ''}${
-              it.links?.length ? `<span class="info-panel__item-links">${it.links.map((l) => `<button type="button" data-open="${escapeHtml(l.key)}">${escapeHtml(l.label)}</button>`).join('')}</span>` : ''
+              it.links?.length
+                ? `<span class="info-panel__item-links">${it.links
+                    .map((l) =>
+                      l.url
+                        ? `<a href="${escapeHtml(l.url)}"${l.newTab ? ' target="_blank" rel="noopener"' : ''}>${escapeHtml(l.label)}</a>`
+                        : l.copy
+                          ? `<button type="button" data-copy="${escapeHtml(l.copy)}">${escapeHtml(l.label)}</button>`
+                          : `<button type="button" data-open="${escapeHtml(l.key ?? '')}">${escapeHtml(l.label)}</button>`,
+                    )
+                    .join('')}</span>`
+                : ''
             }</li>`,
           )
           .join('')}</ul>`
@@ -172,6 +206,7 @@ export class InfoPanel {
           ${paragraphs}${bullets}${items}
         </section>
         ${footer}
+        <p class="info-panel__status" role="status"></p>
         <p class="info-panel__hint" aria-hidden="true">${d.sections.length > 1 ? '← → sections · ' : ''}Esc close</p>
       </div>`;
   }

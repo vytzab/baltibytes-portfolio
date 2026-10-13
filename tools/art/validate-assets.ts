@@ -408,6 +408,7 @@ const PANEL_TARGETS = new Set([
   ...SKILL_CATEGORIES.map((c) => `skills:${c.id}`),
   ...ROLES.map((r) => `role:${r.id}`),
   'experience',
+  'contact',
 ]);
 
 /** What other maps need to know about a map: where you can arrive, and where its portals lead. */
@@ -564,7 +565,7 @@ function checkPlacementAndReach(
       if (obj.type !== 'spawn' && !sprite) err(`${label}: needs a "sprite" property`);
       const panel = propValue(obj, 'panel');
       if (panel !== undefined && !PANEL_TARGETS.has(panel)) {
-        err(`${label}: panel "${panel}" is not something in src/content (use project:<id>, skills:<id>, role:<id> or experience)`);
+        err(`${label}: panel "${panel}" is not something in src/content (use project:<id>, skills:<id>, role:<id>, experience or contact)`);
       }
       if (panel) talkTo.push({ name: obj.name ?? '?', x, y });
       if (obj.type === 'spawn') {

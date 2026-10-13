@@ -422,6 +422,90 @@
       "notes": "Bald, grey moustache and brows, rolled sleeves, leather apron, a ledger. Shortest and widest of the cast (~25 px). Origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
     },
     {
+      "id": "char.npc-courier",
+      "path": "characters/npc-courier.png",
+      "category": "character",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "The courier at the Exit Portal (Contact): idle and walk in four directions; turns to face the player when spoken to.",
+      "width": 96,
+      "height": 256,
+      "grid": {
+        "width": 24,
+        "height": 32
+      },
+      "animations": [
+        {
+          "name": "idle-down",
+          "row": 0,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-left",
+          "row": 1,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-right",
+          "row": 2,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-up",
+          "row": 3,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "walk-down",
+          "row": 4,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-left",
+          "row": 5,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-right",
+          "row": 6,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-up",
+          "row": 7,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/characters/compose.ts",
+        "source": "tools/art/characters/courier.ts",
+        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
+      },
+      "notes": "Flat cap, blond hair, brick-red jacket with gold buttons, satchel with a letter. Player proportions (~26 px). Origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
+    },
+    {
       "id": "tiles.terrain",
       "path": "tiles/terrain.png",
       "category": "tileset",
@@ -1164,6 +1248,48 @@
         "source": "tools/art/interior/props.ts"
       },
       "notes": "Hangs on a wall face; not solid."
+    },
+    {
+      "id": "obj.portal",
+      "path": "objects/portal.png",
+      "category": "object",
+      "type": "spritesheet",
+      "status": "draft",
+      "usage": "The Exit Portal (Contact) in the village glade: a stone ring with a turning heather and sea-light swirl. Interacting opens the contact panel (email, links, r\u00e9sum\u00e9).",
+      "width": 192,
+      "height": 56,
+      "grid": {
+        "width": 48,
+        "height": 56
+      },
+      "animations": [
+        {
+          "name": "swirl",
+          "row": 0,
+          "frames": 4,
+          "fps": 6,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "solid": [
+        {
+          "x": 4,
+          "y": 44,
+          "width": 40,
+          "height": 12
+        }
+      ],
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/interior/props.ts"
+      },
+      "notes": "Hard pixels only (no soft alpha), though the art bible allows a glow here. Frame 0 when motion is reduced."
     },
     {
       "id": "ui.dialogue-box",

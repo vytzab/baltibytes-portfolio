@@ -30,8 +30,8 @@ const GROUND: Grid = [
   '.,..........==============',
   '........,...==============',
   '..;.........==........,...',
-  '............==............',
-  '.....,......==...;........',
+  '......========............',
+  '.....,========...;........',
   '............==............',
 ];
 
@@ -54,9 +54,9 @@ const DECOR: Grid = [
   '.................|tdtd|...',
   '..B....g...*..p..FF..FF...',
   '.......m..................',
-  '....*.....................',
-  '..R....S...........R......',
-  '..........*...*...m.......',
+  '..........................',
+  '...................R......',
+  '..............*...m.......',
   '...g..............g.......',
   '..........................',
 ];
@@ -81,6 +81,7 @@ interface Placed {
   sprite: string;
   dialogue?: string;
   facing?: string;
+  panel?: string;
 }
 
 const ENTITIES: Placed[] = [
@@ -88,6 +89,9 @@ const ENTITIES: Placed[] = [
   { name: 'guide', type: 'npc', x: px(15) + 8, y: px(12), sprite: 'char.npc-guide', dialogue: 'village-guide' },
   { name: 'welcome-sign', type: 'sign', x: px(10) + 8, y: px(20) + 4, sprite: 'obj.sign', dialogue: 'village-sign' },
   { name: 'welcome-arch', type: 'prop', x: px(13), y: px(18), sprite: 'obj.arch' },
+  // The Exit Portal (Contact), in the glade by the gate, with its courier.
+  { name: 'exit-portal', type: 'prop', x: px(4), y: px(19), sprite: 'obj.portal', panel: 'contact' },
+  { name: 'courier', type: 'npc', x: px(7), y: px(17) + 10, sprite: 'char.npc-courier', dialogue: 'portal-courier' },
   // The cellar at the top of the north path leads down to the Dungeon (Projects).
   { name: 'cellar', type: 'prop', x: px(14), y: px(3) + 8, sprite: 'obj.cellar' },
   { name: 'from-dungeon', type: 'arrive', x: px(14), y: px(5), sprite: '', facing: 'down' },
@@ -210,7 +214,7 @@ export function villageMap(tilesets: { terrain: { id: string; image: string }; v
     height: 0,
     rotation: 0,
     visible: true,
-    properties: props({ sprite: e.sprite || undefined, dialogue: e.dialogue, facing: e.facing }),
+    properties: props({ sprite: e.sprite || undefined, dialogue: e.dialogue, facing: e.facing, panel: e.panel }),
   }));
   // The roads leave the map through the gaps in the forest edge.
   entities.push(

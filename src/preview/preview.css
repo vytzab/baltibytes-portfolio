@@ -211,6 +211,8 @@ html, body {
 .info-panel__item-label { font-weight: 600; }
 .info-panel__item-note { color: var(--bark); font-size: 14px; }
 .info-panel__item-links { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.info-panel__status { min-height: 1.2em; margin: 4px 0 0; font-size: 14px; color: var(--accent); }
+.info-panel__item-links a { display: inline-flex; align-items: center; font-size: 13px; min-height: 28px; padding: 2px 8px; border: 1px solid var(--accent); border-radius: 3px; background: var(--paper); text-decoration: none; }
 .info-panel__item-links button {
   font: 13px system-ui, sans-serif; color: var(--accent); background: var(--paper); border: 1px solid var(--accent); border-radius: 3px;
   padding: 2px 8px; min-height: 28px; cursor: pointer;
