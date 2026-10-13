@@ -2,7 +2,7 @@
 
 The software engineering portfolio behind [baltibytes.com](https://baltibytes.com), being built as a small, cozy, top-down pixel-art RPG: walk between five places (a village, a dungeon, a skill tower, a guild hall and a portal) and talk to the people there to learn about my work.
 
-**Status:** early development. The art pipeline and a test scene with placeholder art exist; the world itself doesn't yet.
+**Status:** live at baltibytes.com and growing. The village, the Dungeon (projects), the Skill Tower, the Guild Hall and the Exit Portal (contact) are in; art and text are drafts.
 
 ## Stack
 
@@ -16,7 +16,7 @@ Needs Node 22.18 or newer.
 
 ```bash
 npm install
-npm run dev        # http://localhost:5173 (art test scene: /art-preview.html)
+npm run dev        # http://localhost:5173 (the game; dev-only art tools at /art-preview.html)
 npm run check      # type-check, asset validation, tests
 npm run build      # production build into dist/
 npm run preview    # serve the build at http://localhost:4173

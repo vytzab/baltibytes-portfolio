@@ -1,10 +1,10 @@
-// Text for the art preview's NPC and sign, keyed by the `dialogue` property of map objects.
-import { ABOUT } from '../content/about.ts';
-import { PROJECTS } from '../content/projects.ts';
+// What the NPCs and signs say, keyed by the `dialogue` property of map objects.
+import { ABOUT } from './about.ts';
+import { PROJECTS } from './projects.ts';
 import { openedCaseStudies } from '../game/progress.ts';
 import type { Dialogue } from '../game/dialogue-box.ts';
 
-export const PREVIEW_DIALOGUE: Record<string, Dialogue> = {
+export const DIALOGUE: Record<string, Dialogue> = {
   'preview-guide': {
     speaker: 'Guide',
     lines: [
@@ -73,6 +73,6 @@ function dungeonKeeper(): Dialogue {
 /** Text for a dialogue id, or undefined if there is none. */
 export function dialogueFor(id: string): Dialogue | undefined {
   if (id === 'dungeon-keeper') return dungeonKeeper();
-  return PREVIEW_DIALOGUE[id];
+  return DIALOGUE[id];
 }
 

@@ -20,9 +20,9 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
+        // The site: the game, and the résumé. The art preview (art-preview.html) is a development
+        // tool: `npm run dev` serves it, but it is not part of the build or the deployed site.
         main: resolve(import.meta.dirname, 'index.html'),
-        // The art preview ships with every build so branch previews on Cloudflare show it too.
-        artPreview: resolve(import.meta.dirname, 'art-preview.html'),
         resume: resolve(import.meta.dirname, 'resume.html'),
       },
     },
