@@ -223,7 +223,8 @@ export function villageMap(tilesets: { terrain: { id: string; image: string }; v
   );
   // Walking into the cellar's dark doorway takes you down to the Dungeon.
   entities.push({
-    id: nextId++, name: 'to-dungeon', type: 'portal', point: false, x: px(14) - 9, y: 40, width: 18, height: 8, rotation: 0, visible: true,
+    // On the threshold (level with the arch's base): a locked door stops you in front of the arch, not inside it.
+    id: nextId++, name: 'to-dungeon', type: 'portal', point: false, x: px(14) - 9, y: 46, width: 18, height: 10, rotation: 0, visible: true,
     properties: props({ to: 'map.dungeon', arrive: 'from-village' }),
   });
   const collision = COLLISION.map((r) => ({ id: nextId++, name: r.name, type: 'solid', x: r.x, y: r.y, width: r.width, height: r.height, rotation: 0, visible: true }));

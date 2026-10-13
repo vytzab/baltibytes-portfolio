@@ -6,6 +6,7 @@ import { PROJECTS, projectById } from '../content/projects.ts';
 import { skillCategoryById } from '../content/skills.ts';
 import { EXPERIENCE_OVERVIEW, ROLES, roleById } from '../content/experience.ts';
 import { CONTACT, contactLinks } from '../content/contact.ts';
+import { SHOW_RESUME } from '../content/site.ts';
 
 export interface PanelItem {
   label: string;
@@ -106,14 +107,15 @@ export function docFor(key: string): PanelDoc | undefined {
       accent: 'heather',
       kicker: 'Exit Portal',
       title: 'Get in touch',
-      tagline: CONTACT.availability,
+      // Placeholder lines never show on the live site.
+      tagline: CONTACT.availability.startsWith('TODO') ? undefined : CONTACT.availability,
       sections: [
         {
           title: 'Contact',
           items: [
             { label: 'Email', note: CONTACT.email, links: [{ label: 'Write an email', url: `mailto:${CONTACT.email}` }, { label: 'Copy address', copy: CONTACT.email }] },
             ...contactLinks().map((l) => ({ label: l.label, note: l.text, links: [{ label: `Open ${l.label}`, url: l.url, newTab: true }] })),
-            { label: 'Résumé', note: 'One page: experience, projects, skills. Printable.', links: resume },
+            ...(SHOW_RESUME ? [{ label: 'Résumé', note: 'One page: experience, projects, skills. Printable.', links: resume }] : []),
           ],
         },
       ],

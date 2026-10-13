@@ -308,6 +308,19 @@ test('a portal and its arrival are fine', () => withFixture((fx) => {
   assert.deepEqual(fx.run(), []);
 }));
 
+test('a locked portal is a wall you can still reach and knock on', () => withFixture((fx) => {
+  const map = mapWithPortal();
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
+  writeFileSync(join(fx.assets, 'manifest.json'), JSON.stringify(fx.manifest));
+  const locked = { 'map.test': 'closed' };
+  assert.deepEqual(validateAssets({ assetRoot: fx.assets, paletteDir: fx.palettes, locked }).issues, []);
+  // Solid: an arrival standing inside it is blocked.
+  map.layers[1]!.objects!.push({ name: 'stuck', type: 'arrive', point: true, x: 85, y: 16 });
+  writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
+  const issues = validateAssets({ assetRoot: fx.assets, paletteDir: fx.palettes, locked }).issues;
+  expectError(issues, 'map.test', /arrival "stuck" at 85,16 is blocked by object "door" in layer "entities" \(locked\)/);
+}));
+
 test('portal to a map that does not exist', () => withFixture((fx) => {
   writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(mapWithPortal({ properties: [{ name: 'to', value: 'map.nowhere' }, { name: 'arrive', value: 'back' }] })));
   expectError(fx.run(), 'map.test', /leads to "map\.nowhere", which is not a map in the manifest/);

@@ -19,6 +19,7 @@ import { FEET, INTERACT_RANGE } from '../../src/game/rules.ts';
 import { PROJECTS } from '../../src/content/projects.ts';
 import { SKILL_CATEGORIES } from '../../src/content/skills.ts';
 import { ROLES } from '../../src/content/experience.ts';
+import { LOCKED } from '../../src/content/site.ts';
 import { readPng, rgbToHex, type RgbaImage } from './png.ts';
 import { PALETTE_DIR, loadPalette } from './palette.ts';
 
@@ -35,6 +36,8 @@ export interface ValidateOptions {
   paletteDir?: string;
   /** Treat anything not yet production (placeholder or draft) as an error: a release gate. */
   noPlaceholders?: boolean;
+  /** Closed places (map id → dialogue id); defaults to src/content/site.ts. */
+  locked?: Record<string, string>;
 }
 
 export interface ValidateResult {
@@ -216,7 +219,7 @@ export function validateAssets(options: ValidateOptions): ValidateResult {
   for (const entry of entries) {
     if (entry?.type !== 'tilemap' || !isText(entry.path) || !listedFiles.has(entry.path)) continue;
     const file = join(assetRoot, entry.path);
-    if (existsSync(file)) maps.set(entry.id, checkTilemap(entry, file, byId, (msg) => error(entry.id ?? entry.path, msg)));
+    if (existsSync(file)) maps.set(entry.id, checkTilemap(entry, file, byId, (msg) => error(entry.id ?? entry.path, msg), options.locked ?? LOCKED));
   }
   for (const [mapId, info] of maps) {
     for (const portal of info.portals) {
@@ -417,7 +420,7 @@ interface MapInfo {
   portals: Array<{ label: string; to: string; arrive: string }>;
 }
 
-function checkTilemap(entry: AssetEntry, file: string, byId: Map<string, AssetEntry>, err: (m: string) => void): MapInfo {
+function checkTilemap(entry: AssetEntry, file: string, byId: Map<string, AssetEntry>, err: (m: string) => void, locked: Record<string, string>): MapInfo {
   const info: MapInfo = { arrivals: new Set(), portals: [] };
   let map: {
     orientation?: string;
@@ -483,7 +486,7 @@ function checkTilemap(entry: AssetEntry, file: string, byId: Map<string, AssetEn
       }
     }
   }
-  checkPlacementAndReach(map, byId, err, info);
+  checkPlacementAndReach(map, byId, err, info, locked);
   return info;
 }
 
@@ -506,6 +509,7 @@ function checkPlacementAndReach(
   byId: Map<string, AssetEntry>,
   err: (m: string) => void,
   info: MapInfo,
+  locked: Record<string, string>,
 ): void {
   const tw = map.tilewidth ?? 0;
   const th = map.tileheight ?? 0;
@@ -550,7 +554,12 @@ function checkPlacementAndReach(
         else if (x + obj.width! > W || y + obj.height! > H) err(`${label}: rectangle sticks out of the ${W}×${H} map`);
         if (!to || !arrive) err(`${label}: a portal needs "to" (a map id) and "arrive" (an arrive object in that map)`);
         else info.portals.push({ label, to, arrive });
-        portals.push({ x, y, width: obj.width ?? 0, height: obj.height ?? 0, what: obj.name ?? '?' });
+        const rect = { x, y, width: obj.width ?? 0, height: obj.height ?? 0, what: obj.name ?? '?' };
+        // A portal to a closed place is a wall with a message, as in the game (world.ts).
+        if (to && locked[to]) {
+          solids.push({ ...rect, what: `${label} (locked)` });
+          talkTo.push({ name: obj.name ?? '?', x: x + rect.width / 2, y: y + rect.height });
+        } else portals.push(rect);
         continue;
       }
       if (obj.type === 'arrive') {
