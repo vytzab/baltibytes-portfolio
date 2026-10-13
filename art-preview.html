@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- No favicon yet (docs/ARTWORK.md #8); this stops the browser requesting /favicon.ico. -->
+    <link rel="icon" href="data:," />
+    <meta name="robots" content="noindex" />
+    <title>Art preview · Baltibytes</title>
+  </head>
+  <body>
+    <header class="toolbar">
+      <h1>Art preview</h1>
+      <span class="badge" id="art-status"></span>
+      <span class="group" role="group" aria-label="Zoom">
+        <button id="zoom-out" type="button" aria-label="Zoom out">−</button>
+        <output id="zoom" aria-live="polite"></output>
+        <button id="zoom-in" type="button" aria-label="Zoom in">+</button>
+        <button id="zoom-fit" type="button">Fit</button>
+      </span>
+      <span class="muted" id="view"></span>
+      <label><input type="checkbox" id="toggle-grid" /> Grid (G)</label>
+      <label><input type="checkbox" id="toggle-collision" /> Collision (C)</label>
+      <button id="toggle-gallery" type="button" aria-expanded="false" aria-controls="gallery">Assets</button>
+    </header>
+    <main id="game" aria-label="Art preview scene: walk with WASD or the arrow keys, interact with E, Space or Enter"></main>
+    <section id="dialogue" class="dialogue"></section>
+    <aside id="gallery" hidden aria-label="Asset list"></aside>
+    <p class="help">WASD / arrows: walk · E / Space / Enter: talk · Esc: close · +/−/0: zoom</p>
+    <script type="module" src="/src/preview/main.ts"></script>
+  </body>
+</html>

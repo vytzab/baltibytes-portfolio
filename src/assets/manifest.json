@@ -1,0 +1,269 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "id": "char.player",
+      "path": "characters/player.png",
+      "category": "character",
+      "type": "spritesheet",
+      "status": "placeholder",
+      "usage": "Player character in every scene: idle and walk in four directions.",
+      "width": 64,
+      "height": 192,
+      "grid": {
+        "width": 16,
+        "height": 24
+      },
+      "animations": [
+        {
+          "name": "idle-down",
+          "row": 0,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-left",
+          "row": 1,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-right",
+          "row": 2,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-up",
+          "row": 3,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "walk-down",
+          "row": 4,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-left",
+          "row": 5,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-right",
+          "row": 6,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        },
+        {
+          "name": "walk-up",
+          "row": 7,
+          "frames": 4,
+          "fps": 8,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/placeholders/characters.ts"
+      },
+      "notes": "Origin bottom-centre (feet). Right-facing rows are mirrors of left in the placeholder; production art may differ."
+    },
+    {
+      "id": "char.npc-guide",
+      "path": "characters/npc-guide.png",
+      "category": "character",
+      "type": "spritesheet",
+      "status": "placeholder",
+      "usage": "Guide NPC in the art preview; turns to face the player when spoken to.",
+      "width": 64,
+      "height": 96,
+      "grid": {
+        "width": 16,
+        "height": 24
+      },
+      "animations": [
+        {
+          "name": "idle-down",
+          "row": 0,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-left",
+          "row": 1,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-right",
+          "row": 2,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        },
+        {
+          "name": "idle-up",
+          "row": 3,
+          "frames": 4,
+          "fps": 3,
+          "loop": true
+        }
+      ],
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/placeholders/characters.ts"
+      },
+      "notes": "Same body template as the player, recoloured."
+    },
+    {
+      "id": "tiles.terrain",
+      "path": "tiles/terrain.png",
+      "category": "tileset",
+      "type": "spritesheet",
+      "status": "placeholder",
+      "usage": "Overworld ground and decoration tiles: grass, grass-tufts, path, water, shore, bush, rock, fence, flowers, stump. Collision is a tile property in the map's tileset.",
+      "width": 80,
+      "height": 32,
+      "grid": {
+        "width": 16,
+        "height": 16
+      },
+      "transparency": "mixed",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/placeholders/terrain.ts"
+      },
+      "notes": "Tiles 0-4 are opaque ground; 5-9 are decoration on a transparent background. No autotile transitions yet."
+    },
+    {
+      "id": "map.art-preview",
+      "path": "maps/art-preview.json",
+      "category": "map",
+      "type": "tilemap",
+      "status": "placeholder",
+      "usage": "Small test area for the art preview page (art-preview.html).",
+      "grid": {
+        "width": 16,
+        "height": 16
+      },
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/placeholders/map.ts",
+        "notes": "Generated Tiled JSON; opens in Tiled. Real maps will be drawn in Tiled."
+      }
+    },
+    {
+      "id": "obj.sign",
+      "path": "objects/sign.png",
+      "category": "object",
+      "type": "image",
+      "status": "placeholder",
+      "usage": "Readable wooden sign; shows dialogue when the player interacts.",
+      "width": 16,
+      "height": 16,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/placeholders/props.ts"
+      }
+    },
+    {
+      "id": "ui.dialogue-box",
+      "path": "ui/dialogue-box.png",
+      "category": "ui",
+      "type": "image",
+      "status": "placeholder",
+      "usage": "Nine-slice frame (8 px corners) for the dialogue box and panels, used as a CSS border-image.",
+      "width": 24,
+      "height": 24,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/placeholders/props.ts"
+      }
+    },
+    {
+      "id": "ui.prompt",
+      "path": "ui/prompt.png",
+      "category": "ui",
+      "type": "image",
+      "status": "placeholder",
+      "usage": "Speech bubble with \"!\" above the nearest thing the player can interact with.",
+      "width": 9,
+      "height": 9,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/placeholders/props.ts"
+      }
+    },
+    {
+      "id": "fx.shadow",
+      "path": "effects/shadow.png",
+      "category": "effect",
+      "type": "image",
+      "status": "placeholder",
+      "usage": "Ground shadow under characters and objects; the game draws it at 25 % opacity.",
+      "width": 12,
+      "height": 5,
+      "transparency": "transparent",
+      "palette": "baltibytes-v0",
+      "provenance": {
+        "origin": "code-generated",
+        "author": "Claude (AI assistant) for Vytautas Z",
+        "created": "2026-10-13",
+        "license": "owner",
+        "tool": "tools/art/generate-placeholders.ts",
+        "source": "tools/art/placeholders/props.ts"
+      }
+    }
+  ]
+}

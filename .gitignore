@@ -147,3 +147,17 @@ vite.config.ts.timestamp-*
 
 # Turbo Repo
 .turbo
+
+# Cloudflare Wrangler local state
+.wrangler/
+
+# OS files
+.DS_Store
+
+# Local-only project docs (kept on the owner's machine, never published)
+CLAUDE.md
+CHANGELOG.md
+docs/
+
+# Raw art imports waiting for review (art/README.md)
+art/inbox/
