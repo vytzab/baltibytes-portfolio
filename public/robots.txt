@@ -1,0 +1,3 @@
+# The search and AI-crawler rules come from Cloudflare (managed robots.txt), which adds them
+# above this file. This file only points crawlers at the sitemap.
+Sitemap: https://baltibytes.com/sitemap.xml

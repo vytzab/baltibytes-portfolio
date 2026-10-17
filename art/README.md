@@ -28,8 +28,10 @@ How art gets into the game: where files live, how they're described, checked and
 | `tools/art/maps/` | `indoor.ts`: the shared builder for indoor maps (walls pick their own faces and rims; floors, decor, entities, portals) | Yes |
 | `tools/art/characters/` | The characters: `player.ts`, `guide.ts`, `keeper.ts`, `sage.ts` and `guildmaster.ts` hold every pixel as hand-drawn text grids (head, body, arm, legs per direction); `compose.ts` stacks them into 24 × 32 frames and sheets | Yes |
 | `src/game/` | Engine code that uses assets by id: loader, `world.ts` (builds a map: layers, collision, entities, props, depth sorting), characters, dialogue, interaction, scaling, `rules.ts` (feet box and interaction range, shared with the validator) | Yes |
-| `src/content/` | Text the game shows: `about.ts` (About me), `projects.ts` (case studies), `skills.ts` (Skill Tower), `experience.ts` (Guild Hall; placeholder roles), `contact.ts` (Exit Portal and résumé). All are drafts for the owner to check; the repo is public | Yes |
+| `tools/art/site-images.ts` | The fixed-URL images in `public/`: `og-image.png` (the link preview, 1200 × 630: a crop of the Starting Village rendered from its map and sprites at ×4) and the icons (`favicon.ico`, `favicon.png`, `apple-touch-icon.png`: the player's head and shoulders). Run by `npm run art:generate` after the game art; never edit the outputs by hand. They live outside `src/assets/`, so they have no manifest entries | Yes |
+| `src/content/` | Text the game shows: `about.ts` (About me), `projects.ts` (case studies), `skills.ts` (Skill Tower), `experience.ts` (Guild Hall and education), `contact.ts` (Exit Portal and résumé). The repo is public, so everything here is published | Yes |
 | `src/resume/` | The résumé page (`resume.html`), rendered from `src/content` at build time by `vite.config.ts`: no JavaScript needed, print styles included | Yes |
+| `src/portfolio/` | The plain version of the site (`portfolio.html`), rendered the same way, also used for `404.html`'s styles | Yes |
 | `src/main.ts` | The site's entry (`index.html`): starts the game in the Starting Village | Yes |
 | `src/preview/` | The art preview's toolbar and asset gallery (`art-preview.html`, dev only) | Yes |
 

@@ -27,6 +27,7 @@ import { villageMap } from './village/map.ts';
 import { dungeonTileset } from './dungeon/tiles.ts';
 import { cellar, chest, stairsUp, torch } from './dungeon/props.ts';
 import { dungeonMap } from './dungeon/map.ts';
+import { writeSiteImages } from './site-images.ts';
 
 const ASSETS = join(import.meta.dirname, '../../src/assets');
 const PALETTE_ID = 'baltibytes-v0';
@@ -118,4 +119,6 @@ writeMap('maps/village.json', villageMap({ terrain: { id: 'tiles.terrain', image
 writeGpl(palette);
 writeSwatch(palette);
 console.log(`  art/palettes/${PALETTE_ID}.gpl, ${PALETTE_ID}.png`);
+// Last, because it draws from the files written above.
+writeSiteImages(c('paper'));
 console.log('Done. Run `npm run art:validate` next.');
