@@ -31,6 +31,8 @@ export interface Project {
   accent: Accent;
   sections: CaseStudySection[];
   links: Array<{ label: string; url: string }>;
+  /** The source is public (and linked); otherwise case studies say it can be shown on request. */
+  publicSource?: boolean;
 }
 
 export const PROJECTS: Project[] = [
@@ -238,7 +240,11 @@ export const PROJECTS: Project[] = [
       },
     ],
     links: [{ label: 'Source on GitHub', url: 'https://github.com/vytzab/FIX' }],
+    publicSource: true,
   },
 ];
+
+/** Shown under a case study whose source isn't public (the game's panel and the plain page). */
+export const PRIVATE_SOURCE_NOTE = 'Source is private; happy to walk through it on request.';
 
 export const projectById = (id: string): Project | undefined => PROJECTS.find((p) => p.id === id);

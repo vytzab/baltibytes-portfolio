@@ -22,9 +22,12 @@ npm run build      # production build into dist/
 npm run preview    # serve the build at http://localhost:4173
 ```
 
-## Résumé
+## Plain version and résumé
 
-A plain page at `/resume.html`, built from the same content as the game (`src/content`); it works without JavaScript and prints to PDF from the browser. It can be switched off in `src/content/site.ts` (`SHOW_RESUME`).
+Everything in the game is also on one plain page at `/portfolio.html`: the same content (`src/content`), rendered at build time, readable with a screen reader or without JavaScript. The home page's skip link goes there.
+
+
+The résumé is a page at `/resume.html`, built from the same content as the game (`src/content`); it works without JavaScript and prints to PDF from the browser. It can be switched off in `src/content/site.ts` (`SHOW_RESUME`).
 
 ## Art
 

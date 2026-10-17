@@ -2,7 +2,7 @@
 // "project:<id>", "skills:<id>", "role:<id>", "experience" or "contact". Links between documents are keys
 // too, so a skill can point at the projects that used it and the records board at each role.
 import type { Accent } from '../content/projects.ts';
-import { PROJECTS, projectById } from '../content/projects.ts';
+import { PRIVATE_SOURCE_NOTE, PROJECTS, projectById } from '../content/projects.ts';
 import { skillCategoryById } from '../content/skills.ts';
 import { EXPERIENCE_OVERVIEW, ROLES, roleById } from '../content/experience.ts';
 import { CONTACT, contactLinks } from '../content/contact.ts';
@@ -58,7 +58,7 @@ export function docFor(key: string): PanelDoc | undefined {
       chips: p.stack,
       chipsLabel: 'Stack',
       links: p.links,
-      note: 'Source is private; happy to walk through it on request.',
+      note: p.publicSource ? undefined : PRIVATE_SOURCE_NOTE,
     };
   }
 
@@ -115,6 +115,7 @@ export function docFor(key: string): PanelDoc | undefined {
           items: [
             { label: 'Email', note: CONTACT.email, links: [{ label: 'Write an email', url: `mailto:${CONTACT.email}` }, { label: 'Copy address', copy: CONTACT.email }] },
             ...contactLinks().map((l) => ({ label: l.label, note: l.text, links: [{ label: `Open ${l.label}`, url: l.url, newTab: true }] })),
+            { label: 'Plain page', note: 'Everything in this village as one readable page.', links: [{ label: 'Open the plain page', url: '/portfolio.html', newTab: true }] },
             ...(SHOW_RESUME ? [{ label: 'Résumé', note: 'One page: experience, projects, skills. Printable.', links: resume }] : []),
           ],
         },

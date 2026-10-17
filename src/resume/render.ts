@@ -7,7 +7,7 @@ import { EDUCATION, ROLES } from '../content/experience.ts';
 import { PROJECTS } from '../content/projects.ts';
 import { SKILL_CATEGORIES } from '../content/skills.ts';
 
-const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+export const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
 
 /** True while any content still has placeholder text: the page then says it's a draft. */
 export function resumeIsDraft(): boolean {
