@@ -1,7 +1,6 @@
 // Contact details for the Exit Portal and the résumé page.
 //
-// DRAFT (2026-10-13): the owner confirms each line. Empty URLs are left out of the game and the
-// résumé.
+// Confirmed by Vytautas on 2026-10-17. Empty URLs are left out of the game and the résumé.
 
 export interface ContactLink {
   label: string;
@@ -13,11 +12,11 @@ export interface ContactLink {
 export const CONTACT = {
   email: 'baltibytes@gmail.com',
   /** One line on what you're open to. */
-  availability: 'TODO: e.g. "Open to software engineering roles, in Vilnius or remote."',
-  location: 'TODO: e.g. Vilnius, Lithuania',
+  availability: 'Open to software engineering roles, in Vilnius or remote.',
+  location: 'Vilnius, Lithuania',
   links: [
     { label: 'GitHub', text: 'github.com/vytzab', url: 'https://github.com/vytzab' },
-    { label: 'LinkedIn', text: 'TODO', url: '' }, // TODO: your profile URL
+    { label: 'LinkedIn', text: 'linkedin.com/in/vytautaszabielskas', url: 'https://www.linkedin.com/in/vytautaszabielskas/' },
   ] as ContactLink[],
   resume: {
     /** The printable page built from the content in this folder. */

@@ -6,16 +6,24 @@ import { SHOW_RESUME } from './src/content/site.ts';
 
 /**
  * Fills pages from src/content at build (and dev) time, so they need no JavaScript: the résumé
- * (resume.html), and the contact address in the home page's skip link and no-JS message.
+ * (resume.html), and the home page's skip link and no-JS message, which offer the résumé while
+ * it is published (SHOW_RESUME) and the contact address otherwise.
  */
 function contentPages(): Plugin {
+  const mail = `<a href="mailto:${CONTACT.email}">${CONTACT.email}</a>`;
+  const skipLink = SHOW_RESUME
+    ? `<a class="skip-link" href="${CONTACT.resume.page}">Skip the game: read the résumé</a>`
+    : `<a class="skip-link" href="mailto:${CONTACT.email}">Skip the game: email ${CONTACT.email}</a>`;
+  const noscriptAlternative = SHOW_RESUME
+    ? `<a href="${CONTACT.resume.page}">Read the résumé instead</a>, or write to ${mail}.`
+    : `You can reach me at ${mail}.`;
   return {
     name: 'baltibytes-content',
     transformIndexHtml: {
       order: 'pre',
       handler(html, ctx) {
         if (ctx.path.endsWith('resume.html')) return html.replace('<!--resume-->', renderResume());
-        return html.replaceAll('%CONTACT_EMAIL%', CONTACT.email);
+        return html.replace('<!--skip-link-->', skipLink).replace('<!--noscript-alternative-->', noscriptAlternative);
       },
     },
   };

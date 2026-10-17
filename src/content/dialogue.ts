@@ -1,6 +1,7 @@
 // What the NPCs and signs say, keyed by the `dialogue` property of map objects.
 import { ABOUT } from './about.ts';
 import { PROJECTS } from './projects.ts';
+import { SHOW_RESUME } from './site.ts';
 import { openedCaseStudies } from '../game/progress.ts';
 import type { Dialogue } from '../game/dialogue-box.ts';
 
@@ -49,7 +50,9 @@ export const DIALOGUE: Record<string, Dialogue> = {
     speaker: 'Courier',
     lines: [
       'Need to send word? I carry every letter that goes through the portal.',
-      'Step up to it and press E: there\'s the email address and the links.',
+      SHOW_RESUME
+        ? 'Step up to it and press E: there\'s the email address, the links and the résumé.'
+        : 'Step up to it and press E: there\'s the email address and the links.',
     ],
   },
   'tower-sage': {

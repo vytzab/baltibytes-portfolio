@@ -15,7 +15,7 @@ import {
   type AnimationSpec,
   type SolidBox,
 } from '../../src/game/assets/manifest.ts';
-import { FEET, INTERACT_RANGE } from '../../src/game/rules.ts';
+import { FEET, INTERACT_RANGE, frontEdge, reachDistance, type FrontEdge } from '../../src/game/rules.ts';
 import { PROJECTS } from '../../src/content/projects.ts';
 import { SKILL_CATEGORIES } from '../../src/content/skills.ts';
 import { ROLES } from '../../src/content/experience.ts';
@@ -518,7 +518,7 @@ function checkPlacementAndReach(
   if (!W || !H) return;
 
   const solids: Rect[] = [];
-  const talkTo: Array<{ name: string; x: number; y: number }> = [];
+  const talkTo: Array<{ name: string; x: number; y: number; front?: FrontEdge }> = [];
   let spawn: { x: number; y: number } | null = null;
   const arrivals: Array<{ name: string; x: number; y: number }> = [];
   const portals: Rect[] = [];
@@ -576,7 +576,8 @@ function checkPlacementAndReach(
       if (panel !== undefined && !PANEL_TARGETS.has(panel)) {
         err(`${label}: panel "${panel}" is not something in src/content (use project:<id>, skills:<id>, role:<id>, experience or contact)`);
       }
-      if (panel) talkTo.push({ name: obj.name ?? '?', x, y });
+      const front = obj.type === 'npc' || !asset ? undefined : frontEdge(x, asset.grid?.width ?? asset.width ?? 0, asset.solid);
+      if (panel) talkTo.push({ name: obj.name ?? '?', x, y, front });
       if (obj.type === 'spawn') {
         if (spawn) err(`${label}: a map has one spawn`);
         spawn = { x, y };
@@ -587,7 +588,7 @@ function checkPlacementAndReach(
         const fh = asset.grid?.height ?? asset.height ?? 0;
         for (const b of asset.solid ?? []) solids.push({ x: x - fw / 2 + b.x, y: y - fh + b.y, width: b.width, height: b.height, what: `${label} (${sprite})` });
       }
-      if (obj.type !== 'spawn' && propValue(obj, 'dialogue')) talkTo.push({ name: obj.name ?? '?', x, y });
+      if (obj.type !== 'spawn' && propValue(obj, 'dialogue')) talkTo.push({ name: obj.name ?? '?', x, y, front });
     }
   }
 
@@ -647,7 +648,7 @@ function checkPlacementAndReach(
     }
   }
   for (const t of talkTo) {
-    const ok = reached.some(([x, y]) => Math.hypot(x - t.x, y - t.y) <= INTERACT_RANGE);
+    const ok = reached.some(([x, y]) => reachDistance(x, y, t) <= INTERACT_RANGE);
     if (!ok) err(`"${t.name}" can't be reached: no free spot within ${INTERACT_RANGE} px of it is walkable from ${start.what}`);
   }
   for (const p of portals) {

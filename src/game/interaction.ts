@@ -1,11 +1,13 @@
 // Finds the nearest thing the player can interact with and shows the "!" prompt above it.
 import * as Phaser from 'phaser';
-import { INTERACT_RANGE } from './rules.ts';
+import { INTERACT_RANGE, reachDistance, type FrontEdge } from './rules.ts';
 
 export interface Interactable {
   /** Feet position (where the object touches the ground). */
   x: number;
   y: number;
+  /** A prop's front edge (rules.ts): reach is measured to it instead of to the feet point. */
+  front?: FrontEdge;
   /** Height of its sprite, so the prompt floats just above it. */
   height: number;
   /** Text to show (a key into the scene's dialogue), or an info-panel document to open (panel-docs.ts). */
@@ -37,7 +39,7 @@ export class InteractionPrompt {
     let bestDistance = INTERACT_RANGE;
     if (enabled) {
       for (const t of this.targets) {
-        const d = Phaser.Math.Distance.Between(px, py, t.x, t.y);
+        const d = reachDistance(px, py, t);
         if (d <= bestDistance) {
           best = t;
           bestDistance = d;

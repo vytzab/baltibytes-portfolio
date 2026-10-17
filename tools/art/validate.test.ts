@@ -8,6 +8,7 @@ import { join } from 'node:path';
 import { PixelCanvas } from './draw.ts';
 import { writePng } from './png.ts';
 import { validateAssets, type Issue } from './validate-assets.ts';
+import { INTERACT_RANGE, frontEdge, reachDistance } from '../../src/game/rules.ts';
 
 const INK = '#2a1e2b';
 const GRASS = '#6aa04a';
@@ -358,3 +359,15 @@ test('panels for a real project, skill category, role, the overview and contact 
   writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
   assert.deepEqual(fx.run(), []);
 }));
+
+test('a wide prop is in reach from its side and its front, not from far behind', () => {
+  // The Exit Portal: a 48 px frame with a 40 px solid base, feet at (64, 304).
+  const portal = { x: 64, y: 304, front: frontEdge(64, 48, [{ x: 4, width: 40 }]) };
+  assert.deepEqual(portal.front, { left: 44, right: 84 });
+  assert.ok(reachDistance(89, 300, portal) <= INTERACT_RANGE, 'right side');
+  assert.ok(reachDistance(39, 300, portal) <= INTERACT_RANGE, 'left side');
+  assert.ok(reachDistance(80, 308, portal) <= INTERACT_RANGE, 'in front, off centre');
+  assert.ok(reachDistance(64, 270, portal) > INTERACT_RANGE, 'far behind');
+  // Without solid boxes, reach is the plain distance to the feet point.
+  assert.equal(reachDistance(3, 4, { x: 0, y: 0, front: frontEdge(0, 16, undefined) }), 5);
+});

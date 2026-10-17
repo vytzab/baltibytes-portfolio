@@ -15,6 +15,7 @@ import { asset, createTilemap } from './assets/loader.ts';
 import { animationKey } from './assets/manifest.ts';
 import { Character, type Facing } from './character.ts';
 import type { Interactable } from './interaction.ts';
+import { frontEdge } from './rules.ts';
 import { LOCKED } from '../content/site.ts';
 
 export interface Portal {
@@ -137,8 +138,9 @@ export function buildWorld(scene: Phaser.Scene, mapId: string, options: { reduce
     const top = y - object.height;
     for (const b of entry.solid ?? []) addSolid(left + b.x, top + b.y, b.width, b.height);
     if (projectId) caseStudies.push({ projectId, object, assetId: sprite });
-    if (panel) interactables.push({ x, y, height: object.height, panel });
-    else if (dialogueId) interactables.push({ x, y, height: object.height, dialogueId });
+    const front = frontEdge(x, object.width, entry.solid);
+    if (panel) interactables.push({ x, y, front, height: object.height, panel });
+    else if (dialogueId) interactables.push({ x, y, front, height: object.height, dialogueId });
   }
   scene.physics.add.collider(player.sprite, solids);
 

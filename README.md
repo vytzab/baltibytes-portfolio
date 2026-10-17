@@ -24,7 +24,7 @@ npm run preview    # serve the build at http://localhost:4173
 
 ## Résumé
 
-A plain page at `/resume.html`, built from the same content as the game (`src/content`); it works without JavaScript and prints to PDF from the browser. Not published yet: it is switched off in `src/content/site.ts` (`SHOW_RESUME`) while its content is a draft.
+A plain page at `/resume.html`, built from the same content as the game (`src/content`); it works without JavaScript and prints to PDF from the browser. It can be switched off in `src/content/site.ts` (`SHOW_RESUME`).
 
 ## Art
 
