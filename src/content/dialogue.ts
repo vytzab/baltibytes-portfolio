@@ -22,7 +22,7 @@ export const DIALOGUE: Record<string, Dialogue> = {
   'village-guide': {
     speaker: 'Guide',
     lines: [
-      `Welcome to the Starting Village! This is where ${ABOUT.name} lives and works.`,
+      `Welcome to the Starting Village! This is where ${ABOUT.firstName} lives and works.`,
       'The notice board on the square says who they are. The workshop by the path is where they tinker.',
       'The old cellar at the top of the north path leads down to the Dungeon, where the projects are kept. It\'s locked for now, while the keeper catalogues them.',
       'The roads lead west to the Guild Hall, where the work history is kept, and east to the Skill Tower. Both are closed for now.',
