@@ -11,7 +11,4 @@ export const SHOW_RESUME = false;
  * and pressing E shows this dialogue instead of going in. Map id → dialogue id (dialogue.ts).
  * Remove a line to open the place again; nothing else needs to change.
  */
-export const LOCKED: Record<string, string> = {
-  'map.tower': 'locked-tower',
-  'map.guildhall': 'locked-guildhall',
-};
+export const LOCKED: Record<string, string> = {};

@@ -27,6 +27,6 @@ export const ABOUT: About = {
   ],
   workshop: [
     'The workshop is locked. Through the window: a desk, two monitors and a half-built keyboard.',
-    'A sign hangs on the door: "Work in progress! This website is being built right now, so new places open soon. Thanks for visiting!"',
+    'A sign hangs on the door: "Work in progress! This website is still being built, so check back for new things. Thanks for visiting!"',
   ],
 };
