@@ -39,8 +39,8 @@ export const PROJECTS: Project[] = [
     title: 'MealPlanner',
     tagline: 'A self-hosted meal planner for a small household, running on a Raspberry Pi.',
     kind: 'Web app (PWA)',
-    status: 'In daily use at home', // TODO confirm
-    role: 'Solo: backend, frontend, hosting', // TODO confirm
+    status: 'Being filled with recipes for daily use at home',
+    role: 'Solo: backend, frontend, hosting on a Raspberry Pi',
     stack: ['Java 21', 'Spring Boot', 'Flyway', 'MariaDB', 'React 19', 'TypeScript', 'Tailwind', 'Zod', 'Docker'],
     accent: 'gold',
     sections: [
@@ -63,7 +63,12 @@ export const PROJECTS: Project[] = [
       },
       {
         title: 'Outcome',
-        paragraphs: ['TODO: how it is used day to day, and what you learned.'],
+        paragraphs: ['The core is built and running on the Pi. I\'m now filling the catalog with ingredients and recipes so it can take over our meal planning at home.'],
+        bullets: [
+          'Evolving a real database schema safely with versioned migrations',
+          'Running an app end to end: Docker, nightly backups, HTTPS for the installable app, automated deploys',
+          'Keeping business rules in plain, tested code, apart from the UI',
+        ],
       },
     ],
     links: [],
@@ -74,8 +79,8 @@ export const PROJECTS: Project[] = [
     tagline: 'Short, focused brain games for Android, grouped by the kind of thinking they challenge.',
     kind: 'Android app',
     status: 'In development · not yet on Google Play',
-    role: 'Solo: design, code, art, sound', // TODO confirm
-    stack: ['Kotlin', 'Jetpack Compose', 'Material 3', 'Room', 'DataStore', 'Hilt', 'Coroutines'],
+    role: 'Solo: design, code, art, sound',
+    stack: ['Kotlin', 'Jetpack Compose', 'Material 3', 'Room', 'DataStore', 'Hilt', 'Coroutines', 'TypeScript', 'Cloudflare Workers'],
     accent: 'heather',
     sections: [
       {
@@ -108,19 +113,22 @@ export const PROJECTS: Project[] = [
       },
       {
         title: 'Outcome',
-        paragraphs: ['In closed testing ahead of a Google Play release.'], // TODO update
-        bullets: ['TODO: a result worth sharing (testers, ratings, something you learned)'],
+        paragraphs: ['In closed testing on Google Play, working through the testing period required before a public release.'],
+        bullets: [
+          'A daily challenge leaderboard on a small serverless backend (a TypeScript Cloudflare Worker with a SQLite database), protected against cheating with signed requests and Google Play Integrity checks',
+          'Monetisation without a subscription: a free daily set and a one-time unlock, bought through Google Play',
+        ],
       },
     ],
-    links: [],
+    links: [{ label: 'Today\'s leaderboard', url: 'https://daily.baltibytes.com' }],
   },
   {
     id: 'scoretracker',
     title: 'ScoreTracker',
     tagline: 'A session-first platform for tracking games, matches and small tournaments.',
     kind: 'Web app',
-    status: 'Working core; more planned', // TODO confirm
-    role: 'Solo', // TODO confirm
+    status: 'In use on a Raspberry Pi; more planned',
+    role: 'Solo',
     stack: ['Python 3.12', 'Flask', 'SQLAlchemy 2', 'Alembic', 'MariaDB', 'React 19', 'TypeScript', 'Vite', 'Docker'],
     accent: 'denim',
     sections: [
@@ -144,7 +152,7 @@ export const PROJECTS: Project[] = [
       },
       {
         title: 'Outcome',
-        paragraphs: ['Next on the list: automatic brackets, Swiss pairing, authentication and live updates.'], // TODO confirm
+        paragraphs: ['Running on the Pi with real data from our game nights. Next: tournament brackets, head-to-head statistics and a login.'],
       },
     ],
     links: [],
@@ -154,8 +162,8 @@ export const PROJECTS: Project[] = [
     title: 'Control Panel',
     tagline: 'One place to watch and look after every app on a home Raspberry Pi.',
     kind: 'Web app',
-    status: 'In use on the Pi; more planned', // TODO confirm
-    role: 'Solo', // TODO confirm
+    status: 'In use on the Pi; more planned',
+    role: 'Solo',
     stack: ['Python 3.12', 'FastAPI', 'React 19', 'TypeScript', 'Vite', 'Docker', 'nginx', 'GitHub Actions'],
     accent: 'moss',
     sections: [
@@ -185,7 +193,7 @@ export const PROJECTS: Project[] = [
       },
       {
         title: 'Outcome',
-        paragraphs: ['TODO: what it has caught or saved you from, and what is next.'],
+        paragraphs: ['Every app on the Pi, its health and its backups now sit on one page, and my phone tells me when something needs attention, and again when it recovers.'],
       },
     ],
     links: [],
