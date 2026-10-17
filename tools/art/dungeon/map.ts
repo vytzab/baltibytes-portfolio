@@ -1,5 +1,6 @@
 // The Dungeon (Projects), written as Tiled JSON. Five vaults open off a torch-lit hall; each
 // holds a quest chest with one project's case study, under a banner in that project's colour.
+// With fewer than five projects the last vaults stay bare (no chest, banner or torch), waiting.
 // Stairs at the south lead back up to the village.
 //
 // Walls are drawn from the text below: '#' wall, '.' floor. A wall with floor to its south
@@ -36,7 +37,7 @@ const WALLS: Grid = [
 
 // Decoration over the floor and walls: 'R' rug (2 wide; left/right picked by position),
 // 'r' rubble, 'm' mushrooms, 'p' pebbles, '<' / '>' cobwebs in a room's NW / NE corner,
-// '1'–'5' the banner of project 1–5 (in PROJECTS order).
+// '1'–'5' the banner of project 1–5 (in PROJECTS order; bare wall if there is no such project).
 const DECOR: Grid = [
   '..........................',
   '....1......2..2......3....',
@@ -83,7 +84,7 @@ interface Placed {
 }
 
 function entities(): Placed[] {
-  if (PROJECTS.length !== VAULTS.length) throw new Error(`dungeon: ${PROJECTS.length} projects but ${VAULTS.length} vaults`);
+  if (PROJECTS.length > VAULTS.length) throw new Error(`dungeon: ${PROJECTS.length} projects but only ${VAULTS.length} vaults`);
   const list: Placed[] = [
     { name: 'player', type: 'spawn', x: px(13), y: px(17), props: { sprite: 'char.player' } },
     { name: 'from-village', type: 'arrive', x: px(13), y: px(17), props: { facing: 'up' } },
@@ -144,7 +145,10 @@ export function dungeonMap(tilesets: { dungeon: { id: string; image: string }; v
       else if (d === '>') decor.push(dungeonGid('cobweb-ne'));
       else if (d === 'm') decor.push(villageGid('mushrooms'));
       else if (d === 'p') decor.push(villageGid('pebbles'));
-      else if (/[1-5]/.test(d)) decor.push(dungeonGid(`banner-${PROJECTS[Number(d) - 1]!.accent}`));
+      else if (/[1-5]/.test(d)) {
+        const project = PROJECTS[Number(d) - 1];
+        decor.push(project ? dungeonGid(`banner-${project.accent}`) : 0);
+      }
       else throw new Error(`dungeon decor: unknown "${d}" at ${x},${y}`);
     }
   }

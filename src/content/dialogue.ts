@@ -75,11 +75,11 @@ function dungeonKeeper(): Dialogue {
   const total = PROJECTS.length;
   const progress =
     opened === 0
-      ? `There are ${total} vaults down here, one project in each chest. Walk up to a chest and press E to open its case study.`
+      ? `There are ${total} chests down here, one project in each. Walk up to a chest and press E to open its case study.`
       : opened < total
         ? `You've opened ${opened} of ${total} chests. The banners over the vaults show which project is which.`
         : `You've opened all ${total} chests. That's every project. The stairs behind you lead back up to the village.`;
-  return { speaker: 'Keeper', lines: ['Mind the steps! I keep the projects down here, one in every vault.', progress] };
+  return { speaker: 'Keeper', lines: ['Mind the steps! I keep the projects down here, each in its own vault. The empty one is waiting for the next.', progress] };
 }
 
 /** Text for a dialogue id, or undefined if there is none. */

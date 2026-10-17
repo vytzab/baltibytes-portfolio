@@ -11,7 +11,7 @@
  "tilewidth": 16,
  "tileheight": 16,
  "nextlayerid": 4,
- "nextobjectid": 21,
+ "nextobjectid": 19,
  "layers": [
   {
    "id": 1,
@@ -587,6 +587,16 @@
     0,
     0,
     0,
+    31,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    32,
+    0,
+    0,
     32,
     0,
     0,
@@ -594,17 +604,7 @@
     0,
     0,
     0,
-    30,
-    0,
-    0,
-    30,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    31,
+    29,
     0,
     0,
     0,
@@ -924,10 +924,10 @@
     0,
     0,
     0,
-    29,
+    30,
     0,
     0,
-    29,
+    30,
     0,
     0,
     0,
@@ -940,10 +940,10 @@
     0,
     0,
     0,
-    28,
     0,
     0,
-    28,
+    0,
+    0,
     0,
     0,
     0,
@@ -1172,134 +1172,10 @@
     },
     {
      "id": 5,
-     "name": "chest-ninelight",
-     "type": "prop",
-     "point": true,
-     "x": 72,
-     "y": 64,
-     "width": 0,
-     "height": 0,
-     "rotation": 0,
-     "visible": true,
-     "properties": [
-      {
-       "name": "sprite",
-       "type": "string",
-       "value": "obj.chest"
-      },
-      {
-       "name": "panel",
-       "type": "string",
-       "value": "project:ninelight"
-      }
-     ]
-    },
-    {
-     "id": 6,
-     "name": "torch-ninelight-0",
-     "type": "prop",
-     "point": true,
-     "x": 40,
-     "y": 32,
-     "width": 0,
-     "height": 0,
-     "rotation": 0,
-     "visible": true,
-     "properties": [
-      {
-       "name": "sprite",
-       "type": "string",
-       "value": "obj.torch"
-      }
-     ]
-    },
-    {
-     "id": 7,
-     "name": "torch-ninelight-1",
-     "type": "prop",
-     "point": true,
-     "x": 104,
-     "y": 32,
-     "width": 0,
-     "height": 0,
-     "rotation": 0,
-     "visible": true,
-     "properties": [
-      {
-       "name": "sprite",
-       "type": "string",
-       "value": "obj.torch"
-      }
-     ]
-    },
-    {
-     "id": 8,
-     "name": "chest-portio",
-     "type": "prop",
-     "point": true,
-     "x": 208,
-     "y": 64,
-     "width": 0,
-     "height": 0,
-     "rotation": 0,
-     "visible": true,
-     "properties": [
-      {
-       "name": "sprite",
-       "type": "string",
-       "value": "obj.chest"
-      },
-      {
-       "name": "panel",
-       "type": "string",
-       "value": "project:portio"
-      }
-     ]
-    },
-    {
-     "id": 9,
-     "name": "torch-portio-0",
-     "type": "prop",
-     "point": true,
-     "x": 168,
-     "y": 32,
-     "width": 0,
-     "height": 0,
-     "rotation": 0,
-     "visible": true,
-     "properties": [
-      {
-       "name": "sprite",
-       "type": "string",
-       "value": "obj.torch"
-      }
-     ]
-    },
-    {
-     "id": 10,
-     "name": "torch-portio-1",
-     "type": "prop",
-     "point": true,
-     "x": 248,
-     "y": 32,
-     "width": 0,
-     "height": 0,
-     "rotation": 0,
-     "visible": true,
-     "properties": [
-      {
-       "name": "sprite",
-       "type": "string",
-       "value": "obj.torch"
-      }
-     ]
-    },
-    {
-     "id": 11,
      "name": "chest-mealplanner",
      "type": "prop",
      "point": true,
-     "x": 344,
+     "x": 72,
      "y": 64,
      "width": 0,
      "height": 0,
@@ -1319,11 +1195,11 @@
      ]
     },
     {
-     "id": 12,
+     "id": 6,
      "name": "torch-mealplanner-0",
      "type": "prop",
      "point": true,
-     "x": 312,
+     "x": 40,
      "y": 32,
      "width": 0,
      "height": 0,
@@ -1338,11 +1214,11 @@
      ]
     },
     {
-     "id": 13,
+     "id": 7,
      "name": "torch-mealplanner-1",
      "type": "prop",
      "point": true,
-     "x": 376,
+     "x": 104,
      "y": 32,
      "width": 0,
      "height": 0,
@@ -1357,12 +1233,74 @@
      ]
     },
     {
-     "id": 14,
+     "id": 8,
+     "name": "chest-ninelight",
+     "type": "prop",
+     "point": true,
+     "x": 208,
+     "y": 64,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.chest"
+      },
+      {
+       "name": "panel",
+       "type": "string",
+       "value": "project:ninelight"
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "name": "torch-ninelight-0",
+     "type": "prop",
+     "point": true,
+     "x": 168,
+     "y": 32,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.torch"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "torch-ninelight-1",
+     "type": "prop",
+     "point": true,
+     "x": 248,
+     "y": 32,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.torch"
+      }
+     ]
+    },
+    {
+     "id": 11,
      "name": "chest-scoretracker",
      "type": "prop",
      "point": true,
-     "x": 72,
-     "y": 288,
+     "x": 344,
+     "y": 64,
      "width": 0,
      "height": 0,
      "rotation": 0,
@@ -1381,8 +1319,70 @@
      ]
     },
     {
-     "id": 15,
+     "id": 12,
      "name": "torch-scoretracker-0",
+     "type": "prop",
+     "point": true,
+     "x": 312,
+     "y": 32,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.torch"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "torch-scoretracker-1",
+     "type": "prop",
+     "point": true,
+     "x": 376,
+     "y": 32,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.torch"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "chest-controlpanel",
+     "type": "prop",
+     "point": true,
+     "x": 72,
+     "y": 288,
+     "width": 0,
+     "height": 0,
+     "rotation": 0,
+     "visible": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obj.chest"
+      },
+      {
+       "name": "panel",
+       "type": "string",
+       "value": "project:controlpanel"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "torch-controlpanel-0",
      "type": "prop",
      "point": true,
      "x": 40,
@@ -1401,49 +1401,6 @@
     },
     {
      "id": 16,
-     "name": "chest-video-studio",
-     "type": "prop",
-     "point": true,
-     "x": 344,
-     "y": 288,
-     "width": 0,
-     "height": 0,
-     "rotation": 0,
-     "visible": true,
-     "properties": [
-      {
-       "name": "sprite",
-       "type": "string",
-       "value": "obj.chest"
-      },
-      {
-       "name": "panel",
-       "type": "string",
-       "value": "project:video-studio"
-      }
-     ]
-    },
-    {
-     "id": 17,
-     "name": "torch-video-studio-0",
-     "type": "prop",
-     "point": true,
-     "x": 376,
-     "y": 240,
-     "width": 0,
-     "height": 0,
-     "rotation": 0,
-     "visible": true,
-     "properties": [
-      {
-       "name": "sprite",
-       "type": "string",
-       "value": "obj.torch"
-      }
-     ]
-    },
-    {
-     "id": 18,
      "name": "torch-hall-136",
      "type": "prop",
      "point": true,
@@ -1462,7 +1419,7 @@
      ]
     },
     {
-     "id": 19,
+     "id": 17,
      "name": "torch-hall-280",
      "type": "prop",
      "point": true,
@@ -1481,7 +1438,7 @@
      ]
     },
     {
-     "id": 20,
+     "id": 18,
      "name": "to-village",
      "type": "portal",
      "x": 196,

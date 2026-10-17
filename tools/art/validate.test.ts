@@ -353,7 +353,7 @@ test('panel that is not in the content', () => withFixture((fx) => {
 test('panels for a real project, skill category, role, the overview and contact are fine', () => withFixture((fx) => {
   const map = tiledMap();
   map.layers[1]!.objects!.push(
-    ...['project:portio', 'skills:languages', 'role:independent', 'experience', 'contact'].map((panel, i) => ({ name: `p${i}`, type: 'prop', point: true, x: 40 + i * 4, y: 56, properties: [{ name: 'sprite', value: 'char.hero' }, { name: 'panel', value: panel }] })),
+    ...['project:ninelight', 'skills:languages', 'role:independent', 'experience', 'contact'].map((panel, i) => ({ name: `p${i}`, type: 'prop', point: true, x: 40 + i * 4, y: 56, properties: [{ name: 'sprite', value: 'char.hero' }, { name: 'panel', value: panel }] })),
   );
   writeFileSync(join(fx.assets, 'maps/test.json'), JSON.stringify(map));
   assert.deepEqual(fx.run(), []);
