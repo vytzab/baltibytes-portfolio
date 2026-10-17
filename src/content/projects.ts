@@ -1,10 +1,9 @@
-// Projects for the Dungeon's case studies (and later the accessible HTML version), in the
-// order the owner chose; the Dungeon fills its vaults in this order.
+// Projects for the Dungeon's case studies (and later the accessible HTML version). The Dungeon
+// fills its vaults in this order.
 //
 // DRAFT: written by Claude from each project's own README (2026-10-13, refreshed 2026-10-17).
-// The owner checks every claim, decides what may be public (all four repositories are private,
-// and this repository is public), adds links once there is something public to link to, and
-// replaces any line marked TODO. Nothing here should go live before that review.
+// Status, role and outcome were confirmed by Vytautas on 2026-10-17. Vytautas reviews any new
+// claim first: all four repositories are private, and this repository is public.
 
 /** Palette accent used for the project's vault banner and the case-study panel. */
 export type Accent = 'brick' | 'denim' | 'moss' | 'gold' | 'heather';

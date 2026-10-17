@@ -21,7 +21,7 @@ export const ABOUT: About = {
   tagline: 'Software engineer',
   bio: [
     "I'm a software engineer based in Vilnius. I work mostly on the backend and step into the UI when a feature needs it.",
-    "I joined my company in operations in 2021 and moved into engineering in January 2025, so I know the systems I build from the user's side too. Along the way I finished a bachelor's in Software Systems at Vilnius University of Applied Sciences.",
+    "I joined my company in 2020 in client success, moved into operations in 2021 and into engineering in January 2025, so I know the systems I build from the user's side too. Along the way, while working, I finished a bachelor's in Software Systems at Vilnius University of Applied Sciences.",
     'In my spare time I build apps that make everyday life a little easier, from brain games for Android to a meal planner that runs on a Raspberry Pi at home. I care about clean architecture, good tests and a bit of polish, and I like shipping things people actually use.',
     "Away from the keyboard I box and play chess, and I'm a big basketball and football fan, though I only watch those. Thanks for walking around my village!",
   ],

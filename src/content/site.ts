@@ -12,7 +12,6 @@ export const SHOW_RESUME = false;
  * Remove a line to open the place again; nothing else needs to change.
  */
 export const LOCKED: Record<string, string> = {
-  'map.dungeon': 'locked-dungeon',
   'map.tower': 'locked-tower',
   'map.guildhall': 'locked-guildhall',
 };

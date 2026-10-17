@@ -24,7 +24,7 @@ export const DIALOGUE: Record<string, Dialogue> = {
     lines: [
       `Welcome to the Starting Village! This is where ${ABOUT.firstName} lives and works.`,
       'The notice board on the square says who they are. The workshop by the path is where they tinker.',
-      'The old cellar at the top of the north path leads down to the Dungeon, where the projects are kept. It\'s locked for now, while the keeper catalogues them.',
+      'The old cellar at the top of the north path leads down to the Dungeon, where the projects are kept. The keeper down there will show you around.',
       'The roads lead west to the Guild Hall, where the work history is kept, and east to the Skill Tower. Both are closed for now.',
       'And right by the gate stands the Exit Portal. That\'s the way to get in touch.',
     ],

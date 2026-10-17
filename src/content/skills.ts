@@ -2,8 +2,8 @@
 //
 // DRAFT (2026-10-13, updated 2026-10-17 for the new project list): drawn from the stacks of the
 // projects in projects.ts. Each skill lists the projects it was used in, so the tower shows
-// evidence instead of self-ratings. The owner adds, removes or rewords anything, adds skills from
-// work experience, and fills the TODO lines.
+// evidence instead of self-ratings; skills from work have a note instead (the Guild Hall has the
+// roles). Reviewed with Vytautas on 2026-10-17.
 import type { Accent } from './projects.ts';
 
 export interface Skill {
@@ -28,14 +28,15 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
   {
     id: 'languages',
     title: 'Languages',
-    summary: 'The languages the projects are written in.',
+    summary: 'The languages I write, in my projects and at work.',
     accent: 'heather',
     skills: [
       { name: 'Kotlin', usedIn: ['ninelight'] },
-      { name: 'TypeScript', usedIn: ['mealplanner', 'scoretracker', 'controlpanel'], note: 'Also this website.' },
-      { name: 'Java', usedIn: ['mealplanner'] },
+      { name: 'TypeScript', usedIn: ['mealplanner', 'scoretracker', 'controlpanel'], note: 'Also at work, and this website.' },
+      { name: 'Java', usedIn: ['mealplanner'], note: 'Also at work.' },
       { name: 'Python', usedIn: ['scoretracker', 'controlpanel'] },
       { name: 'SQL', usedIn: ['mealplanner', 'scoretracker'] },
+      { name: 'Shell scripting', usedIn: [], note: 'At work, in operations.' },
     ],
   },
   {
@@ -70,24 +71,29 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     summary: 'APIs, databases and the schemas between them.',
     accent: 'gold',
     skills: [
-      { name: 'Spring Boot & Spring Data JPA', usedIn: ['mealplanner'] },
+      { name: 'Spring Boot & Spring Data JPA', usedIn: ['mealplanner'], note: 'Also at work.' },
+      { name: 'Apache Kafka', usedIn: [], note: 'At work.' },
       { name: 'Flask & SQLAlchemy', usedIn: ['scoretracker'] },
       { name: 'FastAPI', usedIn: ['controlpanel'] },
-      { name: 'MariaDB / MySQL', usedIn: ['mealplanner', 'scoretracker'] },
+      { name: 'Relational databases (MariaDB / MySQL)', usedIn: ['mealplanner', 'scoretracker'], note: 'Also at work.' },
       { name: 'Schema migrations (Flyway, Alembic)', usedIn: ['mealplanner', 'scoretracker'] },
-      { name: 'REST API design', usedIn: ['scoretracker', 'mealplanner'] },
+      { name: 'RESTful API design', usedIn: ['scoretracker', 'mealplanner'], note: 'Also at work.' },
+      { name: 'OpenAPI / Swagger', usedIn: [], note: 'At work.' },
     ],
   },
   {
     id: 'ops',
-    title: 'Self-hosting & DevOps',
-    summary: 'Running my own apps on a Raspberry Pi, and keeping them healthy.',
+    title: 'DevOps & hosting',
+    summary: 'Running software and keeping it healthy: production systems at work, my own apps on a Raspberry Pi.',
     accent: 'brick',
     skills: [
       { name: 'Docker & Docker Compose', usedIn: ['mealplanner', 'scoretracker', 'controlpanel'] },
-      { name: 'CI/CD with GitHub Actions', usedIn: ['mealplanner', 'scoretracker', 'controlpanel'] },
+      { name: 'CI/CD with GitHub Actions', usedIn: ['mealplanner', 'scoretracker', 'controlpanel'], note: 'CI/CD at work too.' },
+      { name: 'Linux & system administration', usedIn: ['controlpanel'], note: 'At work, in operations.' },
       { name: 'Raspberry Pi & nginx', usedIn: ['mealplanner', 'controlpanel'] },
       { name: 'Monitoring, alerts and backups', usedIn: ['controlpanel'] },
+      { name: 'Observability (Prometheus, Grafana)', usedIn: [], note: 'At work.' },
+      { name: 'Amazon Web Services (AWS)', usedIn: [], note: 'At work.' },
     ],
   },
   {
@@ -96,10 +102,15 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     summary: 'How the work gets done.',
     accent: 'heather',
     skills: [
+      { name: 'Object-oriented programming', usedIn: [], note: 'At work and in the Java and Kotlin projects.' },
       { name: 'Testable architecture (pure domain logic)', usedIn: ['ninelight', 'scoretracker'] },
       { name: 'Automated tests (JUnit, Vitest, pytest)', usedIn: ['mealplanner', 'ninelight', 'scoretracker', 'controlpanel'] },
       { name: 'Generated, reproducible art and sound', usedIn: ['ninelight'], note: 'And this website.' },
-      { name: 'TODO: anything from work (code review, mentoring, …)', usedIn: [] },
+      { name: 'Incident handling and root-cause analysis', usedIn: [], note: 'At work, in operations.' },
+      { name: 'Log analysis', usedIn: [], note: 'At work, in operations.' },
+      { name: 'Secure coding practices', usedIn: [], note: 'At work.' },
+      { name: 'Code quality with SonarQube', usedIn: [], note: 'At work.' },
+      { name: 'Agile software development', usedIn: [], note: 'At work.' },
     ],
   },
 ];
