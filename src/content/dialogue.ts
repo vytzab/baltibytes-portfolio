@@ -22,9 +22,9 @@ export const DIALOGUE: Record<string, Dialogue> = {
   'village-guide': {
     speaker: 'Guide',
     lines: [
-      `Welcome to the Starting Village! This is where ${ABOUT.name} lives and works.`,
+      `Welcome to the Starting Village! This is where ${ABOUT.firstName} lives and works.`,
       'The notice board on the square says who they are. The workshop by the path is where they tinker.',
-      'The old cellar at the top of the north path leads down to the Dungeon, where the projects are kept. It\'s locked for now, while the keeper catalogues them.',
+      'The old cellar at the top of the north path leads down to the Dungeon, where the projects are kept. The keeper down there will show you around.',
       'The roads lead west to the Guild Hall, where the work history is kept, and east to the Skill Tower. Both are closed for now.',
       'And right by the gate stands the Exit Portal. That\'s the way to get in touch.',
     ],
@@ -75,11 +75,11 @@ function dungeonKeeper(): Dialogue {
   const total = PROJECTS.length;
   const progress =
     opened === 0
-      ? `There are ${total} vaults down here, one project in each chest. Walk up to a chest and press E to open its case study.`
+      ? `There are ${total} chests down here, one project in each. Walk up to a chest and press E to open its case study.`
       : opened < total
         ? `You've opened ${opened} of ${total} chests. The banners over the vaults show which project is which.`
         : `You've opened all ${total} chests. That's every project. The stairs behind you lead back up to the village.`;
-  return { speaker: 'Keeper', lines: ['Mind the steps! I keep the projects down here, one in every vault.', progress] };
+  return { speaker: 'Keeper', lines: ['Mind the steps! I keep the projects down here, each in its own vault.', progress] };
 }
 
 /** Text for a dialogue id, or undefined if there is none. */

@@ -7,7 +7,7 @@
 //   walk into to go to another map;
 // - signs and props are solid only where their manifest "solid" boxes say (a trunk, two posts),
 //   NPCs at their feet; anything with a "dialogue" property can be talked to, anything with a
-//   "panel" property opens that info-panel document ("project:portio", "skills:web", …);
+//   "panel" property opens that info-panel document ("project:ninelight", "skills:web", …);
 // - characters and props are depth-sorted by the y of their feet, so you walk behind a tree's
 //   crown but in front of its trunk.
 import * as Phaser from 'phaser';

@@ -2,7 +2,7 @@
 
 The software engineering portfolio behind [baltibytes.com](https://baltibytes.com), being built as a small, cozy, top-down pixel-art RPG: walk between five places (a village, a dungeon, a skill tower, a guild hall and a portal) and talk to the people there to learn about my work.
 
-**Status:** live at baltibytes.com and growing. The village, the Dungeon (projects), the Skill Tower, the Guild Hall and the Exit Portal (contact) are in; art and text are drafts.
+**Status:** live at baltibytes.com and growing. The village (about me), the Dungeon (projects) and the Exit Portal (contact) are open; the Skill Tower (skills) and the Guild Hall (experience) open soon. The art is still a draft.
 
 ## Stack
 

@@ -999,7 +999,7 @@
     },
     {
      "id": 12,
-     "name": "lectern-ai",
+     "name": "lectern-ops",
      "type": "prop",
      "point": true,
      "x": 272,
@@ -1017,7 +1017,7 @@
       {
        "name": "panel",
        "type": "string",
-       "value": "skills:ai"
+       "value": "skills:ops"
       }
      ]
     },

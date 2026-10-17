@@ -1,9 +1,12 @@
-// "About me" for the Starting Village. PLACEHOLDER TEXT: the owner replaces every line marked
-// TODO with their own words. The game shows it through the guide, the notice board and the
-// workshop door; the accessible HTML version will read the same data.
+// "About me" for the Starting Village, in the owner's words (approved 2026-10-17). The game shows
+// it through the guide, the notice board and the workshop door; the résumé and the accessible
+// HTML version read the same data.
 
 export interface About {
+  /** Full name, for the notice board and the résumé heading. */
   name: string;
+  /** What characters call the owner in conversation. */
+  firstName: string;
   /** One line, e.g. "Software engineer in Vilnius". */
   tagline: string;
   /** Short paragraphs for the notice board, each shown as one dialogue page. */
@@ -13,12 +16,14 @@ export interface About {
 }
 
 export const ABOUT: About = {
-  name: 'Vytautas', // TODO: confirm how you want to be named
-  tagline: 'Software engineer', // TODO
+  name: 'Vytautas Zabielskas',
+  firstName: 'Vytautas',
+  tagline: 'Software engineer',
   bio: [
-    'TODO: Who you are in one or two sentences.',
-    'TODO: What you like to build, and how you like to work.',
-    'TODO: Something human: where you are, what you do away from the keyboard.',
+    "I'm a software engineer based in Vilnius. I work mostly on the backend and step into the UI when a feature needs it.",
+    "I joined my company in 2020 in client success, moved into operations in 2021 and into engineering in January 2025, so I know the systems I build from the user's side too. Along the way, while working, I finished a bachelor's in Software Systems at Vilnius University of Applied Sciences.",
+    'In my spare time I build apps that make everyday life a little easier, from brain games for Android to a meal planner that runs on a Raspberry Pi at home. I care about clean architecture, good tests and a bit of polish, and I like shipping things people actually use.',
+    "Away from the keyboard I box and play chess, and I'm a big basketball and football fan, though I only watch those. Thanks for walking around my village!",
   ],
   workshop: [
     'The workshop is locked. Through the window: a desk, two monitors and a half-built keyboard.',
