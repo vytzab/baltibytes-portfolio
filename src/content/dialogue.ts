@@ -79,7 +79,7 @@ function dungeonKeeper(): Dialogue {
       : opened < total
         ? `You've opened ${opened} of ${total} chests. The banners over the vaults show which project is which.`
         : `You've opened all ${total} chests. That's every project. The stairs behind you lead back up to the village.`;
-  return { speaker: 'Keeper', lines: ['Mind the steps! I keep the projects down here, each in its own vault. The empty one is waiting for the next.', progress] };
+  return { speaker: 'Keeper', lines: ['Mind the steps! I keep the projects down here, each in its own vault.', progress] };
 }
 
 /** Text for a dialogue id, or undefined if there is none. */

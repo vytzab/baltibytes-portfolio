@@ -1,9 +1,10 @@
 // Projects for the Dungeon's case studies (and later the accessible HTML version). The Dungeon
 // fills its vaults in this order.
 //
-// DRAFT: written by Claude from each project's own README (2026-10-13, refreshed 2026-10-17).
-// Status, role and outcome were confirmed by Vytautas on 2026-10-17. Vytautas reviews any new
-// claim first: all four repositories are private, and this repository is public.
+// DRAFT: written by Claude from each project's own repository (2026-10-13, refreshed
+// 2026-10-17). Status, role and outcome were confirmed by Vytautas on 2026-10-17. Vytautas
+// reviews any new claim first: the four app repositories are private (the FIX thesis one is
+// public), and this repository is public.
 
 /** Palette accent used for the project's vault banner and the case-study panel. */
 export type Accent = 'brick' | 'denim' | 'moss' | 'gold' | 'heather';
@@ -196,6 +197,47 @@ export const PROJECTS: Project[] = [
       },
     ],
     links: [],
+  },
+  {
+    id: 'fix',
+    title: 'FIX Trading System',
+    tagline: 'A FIX trading engine and a desktop order-entry client, built for my bachelor\'s thesis.',
+    kind: 'Desktop apps (bachelor\'s thesis)',
+    status: 'Finished · Jan 2024',
+    role: 'Solo',
+    stack: ['Java 21', 'QuickFIX/J', 'FIX 4.2', 'Swing', 'MariaDB', 'Maven', 'Jackson', 'Logback'],
+    accent: 'brick',
+    sections: [
+      {
+        title: 'Overview',
+        paragraphs: ['Two Java applications that speak FIX, the messaging standard of electronic trading: an engine that runs markets and matches orders, and a client that traders use to send them. Written for my bachelor\'s thesis in Software Systems, drawing on my work around trading technology.'],
+        bullets: [
+          'Market and limit orders: for the day, good till cancelled, or good till a date',
+          'New orders, cancels, cancel/replace, order status, market data and security status, each answered with an execution report or a reject',
+          'Markets and orders kept in MariaDB, so the engine picks up where it left off after a restart',
+          'Empty markets seeded with real previous-day prices from a market-data API',
+        ],
+      },
+      {
+        title: 'Challenge',
+        paragraphs: ['FIX is strict: both sides have to stay in step on sessions and sequence numbers, and every order message must get the right execution report or a reject with a reason. Orders also outlive sessions: a GTC order has to survive a restart, and a GTD order has to expire on time.'],
+      },
+      {
+        title: 'Approach',
+        paragraphs: ['Built on QuickFIX/J, the open-source Java FIX engine, starting from its example applications. The library handles the session layer; the markets, matching, persistence and both user interfaces are built on top.'],
+        bullets: [
+          'Engine and client built as separate applications that share one order model',
+          'Swing screens with sortable, filterable tables; database work runs on background workers, so the screens stay responsive',
+          'Markets added, updated and deleted from the engine\'s screen; market and order reports exported to CSV',
+          'Every session and message logged',
+        ],
+      },
+      {
+        title: 'Outcome',
+        paragraphs: ['Finished as my bachelor\'s thesis; I graduated in February 2024.'],
+      },
+    ],
+    links: [{ label: 'Source on GitHub', url: 'https://github.com/vytzab/FIX' }],
   },
 ];
 

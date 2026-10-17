@@ -33,7 +33,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     skills: [
       { name: 'Kotlin', usedIn: ['ninelight'] },
       { name: 'TypeScript', usedIn: ['mealplanner', 'scoretracker', 'controlpanel'], note: 'Also at work, and this website.' },
-      { name: 'Java', usedIn: ['mealplanner'], note: 'Also at work.' },
+      { name: 'Java', usedIn: ['mealplanner', 'fix'], note: 'Also at work.' },
       { name: 'Python', usedIn: ['scoretracker', 'controlpanel'] },
       { name: 'SQL', usedIn: ['mealplanner', 'scoretracker'] },
       { name: 'Shell scripting', usedIn: [], note: 'At work, in operations.' },
@@ -73,9 +73,10 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     skills: [
       { name: 'Spring Boot & Spring Data JPA', usedIn: ['mealplanner'], note: 'Also at work.' },
       { name: 'Apache Kafka', usedIn: [], note: 'At work.' },
+      { name: 'FIX protocol (QuickFIX/J)', usedIn: ['fix'] },
       { name: 'Flask & SQLAlchemy', usedIn: ['scoretracker'] },
       { name: 'FastAPI', usedIn: ['controlpanel'] },
-      { name: 'Relational databases (MariaDB / MySQL)', usedIn: ['mealplanner', 'scoretracker'], note: 'Also at work.' },
+      { name: 'Relational databases (MariaDB / MySQL)', usedIn: ['mealplanner', 'scoretracker', 'fix'], note: 'Also at work.' },
       { name: 'Schema migrations (Flyway, Alembic)', usedIn: ['mealplanner', 'scoretracker'] },
       { name: 'RESTful API design', usedIn: ['scoretracker', 'mealplanner'], note: 'Also at work.' },
       { name: 'OpenAPI / Swagger', usedIn: [], note: 'At work.' },
@@ -102,7 +103,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     summary: 'How the work gets done.',
     accent: 'heather',
     skills: [
-      { name: 'Object-oriented programming', usedIn: [], note: 'At work and in the Java and Kotlin projects.' },
+      { name: 'Object-oriented programming', usedIn: ['fix', 'mealplanner', 'ninelight'], note: 'Also at work.' },
       { name: 'Testable architecture (pure domain logic)', usedIn: ['ninelight', 'scoretracker'] },
       { name: 'Automated tests (JUnit, Vitest, pytest)', usedIn: ['mealplanner', 'ninelight', 'scoretracker', 'controlpanel'] },
       { name: 'Generated, reproducible art and sound', usedIn: ['ninelight'], note: 'And this website.' },
