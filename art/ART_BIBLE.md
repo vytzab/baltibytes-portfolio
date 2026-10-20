@@ -4,6 +4,8 @@ The visual rules for every piece of art in the game. Anyone (the owner, a hired 
 
 Status: **v0, provisional.** The rules were tested in the art preview (`art-preview.html`): the terrain and props are placeholders; the player and guide (v2, 24 × 32) are the first real character art, as drafts awaiting approval. Rules marked *(tentative)* should be confirmed with more production art.
 
+**Moving to 2× (in progress, decided 2026-10-20).** All art is being redrawn at twice the resolution (32 × 32 tiles, 48 × 64 characters) for more detail; see §11. Until the switch, the 1× rules in §1–§10 apply to everything in the game.
+
 ## 1. Direction and identity
 
 **Cozy, warm and handcrafted.** A small world you'd like to spend an evening in: soft afternoon light, worn wood, linen, moss, a little sea breeze. It should feel lived-in and kind, never grim, and never busy.
@@ -139,3 +141,22 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 - [ ] Looks right next to existing assets in the art preview, at ×3 and at the default zoom, on grass and on path
 - [ ] Interactive? It has a shape cue, not just colour
 - [ ] Manifest entry complete; `npm run art:validate` passes
+
+## 11. Moving to 2× (v1, in progress)
+
+Decided 2026-10-20: at 24 × 32 a face is about 10 × 5 pixels, too small for the detail wanted. Everything moves to twice the resolution together, on a branch, and ships in one switch, so the game never mixes pixel sizes (§4). Until then §1–§10 stay in force.
+
+| Asset | 1× now | 2× |
+|---|---|---|
+| Tile | 16 × 16 | **32 × 32** |
+| Character frame | 24 × 32 | **48 × 64**, figure about 58 px tall, head about 28 px; feet on row 63, body centred on the line between columns 23 and 24 |
+| Feet collision box | 10 × 6 | 20 × 12 |
+| Minimum view | 240 × 144 | 480 × 288 (still 15 × 9 tiles) |
+| UI 9-slice corners | 8 px | 16 px |
+
+Unchanged: the view and light (§2), the palette (§5), the 1 px ink outline and no anti-aliasing (§4, §6), and the sheet layout and timing (§7: 4 idle and 4 walk frames per direction).
+
+- **How 2× art is made:** characters are painted in code by the assetGenerator repo (`../assetGenerator`, `designs/baltibytes/`). Parts are shapes with a material ramp, and the light, cast shadows and outlines follow §6 by rule. Faces, strands and buttons are placed pixel by pixel. Image-generation tools gave concepts only.
+- **Player (v4, approved 2026-10-20):** an auburn side part with three small spikes on the crown, a cream oxford shirt tucked into grey trousers, a leather belt with a gold buckle, black shoes (`ink`, there is no black). No backpack or headphones any more. Silhouette: the spiky crown.
+- **Exception to §5:** the player's hair uses `brick` as its lit colour (auburn), although brick is reserved for attention; Vytautas chose it. Keep brick out of other characters' large areas.
+
