@@ -68,11 +68,11 @@ const px = (tiles: number) => tiles * TILE;
  * the far wall; torches hang on the visible (north) wall faces, clear of the banners.
  */
 const VAULTS = [
-  { x: px(4) + 8, chestY: px(4), torches: [px(2) + 8, px(6) + 8], torchY: px(2) },
-  { x: px(13), chestY: px(4), torches: [px(10) + 8, px(15) + 8], torchY: px(2) },
-  { x: px(21) + 8, chestY: px(4), torches: [px(19) + 8, px(23) + 8], torchY: px(2) },
-  { x: px(4) + 8, chestY: px(18), torches: [px(2) + 8], torchY: px(15) },
-  { x: px(21) + 8, chestY: px(18), torches: [px(23) + 8], torchY: px(15) },
+  { x: px(4) + 16, chestY: px(4), torches: [px(2) + 16, px(6) + 16], torchY: px(2) },
+  { x: px(13), chestY: px(4), torches: [px(10) + 16, px(15) + 16], torchY: px(2) },
+  { x: px(21) + 16, chestY: px(4), torches: [px(19) + 16, px(23) + 16], torchY: px(2) },
+  { x: px(4) + 16, chestY: px(18), torches: [px(2) + 16], torchY: px(15) },
+  { x: px(21) + 16, chestY: px(18), torches: [px(23) + 16], torchY: px(15) },
 ];
 
 interface Placed {
@@ -88,7 +88,7 @@ function entities(): Placed[] {
   const list: Placed[] = [
     { name: 'player', type: 'spawn', x: px(13), y: px(17), props: { sprite: 'char.player' } },
     { name: 'from-village', type: 'arrive', x: px(13), y: px(17), props: { facing: 'up' } },
-    { name: 'keeper', type: 'npc', x: px(10) + 8, y: px(11), props: { sprite: 'char.npc-keeper', dialogue: 'dungeon-keeper' } },
+    { name: 'keeper', type: 'npc', x: px(10) + 16, y: px(11), props: { sprite: 'char.npc-keeper', dialogue: 'dungeon-keeper' } },
     { name: 'stairs-up', type: 'prop', x: px(13), y: px(19), props: { sprite: 'obj.stairs-up' } },
   ];
   PROJECTS.forEach((p, i) => {
@@ -97,7 +97,7 @@ function entities(): Placed[] {
     v.torches.forEach((x, k) => list.push({ name: `torch-${p.id}-${k}`, type: 'prop', x, y: v.torchY, props: { sprite: 'obj.torch' } }));
   });
   // Torches along the hall's north wall.
-  for (const x of [px(8) + 8, px(17) + 8]) list.push({ name: `torch-hall-${x}`, type: 'prop', x, y: px(8), props: { sprite: 'obj.torch' } });
+  for (const x of [px(8) + 16, px(17) + 16]) list.push({ name: `torch-hall-${x}`, type: 'prop', x, y: px(8), props: { sprite: 'obj.torch' } });
   return list;
 }
 
@@ -170,7 +170,7 @@ export function dungeonMap(tilesets: { dungeon: { id: string; image: string }; v
   const objects: object[] = entities().map(point);
   // Walking onto the bottom step takes you back up to the village.
   objects.push({
-    id: nextId++, name: 'to-village', type: 'portal', x: px(12) + 4, y: px(18) + 8, width: 24, height: 8, rotation: 0, visible: true,
+    id: nextId++, name: 'to-village', type: 'portal', x: px(12) + 8, y: px(18) + 16, width: 48, height: 16, rotation: 0, visible: true,
     properties: [{ name: 'to', type: 'string', value: 'map.village' }, { name: 'arrive', type: 'string', value: 'from-dungeon' }],
   });
 

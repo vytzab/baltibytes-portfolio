@@ -15,7 +15,7 @@ import { buildWorld, type CaseStudyProp } from './world.ts';
 import { dialogueFor } from '../content/dialogue.ts';
 
 /** Walking speed in game pixels per second: about 4.5 tiles a second. */
-const SPEED = 72;
+const SPEED = 144;
 const GRID_COLOR = 0xfdf6e3;
 /** Portal fade, each way. Instant when the visitor asks for reduced motion. */
 const FADE_MS = 180;

@@ -1,15 +1,17 @@
 // The Starting Village (About me), written as Tiled JSON (format 1.10) so it opens in Tiled and
 // loads like any map. The layout is text below; path and pond edges are chosen automatically
-// from their neighbours, so the text stays readable and the edges always match.
+// from their neighbours (corner masks, see cornerMask), so the text stays readable and the
+// edges always match.
 //
 // Layers: ground (terrain + village tiles), decor (plants, fences, rocks; drawn under
 // characters), entities (spawn, NPC, sign, props as points at their feet), collision
 // (rectangles: the forest edge; kept apart from the art so trees can be moved freely).
 import { checkGrid, type Grid } from '../draw.ts';
 import { COLUMNS as TERRAIN_COLUMNS, TERRAIN_TILES, TILE } from '../placeholders/terrain.ts';
-import { COLUMNS as VILLAGE_COLUMNS, VILLAGE_TILES, type Edge } from './tiles.ts';
+import { COLUMNS as VILLAGE_COLUMNS, CORNER, VILLAGE_TILES } from './tiles.ts';
 
-// Ground. '.' grass, ',' grass tufts, ';' clover, '=' path, '#' cobble, '~' pond,
+// Ground. '.' grass, ',' grass tufts, ';' clover, '=' path, '#' the square (paved like the
+// paths, kept apart in the text so the square stays easy to see), '~' pond,
 // 'l' pond with lilies, 'r' pond with reeds (both only where the pond needs no edge).
 const GROUND: Grid = [
   '..,.......;.......,.......',
@@ -61,7 +63,9 @@ const DECOR: Grid = [
   '..........................',
 ];
 
-const GROUND_KEY: Record<string, string> = { '.': 'grass', ',': 'grass-tufts', ';': 'clover', '=': 'path', '#': 'cobble', '~': 'pond', l: 'lilies', r: 'reeds' };
+const GROUND_KEY: Record<string, string> = { '.': 'grass', ',': 'grass-tufts', ';': 'clover', '=': 'path', '#': 'path', '~': 'pond', l: 'lilies', r: 'reeds' };
+/** Plain grass cells cycle through the fills by position, so big fields don't repeat visibly. */
+const GRASS_FILLS = ['grass', 'grass-2', 'grass-3', 'grass', 'grass-2'] as const;
 const DECOR_KEY: Record<string, string> = { B: 'bush', R: 'rock', S: 'stump', F: 'fence', '|': 'fence-v', '*': 'flowers', t: 'tulips', d: 'daisies', g: 'tall-grass', p: 'pebbles', m: 'mushrooms' };
 
 /** Cells that count as the same surface when choosing edges (paths run into the cobbled square). */
@@ -86,70 +90,66 @@ interface Placed {
 
 const ENTITIES: Placed[] = [
   { name: 'player', type: 'spawn', x: px(13), y: px(20), sprite: 'char.player' },
-  { name: 'guide', type: 'npc', x: px(15) + 8, y: px(12), sprite: 'char.npc-guide', dialogue: 'village-guide' },
-  { name: 'welcome-sign', type: 'sign', x: px(10) + 8, y: px(20) + 4, sprite: 'obj.sign', dialogue: 'village-sign' },
+  { name: 'guide', type: 'npc', x: px(15) + 16, y: px(12), sprite: 'char.npc-guide', dialogue: 'village-guide' },
+  { name: 'welcome-sign', type: 'sign', x: px(10) + 16, y: px(20) + 8, sprite: 'obj.sign', dialogue: 'village-sign' },
   { name: 'welcome-arch', type: 'prop', x: px(13), y: px(18), sprite: 'obj.arch' },
   // The Exit Portal (Contact), in the glade by the gate, with its courier.
   { name: 'exit-portal', type: 'prop', x: px(4), y: px(19), sprite: 'obj.portal', panel: 'contact' },
-  { name: 'courier', type: 'npc', x: px(7), y: px(17) + 10, sprite: 'char.npc-courier', dialogue: 'portal-courier' },
+  { name: 'courier', type: 'npc', x: px(7), y: px(17) + 20, sprite: 'char.npc-courier', dialogue: 'portal-courier' },
   // The cellar at the top of the north path leads down to the Dungeon (Projects).
-  { name: 'cellar', type: 'prop', x: px(14), y: px(3) + 8, sprite: 'obj.cellar' },
+  { name: 'cellar', type: 'prop', x: px(14), y: px(3) + 16, sprite: 'obj.cellar' },
   { name: 'from-dungeon', type: 'arrive', x: px(14), y: px(5), sprite: '', facing: 'down' },
   // Roads out of the forest: west to the Guild Hall (Experience), east to the Skill Tower (Skills).
-  { name: 'from-guild-hall', type: 'arrive', x: px(2), y: px(11) + 8, sprite: '', facing: 'right' },
-  { name: 'from-skill-tower', type: 'arrive', x: px(24), y: px(16) + 8, sprite: '', facing: 'left' },
-  { name: 'sign-west', type: 'sign', x: px(3) + 8, y: px(10), sprite: 'obj.sign', dialogue: 'village-sign-west' },
-  { name: 'sign-east', type: 'sign', x: px(15) + 8, y: px(15), sprite: 'obj.sign', dialogue: 'village-sign-east' },
-  { name: 'notice-board', type: 'prop', x: px(13) + 8, y: px(10), sprite: 'obj.noticeboard', dialogue: 'village-board' },
+  { name: 'from-guild-hall', type: 'arrive', x: px(2), y: px(11) + 16, sprite: '', facing: 'right' },
+  { name: 'from-skill-tower', type: 'arrive', x: px(24), y: px(16) + 16, sprite: '', facing: 'left' },
+  { name: 'sign-west', type: 'sign', x: px(3) + 16, y: px(10), sprite: 'obj.sign', dialogue: 'village-sign-west' },
+  { name: 'sign-east', type: 'sign', x: px(15) + 16, y: px(15), sprite: 'obj.sign', dialogue: 'village-sign-east' },
+  { name: 'notice-board', type: 'prop', x: px(13) + 16, y: px(10), sprite: 'obj.noticeboard', dialogue: 'village-board' },
   { name: 'workshop', type: 'prop', x: px(6), y: px(8), sprite: 'obj.house', dialogue: 'village-workshop' },
-  { name: 'crates', type: 'prop', x: px(9) + 8, y: px(8), sprite: 'obj.crates' },
-  { name: 'lamp-west', type: 'prop', x: px(10) + 8, y: px(10), sprite: 'obj.lamp' },
-  { name: 'lamp-east', type: 'prop', x: px(16) + 8, y: px(10), sprite: 'obj.lamp' },
+  { name: 'crates', type: 'prop', x: px(9) + 16, y: px(8), sprite: 'obj.crates' },
+  { name: 'lamp-west', type: 'prop', x: px(10) + 16, y: px(10), sprite: 'obj.lamp' },
+  { name: 'lamp-east', type: 'prop', x: px(16) + 16, y: px(10), sprite: 'obj.lamp' },
   // Trees: a forest edge along the north, west and east, thinning towards the entrance.
-  ...[1, 3, 5, 9, 11, 17, 20, 23, 25].map((t, i) => ({ name: `tree-n${i}`, type: 'prop' as const, x: px(t), y: px(2) + 6, sprite: i % 3 === 1 ? 'obj.tree-birch' : 'obj.tree-pine' })),
+  ...[1, 3, 5, 9, 11, 17, 20, 23, 25].map((t, i) => ({ name: `tree-n${i}`, type: 'prop' as const, x: px(t), y: px(2) + 12, sprite: i % 3 === 1 ? 'obj.tree-birch' : 'obj.tree-pine' })),
   ...[5, 8, 14, 17].map((t, i) => ({ name: `tree-w${i}`, type: 'prop' as const, x: px(1), y: px(t), sprite: i % 2 ? 'obj.tree-birch' : 'obj.tree-pine' })),
   ...[5, 9, 12, 19].map((t, i) => ({ name: `tree-e${i}`, type: 'prop' as const, x: px(25), y: px(t), sprite: i % 2 ? 'obj.tree-pine' : 'obj.tree-birch' })),
   ...[3, 7, 18, 22].map((t, i) => ({ name: `tree-s${i}`, type: 'prop' as const, x: px(t), y: px(21), sprite: i % 2 ? 'obj.tree-birch' : 'obj.tree-pine' })),
   { name: 'pond-birch', type: 'prop', x: px(24), y: px(8), sprite: 'obj.tree-birch' },
-  { name: 'square-birch', type: 'prop', x: px(9) + 8, y: px(14), sprite: 'obj.tree-birch' },
+  { name: 'square-birch', type: 'prop', x: px(9) + 16, y: px(14), sprite: 'obj.tree-birch' },
   { name: 'gate-pine-w', type: 'prop', x: px(9), y: px(18), sprite: 'obj.tree-pine' },
-  { name: 'gate-pine-e', type: 'prop', x: px(17), y: px(18) + 4, sprite: 'obj.tree-pine' },
+  { name: 'gate-pine-e', type: 'prop', x: px(17), y: px(18) + 8, sprite: 'obj.tree-pine' },
 ];
 
 /** The forest edge: solid strips round the map, with a gap for the entrance at the south. */
 const COLLISION = [
-  { name: 'forest-north', x: 0, y: 0, width: px(26), height: 40 },
-  { name: 'forest-west-north', x: 0, y: 0, width: 24, height: px(10) },
-  { name: 'forest-west-south', x: 0, y: px(12), width: 24, height: px(9) },
-  { name: 'forest-east-north', x: px(26) - 24, y: 0, width: 24, height: px(15) },
-  { name: 'forest-east-south', x: px(26) - 24, y: px(17), width: 24, height: px(4) },
-  { name: 'forest-south-west', x: 0, y: px(21) - 12, width: px(11), height: 12 },
-  { name: 'forest-south-east', x: px(15), y: px(21) - 12, width: px(11), height: 12 },
+  { name: 'forest-north', x: 0, y: 0, width: px(26), height: 80 },
+  { name: 'forest-west-north', x: 0, y: 0, width: 48, height: px(10) },
+  { name: 'forest-west-south', x: 0, y: px(12), width: 48, height: px(9) },
+  { name: 'forest-east-north', x: px(26) - 48, y: 0, width: 48, height: px(15) },
+  { name: 'forest-east-south', x: px(26) - 48, y: px(17), width: 48, height: px(4) },
+  { name: 'forest-south-west', x: 0, y: px(21) - 24, width: px(11), height: 24 },
+  { name: 'forest-south-east', x: px(15), y: px(21) - 24, width: px(11), height: 24 },
 ];
 
-function edgeFor(grid: Grid, x: number, y: number, surface: 'path' | 'pond'): Edge | null {
-  const same = (dx: number, dy: number) => {
-    const row = grid[y + dy];
-    const ch = row?.[x + dx];
-    // Off the map counts as the same surface: a path running off the edge has no fringe there.
+/**
+ * Which corners of the cell at x, y are this surface: a corner counts only when all four cells
+ * round it are the surface (off the map counts as the same surface, so a path running off the
+ * edge has no fringe there). So a cell's tile depends only on its own surface, collision stays
+ * per cell, and a path never shares a tile with the pond.
+ */
+function cornerMask(grid: Grid, x: number, y: number, surface: 'path' | 'pond'): number {
+  const same = (cx: number, cy: number) => {
+    const ch = grid[cy]?.[cx];
     return ch === undefined || SURFACES[surface].has(ch);
   };
-  const n = !same(0, -1);
-  const s = !same(0, 1);
-  const w = !same(-1, 0);
-  const e = !same(1, 0);
-  if ((n && s) || (w && e)) throw new Error(`village: ${surface} at ${x},${y} is only 1 tile wide; make it at least 2`);
-  if (n && w) return 'nw';
-  if (n && e) return 'ne';
-  if (s && w) return 'sw';
-  if (s && e) return 'se';
-  if (n) return 'n';
-  if (s) return 's';
-  if (w) return 'w';
-  if (e) return 'e';
-  const corners = (['nw', 'ne', 'sw', 'se'] as const).filter((k) => !same(k.includes('w') ? -1 : 1, k.includes('n') ? -1 : 1));
-  if (corners.length > 1) throw new Error(`village: ${surface} at ${x},${y} needs ${corners.length} inner corners; widen it`);
-  return corners.length ? (`i${corners[0]}` as Edge) : null;
+  const corner = (dx: number, dy: number) => same(x, y) && same(x + dx, y) && same(x, y + dy) && same(x + dx, y + dy);
+  let mask = 0;
+  if (corner(-1, -1)) mask |= CORNER.nw;
+  if (corner(1, -1)) mask |= CORNER.ne;
+  if (corner(-1, 1)) mask |= CORNER.sw;
+  if (corner(1, 1)) mask |= CORNER.se;
+  if (mask === 0) throw new Error(`village: ${surface} at ${x},${y} touches no 2 × 2 block of ${surface}; make it at least 2 wide`);
+  return mask;
 }
 
 export function villageMap(tilesets: { terrain: { id: string; image: string }; village: { id: string; image: string } }): object {
@@ -179,14 +179,14 @@ export function villageMap(tilesets: { terrain: { id: string; image: string }; v
       const ch = GROUND[y]![x]!;
       const name = GROUND_KEY[ch];
       if (!name) throw new Error(`village ground: unknown "${ch}" at ${x},${y}`);
-      if (ch === '=' || ch === '~') {
-        const surface = ch === '=' ? 'path' : 'pond';
-        const edge = edgeFor(GROUND, x, y, surface);
-        ground.push(edge ? villageGid(`${surface}-${edge}`) : ch === '=' ? terrainGid('path') : villageGid('pond'));
+      if (ch === '=' || ch === '#' || ch === '~') {
+        const surface = ch === '~' ? 'pond' : 'path';
+        ground.push(villageGid(`${surface}-${cornerMask(GROUND, x, y, surface)}`));
       } else if (ch === 'l' || ch === 'r') {
-        if (edgeFor(GROUND, x, y, 'pond')) throw new Error(`village: "${ch}" at ${x},${y} is on the pond's edge; move it inwards`);
+        if (cornerMask(GROUND, x, y, 'pond') !== 15) throw new Error(`village: "${ch}" at ${x},${y} is on the pond's edge; move it inwards`);
         ground.push(villageGid(name));
-      } else ground.push(gid(name));
+      } else if (ch === '.') ground.push(gid(GRASS_FILLS[(x * 7 + y * 3) % GRASS_FILLS.length]!));
+      else ground.push(gid(name));
 
       const d = DECOR[y]![x]!;
       if (d === '.') decor.push(0);
@@ -218,13 +218,13 @@ export function villageMap(tilesets: { terrain: { id: string; image: string }; v
   }));
   // The roads leave the map through the gaps in the forest edge.
   entities.push(
-    { id: nextId++, name: 'to-guild-hall', type: 'portal', point: false, x: 0, y: px(10) + 2, width: 6, height: px(2) - 4, rotation: 0, visible: true, properties: props({ to: 'map.guildhall', arrive: 'from-village' }) },
-    { id: nextId++, name: 'to-skill-tower', type: 'portal', point: false, x: px(26) - 6, y: px(15) + 2, width: 6, height: px(2) - 4, rotation: 0, visible: true, properties: props({ to: 'map.tower', arrive: 'from-village' }) },
+    { id: nextId++, name: 'to-guild-hall', type: 'portal', point: false, x: 0, y: px(10) + 4, width: 12, height: px(2) - 8, rotation: 0, visible: true, properties: props({ to: 'map.guildhall', arrive: 'from-village' }) },
+    { id: nextId++, name: 'to-skill-tower', type: 'portal', point: false, x: px(26) - 12, y: px(15) + 4, width: 12, height: px(2) - 8, rotation: 0, visible: true, properties: props({ to: 'map.tower', arrive: 'from-village' }) },
   );
   // Walking into the cellar's dark doorway takes you down to the Dungeon.
   entities.push({
     // On the threshold (level with the arch's base): a locked door stops you in front of the arch, not inside it.
-    id: nextId++, name: 'to-dungeon', type: 'portal', point: false, x: px(14) - 9, y: 46, width: 18, height: 10, rotation: 0, visible: true,
+    id: nextId++, name: 'to-dungeon', type: 'portal', point: false, x: px(14) - 18, y: 92, width: 36, height: 20, rotation: 0, visible: true,
     properties: props({ to: 'map.dungeon', arrive: 'from-village' }),
   });
   const collision = COLLISION.map((r) => ({ id: nextId++, name: r.name, type: 'solid', x: r.x, y: r.y, width: r.width, height: r.height, rotation: 0, visible: true }));

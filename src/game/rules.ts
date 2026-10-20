@@ -2,10 +2,10 @@
 // spawn is free and every NPC, sign and prop with dialogue can be reached). Pure: no imports.
 
 /** Collision box at a character's feet, so characters can walk "behind" the top of things. */
-export const FEET = { width: 10, height: 6 } as const;
+export const FEET = { width: 20, height: 12 } as const;
 
 /** How close (game pixels, feet to feet) the player must be to interact: a bit over one tile. */
-export const INTERACT_RANGE = 22;
+export const INTERACT_RANGE = 44;
 
 /** The front of a prop's solid base: its bottom line, from the leftmost to the rightmost solid box. */
 export interface FrontEdge {

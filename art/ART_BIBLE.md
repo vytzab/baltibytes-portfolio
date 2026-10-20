@@ -2,7 +2,7 @@
 
 The visual rules for every piece of art in the game. Anyone (the owner, a hired artist, or someone using an image-generation tool and cleaning up its output) should be able to make an asset that fits by following this page. The commands and file workflow are in [README.md](README.md).
 
-Status: **v0, provisional.** The rules were tested in the art preview (`art-preview.html`): the terrain and props are placeholders; the player and guide (v2, 24 × 32) are the first real character art, as drafts awaiting approval. Rules marked *(tentative)* should be confirmed with more production art.
+Status: **v1, at 2×** (since 2026-10-20, §11). Every sprite, tileset and UI piece in the game is the approved 2× art, painted in code by the assetGenerator repo; the sizes below are the 2× ones. Rules marked *(tentative)* should be confirmed with more production art.
 
 **Moving to 2× (in progress, decided 2026-10-20).** All art is being redrawn at twice the resolution (32 × 32 tiles, 48 × 64 characters) for more detail; see §11. Until the switch, the 1× rules in §1–§10 apply to everything in the game.
 
@@ -29,22 +29,22 @@ The five locations share one palette and style; each has its own accent:
 
 - **Top-down three-quarter view** (the classic RPG view): the ground is seen from above, and anything that stands up (characters, walls, house fronts, signs) is seen from the front. Every asset uses this same angle. Don't mix in pure side views or isometric pieces.
 - **Light comes from the top-left**, always. Shade on the bottom-right of forms.
-- The camera follows the player, snapped to whole pixels. It always shows at least **240 × 144 game pixels (15 × 9 tiles)**; bigger screens see more of the world at the same pixel size rather than a stretched picture.
+- The camera follows the player, snapped to whole pixels. It always shows at least **480 × 288 game pixels (15 × 9 tiles)**; bigger screens see more of the world at the same pixel size rather than a stretched picture.
 - Things are drawn at one scale. A tree is not drawn in more detail than the character next to it.
 
 ## 3. Sizes
 
 | Asset | Size (px) | Rules |
 |---|---|---|
-| Tile | **16 × 16** | Ground and decoration tiles. Ground tiles tile seamlessly in every direction. |
-| Character / NPC frame | **24 × 32** | Figure 26–29 px tall (player 26, guide 29 with her bun), about 12–16 px wide plus accessories; head about 14 × 14. Feet on the bottom row, body centred on the line between columns 11 and 12. Origin = bottom centre. Collision is separate: a 10 × 6 box at the feet, whatever the frame size. |
-| Large creature or vehicle | 32 × 32 frames | Only when 24 × 32 truly can't fit it; feet on the bottom row. |
-| Objects and props | Multiples of 8, footprint ideally a whole number of tiles | Signs, chests, lamps: usually 16 × 16 or 16 × 32. Trees 32 × 48 to 32 × 56. Buildings: multiples of 16 (the workshop is 80 × 80, its door 28 px tall so characters fit through it). |
-| UI frames | 9-slice with **8 px** corners | `ui.dialogue-box` is 24 × 24 (8 px corners, 8 px stretchable edges). |
-| UI icons | 8 × 8 or 16 × 16 | The "!" prompt is 9 × 9 (odd, so the "!" has a centre column). |
+| Tile | **32 × 32** | Ground and decoration tiles. Ground tiles tile seamlessly in every direction. |
+| Character / NPC frame | **48 × 64** | Figure about 58 px tall, head about 28 px. Feet on the bottom row (63), body centred on the line between columns 23 and 24. Origin = bottom centre. Collision is separate: a 20 × 12 box at the feet, whatever the frame size. |
+| Large creature or vehicle | 64 × 64 frames | Only when 48 × 64 truly can't fit it; feet on the bottom row. |
+| Objects and props | Multiples of 16, footprint ideally a whole number of tiles | Signs 32 × 32, chests 48 × 48, lamps 32 × 64. Trees 64 × 96 to 64 × 112. Buildings: multiples of 32 (the workshop is 160 × 160, its door 56 px tall so characters fit through it). |
+| UI frames | 9-slice with **16 px** corners | `ui.dialogue-box` is 48 × 48 (16 px corners, 16 px stretchable edges). |
+| UI icons | 16 × 16 or 32 × 32 | The "!" prompt is 18 × 18 (its "!" is 2 px wide, so an even size centres it). |
 | Portraits *(tentative)* | 48 × 48 | For dialogue, if wanted. None exist yet. |
 
-**Why 24 × 32 for characters** (changed from 16 × 24 on 2026-10-13). The 16 × 24 placeholders had a 20 px body: 4 rows of face, 1 px eyes, no room for layered clothes, and nothing could stick out of the silhouette. 24 × 32 is the smallest frame that fits what makes a character recognisable at ×3–×6: a 14 px head with 2 px eyes, glasses or a fringe; a jacket over a shirt; and accessories that leave the body outline, like a backpack in profile or a coat flaring at the hem. 16 × 32 was considered and rejected: a 16 px width can't hold a profile backpack or a flared coat. The figures are about 1.6–1.8 tiles tall, a usual cozy-RPG proportion; tiles, props and collision were not changed.
+**Why 24 × 32 for characters** (history: changed from 16 × 24 on 2026-10-13, then doubled to 48 × 64 with everything else on 2026-10-20, §11). The 16 × 24 placeholders had a 20 px body: 4 rows of face, 1 px eyes, no room for layered clothes, and nothing could stick out of the silhouette. 24 × 32 is the smallest frame that fits what makes a character recognisable at ×3–×6: a 14 px head with 2 px eyes, glasses or a fringe; a jacket over a shirt; and accessories that leave the body outline, like a backpack in profile or a coat flaring at the hem. 16 × 32 was considered and rejected: a 16 px width can't hold a profile backpack or a flared coat. The figures are about 1.6–1.8 tiles tall, a usual cozy-RPG proportion; tiles, props and collision were not changed.
 
 **Chibi proportions:** the head is about half the figure's height, so faces read at real size. Everyone shares this proportion; tell characters apart by silhouette (hair shape, accessories, garment outline), not by height alone.
 
@@ -67,7 +67,7 @@ Indoors (the Dungeon), a wall with floor to its south shows its **face**: two ti
 
 ### Paths and water
 
-Paths and water never meet grass at a straight tile edge. Edge tiles show a ragged 2–4 px grass fringe (12 per surface: 4 sides, 4 outer corners, 4 inner corners), with a dark trodden rim on paths and a sand bank plus foam on water. The fringe is 3 px deep where it meets the next tile, so any edge tile joins any other. Surfaces must be at least 2 tiles wide wherever they have grass on both sides. The village map generator picks the right edge tile automatically and refuses layouts that would need anything else.
+Paths and water never meet grass at a straight tile edge. Edges are **corner-based**: each edge tile shows the surface on the corners in its mask (16 per surface: sides, outer and inner corners, both diagonals), with a wobbling boundary, a worn stone rim on paths and a sand bank plus foam on water. The boundary meets each tile border at a point set by that border's two corners, so any edge tile joins any other. A corner counts as surface only when all four map cells round it are, so a cell's tile depends only on its own surface and collision stays per cell; the surface fills three quarters of an edge tile, so a path two cells wide reads about a tile and a half wide. Surfaces must be at least 2 cells wide. The village map generator picks the right edge tile automatically and refuses layouts that would need anything else.
 
 ## 4. Pixels and scaling
 
@@ -110,7 +110,7 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 - **Animation names** are `state-direction` in kebab-case. Later states (`talk-down`, `wave-down`, `sit-left` …) follow the same pattern. In code the key is `<asset id>:<name>`, e.g. `char.player:walk-left`.
 - **Timing:** idle 4 frames at 3 fps (still, still, a 1 px breath, a blink); walk 4 frames at 8 fps (contact, passing, contact with the other foot, passing). Pick fps per animation in the manifest.
 - **Walk poses:** on contact frames the upper body dips 1 px (bent knees) and arms swing against the legs; feet never leave the bottom row and the head never shifts sideways within a direction. Side views swing the near arm forward and back. Secondary motion (a scarf tail, a coat hem) sways 1 px against the step.
-- **Character parts:** characters are built from parts (head, body, near arm, legs) in `tools/art/characters/`, each part hand-drawn as a text grid, and stacked by `compose.ts`. A new character copies `player.ts` and redraws the grids; the layout above comes for free.
+- **Character parts:** characters are painted in code by the assetGenerator repo (`designs/baltibytes/characters/`): parts are shapes with a material ramp, light, cast shadows and outlines follow §6 by rule, and faces and details are placed by hand. A new character copies an existing design; the sheet layout above comes for free.
 - Every frame used by an animation must contain something (the validator flags empty frames).
 - **Ambient loops** (water, flags, torches) must look fine frozen on their first frame, which is what visitors who ask for reduced motion get.
 
@@ -142,9 +142,9 @@ All art uses one palette: **`baltibytes-v0`**, 30 colours, in [`palettes/baltiby
 - [ ] Interactive? It has a shape cue, not just colour
 - [ ] Manifest entry complete; `npm run art:validate` passes
 
-## 11. Moving to 2× (v1, in progress)
+## 11. At 2× (v1)
 
-Decided 2026-10-20: at 24 × 32 a face is about 10 × 5 pixels, too small for the detail wanted. Everything moves to twice the resolution together, on a branch, and ships in one switch, so the game never mixes pixel sizes (§4). Until then §1–§10 stay in force.
+Decided 2026-10-20: at 24 × 32 a face is about 10 × 5 pixels, too small for the detail wanted. Everything moved to twice the resolution together, on the `art-2x` branch, in one switch, so the game never mixes pixel sizes (§4). The sizes in §2–§3 are the 2× ones; this section records the move and each approved design.
 
 | Asset | 1× now | 2× |
 |---|---|---|

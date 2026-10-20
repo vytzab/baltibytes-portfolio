@@ -1,31 +1,20 @@
-// Regenerates every code-drawn placeholder asset, plus the palette files for editors.
+// Regenerates what this repo still draws itself: the Tiled maps, the palette files for editors
+// and the fixed-URL site images (link preview, icons).
 //   npm run art:generate
 // Output is deterministic: running it twice gives byte-identical files.
-// It only writes the files listed below; it never touches the manifest or other assets.
+// The sprites and tilesets are painted at 2× by the sibling assetGenerator repo
+// (`assetgen export designs/baltibytes/export.py`, art/README.md → Workflows), which writes them
+// into src/assets/; this script never touches them, the manifest or any other asset.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { PixelCanvas } from './draw.ts';
 import { writePng } from './png.ts';
 import { PALETTE_DIR, colorsByName, loadPalette, type Palette } from './palette.ts';
-import { characterSheet } from './characters/compose.ts';
-import { GUIDE } from './characters/guide.ts';
-import { PLAYER } from './characters/player.ts';
-import { KEEPER } from './characters/keeper.ts';
-import { SAGE } from './characters/sage.ts';
-import { GUILDMASTER } from './characters/guildmaster.ts';
-import { COURIER } from './characters/courier.ts';
-import { INTERIOR_TILES, COLUMNS as INTERIOR_COLUMNS, interiorTileset } from './interior/tiles.ts';
-import { bookshelf, hearth, lectern, plaque, portal, table } from './interior/props.ts';
+import { INTERIOR_TILES, COLUMNS as INTERIOR_COLUMNS } from './interior/tiles.ts';
 import { guildMap, towerMap } from './interior/maps.ts';
 import { DUNGEON_TILES, COLUMNS as DUNGEON_COLUMNS } from './dungeon/tiles.ts';
-import { terrainTileset } from './placeholders/terrain.ts';
-import { dialogueBox, interactPrompt, shadow, sign } from './placeholders/props.ts';
 import { previewMap } from './placeholders/map.ts';
-import { villageTileset } from './village/tiles.ts';
-import { arch, birch, crates, house, lamp, noticeBoard, pine } from './village/props.ts';
 import { villageMap } from './village/map.ts';
-import { dungeonTileset } from './dungeon/tiles.ts';
-import { cellar, chest, stairsUp, torch } from './dungeon/props.ts';
 import { dungeonMap } from './dungeon/map.ts';
 import { writeSiteImages } from './site-images.ts';
 
@@ -34,11 +23,6 @@ const PALETTE_ID = 'baltibytes-v0';
 
 const palette = loadPalette(PALETTE_ID);
 const c = colorsByName(palette);
-
-function out(path: string, image: PixelCanvas): void {
-  writePng(join(ASSETS, path), image);
-  console.log(`  src/assets/${path}`);
-}
 
 /** GIMP palette: Aseprite, LibreSprite, Pixelorama and GIMP all import it. */
 function writeGpl(p: Palette): void {
@@ -59,47 +43,7 @@ function writeSwatch(p: Palette): void {
   writePng(join(PALETTE_DIR, `${p.id}.png`), canvas);
 }
 
-console.log('Generating code-drawn art:');
-out('characters/player.png', characterSheet(PLAYER, c));
-out('characters/npc-guide.png', characterSheet(GUIDE, c));
-out('characters/npc-keeper.png', characterSheet(KEEPER, c));
-out('characters/npc-sage.png', characterSheet(SAGE, c));
-out('characters/npc-guildmaster.png', characterSheet(GUILDMASTER, c));
-out('characters/npc-courier.png', characterSheet(COURIER, c));
-out('tiles/terrain.png', terrainTileset(c));
-out('objects/sign.png', sign(c));
-out('ui/dialogue-box.png', dialogueBox(c));
-out('ui/prompt.png', interactPrompt(c));
-out('effects/shadow.png', shadow(c));
-
-// Starting Village
-out('tiles/village.png', villageTileset(c));
-out('objects/house.png', house(c));
-out('objects/tree-pine.png', pine(c));
-out('objects/tree-birch.png', birch(c));
-out('objects/arch.png', arch(c));
-out('objects/noticeboard.png', noticeBoard(c));
-out('objects/lamp.png', lamp(c));
-out('objects/crates.png', crates(c));
-out('objects/cellar.png', cellar(c));
-
-// Dungeon
-out('tiles/dungeon.png', dungeonTileset(c));
-out('objects/torch.png', torch(c));
-out('objects/chest.png', chest(c));
-out('objects/stairs-up.png', stairsUp(c));
-
-// Skill Tower and Guild Hall
-out('tiles/interior.png', interiorTileset(c));
-out('objects/bookshelf.png', bookshelf(c));
-out('objects/lectern.png', lectern(c));
-out('objects/hearth.png', hearth(c));
-out('objects/table.png', table(c));
-out('objects/plaque.png', plaque(c));
-
-// Exit Portal
-out('objects/portal.png', portal(c));
-
+console.log('Generating maps:');
 function writeMap(path: string, map: object): void {
   const full = join(ASSETS, path);
   mkdirSync(dirname(full), { recursive: true });
