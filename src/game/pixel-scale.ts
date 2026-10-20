@@ -3,9 +3,10 @@
 // The game's own resolution grows or shrinks with the window instead of stretching.
 import type * as Phaser from 'phaser';
 
-/** Smallest area (game pixels) always visible: 15 × 9 tiles. Sets the default zoom. */
-export const MIN_VIEW = { width: 240, height: 144 } as const;
-export const MAX_ZOOM = 8;
+/** Smallest area (game pixels) always visible: 15 × 9 tiles of 32 px. Sets the default zoom. */
+export const MIN_VIEW = { width: 480, height: 288 } as const;
+/** Art is 2× (ART_BIBLE §11), so 4 device pixels per game pixel is as big as the old ×8. */
+export const MAX_ZOOM = 4;
 
 export interface PixelScale {
   /** Device pixels per game pixel (whole number). */

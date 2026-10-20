@@ -77,8 +77,8 @@ const TOWER_RUG = { x0: 8, y0: 5, x1: 12, y1: 9, star: [10, 7] as [number, numbe
 const LECTERNS: Array<[number, number]> = [
   [px(4), px(7)],
   [px(4), px(10)],
-  [px(7) + 8, px(12)],
-  [px(13) + 8, px(12)],
+  [px(7) + 16, px(12)],
+  [px(13) + 16, px(12)],
   [px(17), px(10)],
   [px(17), px(7)],
 ];
@@ -86,9 +86,9 @@ const LECTERNS: Array<[number, number]> = [
 export function towerMap(tilesets: TilesetRef[]): object {
   if (SKILL_CATEGORIES.length !== LECTERNS.length) throw new Error(`tower: ${SKILL_CATEGORIES.length} skill categories but ${LECTERNS.length} lecterns`);
   const entities: Placed[] = [
-    { name: 'player', type: 'spawn', x: px(10) + 8, y: px(15), props: { sprite: 'char.player' } },
-    { name: 'from-village', type: 'arrive', x: px(10) + 8, y: px(15), props: { facing: 'up' } },
-    { name: 'sage', type: 'npc', x: px(10) + 8, y: px(5) - 2, props: { sprite: 'char.npc-sage', dialogue: 'tower-sage' } },
+    { name: 'player', type: 'spawn', x: px(10) + 16, y: px(15), props: { sprite: 'char.player' } },
+    { name: 'from-village', type: 'arrive', x: px(10) + 16, y: px(15), props: { facing: 'up' } },
+    { name: 'sage', type: 'npc', x: px(10) + 16, y: px(5) - 4, props: { sprite: 'char.npc-sage', dialogue: 'tower-sage' } },
     ...[[px(6), 'a'], [px(8), 'b'], [px(13), 'c'], [px(15), 'd']].map(([x, k]) => ({
       name: `shelf-${k}`, type: 'prop' as const, x: Number(x), y: px(3), props: { sprite: 'obj.bookshelf' },
     })),
@@ -112,7 +112,7 @@ export function towerMap(tilesets: TilesetRef[]): object {
       },
       entities,
       // Walking down the entrance passage leads back out to the village road.
-      portals: [{ name: 'to-village', x: px(8), y: px(16) - 6, width: px(5), height: 6, to: 'map.village', arrive: 'from-skill-tower' }],
+      portals: [{ name: 'to-village', x: px(8), y: px(16) - 12, width: px(5), height: 12, to: 'map.village', arrive: 'from-skill-tower' }],
     },
     tilesets,
   );
@@ -162,12 +162,12 @@ const GUILD_DECOR: Grid = [
 export function guildMap(tilesets: TilesetRef[]): object {
   if (ROLES.length > 4) throw new Error(`guild hall: room for 4 role plaques, ${ROLES.length} roles`);
   const entities: Placed[] = [
-    { name: 'player', type: 'spawn', x: px(12), y: px(13) + 8, props: { sprite: 'char.player' } },
-    { name: 'from-village', type: 'arrive', x: px(12), y: px(13) + 8, props: { facing: 'up' } },
-    { name: 'guildmaster', type: 'npc', x: px(12), y: px(4) + 4, props: { sprite: 'char.npc-guildmaster', dialogue: 'guild-master' } },
+    { name: 'player', type: 'spawn', x: px(12), y: px(13) + 16, props: { sprite: 'char.player' } },
+    { name: 'from-village', type: 'arrive', x: px(12), y: px(13) + 16, props: { facing: 'up' } },
+    { name: 'guildmaster', type: 'npc', x: px(12), y: px(4) + 8, props: { sprite: 'char.npc-guildmaster', dialogue: 'guild-master' } },
     { name: 'hearth', type: 'prop', x: px(12), y: px(2), props: { sprite: 'obj.hearth' } },
     // Plaques on the back wall, west of the hearth, one per role in ROLES order.
-    ...ROLES.map((role, i) => ({ name: `plaque-${role.id}`, type: 'prop' as const, x: px(3 + i * 2) + 8, y: px(2), props: { sprite: 'obj.plaque', panel: `role:${role.id}` } })),
+    ...ROLES.map((role, i) => ({ name: `plaque-${role.id}`, type: 'prop' as const, x: px(3 + i * 2) + 16, y: px(2), props: { sprite: 'obj.plaque', panel: `role:${role.id}` } })),
     { name: 'records', type: 'prop', x: px(4), y: px(12), props: { sprite: 'obj.noticeboard', panel: 'experience' } },
     ...[[px(7), px(6)], [px(17), px(6)], [px(7), px(9)], [px(17), px(9)]].map(([x, y], i) => ({ name: `table-${i}`, type: 'prop' as const, x: x!, y: y!, props: { sprite: 'obj.table' } })),
   ];
@@ -188,7 +188,7 @@ export function guildMap(tilesets: TilesetRef[]): object {
         '>': 'dungeon:cobweb-ne',
       },
       entities,
-      portals: [{ name: 'to-village', x: px(10), y: px(14) - 6, width: px(4), height: 6, to: 'map.village', arrive: 'from-guild-hall' }],
+      portals: [{ name: 'to-village', x: px(10), y: px(14) - 12, width: px(4), height: 12, to: 'map.village', arrive: 'from-guild-hall' }],
     },
     tilesets,
   );

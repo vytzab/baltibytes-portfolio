@@ -72,7 +72,7 @@ function tiledMap() {
       { name: 'ground', type: 'tilelayer', width: 6, height: 4, data: Array.from({ length: 24 }, () => 1) },
       {
         name: 'entities', type: 'objectgroup', objects: [
-          { name: 'hero', type: 'npc', point: true, x: 72, y: 40, properties: [{ name: 'sprite', value: 'char.hero' }, { name: 'dialogue', value: 'hello' }] },
+          { name: 'hero', type: 'npc', point: true, x: 88, y: 40, properties: [{ name: 'sprite', value: 'char.hero' }, { name: 'dialogue', value: 'hello' }] },
           { name: 'start', type: 'spawn', point: true, x: 16, y: 40 },
         ] as Array<Record<string, any>>,
       },
@@ -361,13 +361,13 @@ test('panels for a real project, skill category, role, the overview and contact 
 }));
 
 test('a wide prop is in reach from its side and its front, not from far behind', () => {
-  // The Exit Portal: a 48 px frame with a 40 px solid base, feet at (64, 304).
-  const portal = { x: 64, y: 304, front: frontEdge(64, 48, [{ x: 4, width: 40 }]) };
-  assert.deepEqual(portal.front, { left: 44, right: 84 });
-  assert.ok(reachDistance(89, 300, portal) <= INTERACT_RANGE, 'right side');
-  assert.ok(reachDistance(39, 300, portal) <= INTERACT_RANGE, 'left side');
-  assert.ok(reachDistance(80, 308, portal) <= INTERACT_RANGE, 'in front, off centre');
-  assert.ok(reachDistance(64, 270, portal) > INTERACT_RANGE, 'far behind');
+  // The Exit Portal at 2×: a 96 px frame with an 80 px solid base, feet at (128, 608).
+  const portal = { x: 128, y: 608, front: frontEdge(128, 96, [{ x: 8, width: 80 }]) };
+  assert.deepEqual(portal.front, { left: 88, right: 168 });
+  assert.ok(reachDistance(178, 600, portal) <= INTERACT_RANGE, 'right side');
+  assert.ok(reachDistance(78, 600, portal) <= INTERACT_RANGE, 'left side');
+  assert.ok(reachDistance(160, 616, portal) <= INTERACT_RANGE, 'in front, off centre');
+  assert.ok(reachDistance(128, 540, portal) > INTERACT_RANGE, 'far behind');
   // Without solid boxes, reach is the plain distance to the feet point.
   assert.equal(reachDistance(3, 4, { x: 0, y: 0, front: frontEdge(0, 16, undefined) }), 5);
 });

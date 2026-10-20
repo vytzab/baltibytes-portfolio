@@ -6,13 +6,13 @@
       "path": "characters/player.png",
       "category": "character",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "Player character: idle and walk in four directions.",
-      "width": 96,
-      "height": 256,
+      "width": 192,
+      "height": 512,
       "grid": {
-        "width": 24,
-        "height": 32
+        "width": 48,
+        "height": 64
       },
       "animations": [
         {
@@ -77,26 +77,26 @@
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/characters/compose.ts",
-        "source": "tools/art/characters/player.ts",
-        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/characters/player.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
-      "notes": "v2 design: young engineer with a cowlick, denim jacket, headphones round the neck, mustard backpack. Body ~26 px tall; origin bottom-centre (feet); collision is a 10 \u00d7 6 box at the feet. Right-facing rows mirror the left-facing ones."
+      "notes": "v4 at 2×: auburn side part with three crown spikes, cream oxford shirt, grey trousers, belt, black shoes. Figure ~58 px tall; origin bottom-centre (feet); collision is a 20 × 12 box at the feet. Right-facing rows mirror the left-facing ones."
     },
     {
       "id": "char.npc-guide",
       "path": "characters/npc-guide.png",
       "category": "character",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "Guide NPC in the Starting Village: idle and walk in four directions; turns to face the player when spoken to.",
-      "width": 96,
-      "height": 256,
+      "width": 192,
+      "height": 512,
       "grid": {
-        "width": 24,
-        "height": 32
+        "width": 48,
+        "height": 64
       },
       "animations": [
         {
@@ -161,26 +161,26 @@
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/characters/compose.ts",
-        "source": "tools/art/characters/guide.ts",
-        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/characters/guide.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
-      "notes": "v2 design: silver bun, round glasses, long heather coat, gold scarf, red book. Body ~29 px tall; origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
+      "notes": "v3 at 2×: silver bun, round gold glasses, heather cardigan, grey skirt, gold scarf, satchel, red book in both hands. Origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
     },
     {
       "id": "char.npc-keeper",
       "path": "characters/npc-keeper.png",
       "category": "character",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "The Dungeon's keeper (Projects): idle and walk in four directions; turns to face the player when spoken to.",
-      "width": 96,
-      "height": 256,
+      "width": 192,
+      "height": 512,
       "grid": {
-        "width": 24,
-        "height": 32
+        "width": 48,
+        "height": 64
       },
       "animations": [
         {
@@ -245,26 +245,26 @@
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/characters/compose.ts",
-        "source": "tools/art/characters/keeper.ts",
-        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/characters/keeper.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
-      "notes": "Pointed green hood, ginger beard, brick tunic, keys on the belt, lantern in hand (it swings when he walks). Body ~27 px tall; origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
+      "notes": "v3 at 2×: moss-green hood with a tall point, ginger beard, brick tunic, keys, a brass lantern on a pole. Origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
     },
     {
       "id": "char.npc-sage",
       "path": "characters/npc-sage.png",
       "category": "character",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "The Skill Tower's sage (Skills): idle and walk in four directions; turns to face the player when spoken to.",
-      "width": 96,
-      "height": 256,
+      "width": 192,
+      "height": 512,
       "grid": {
-        "width": 24,
-        "height": 32
+        "width": 48,
+        "height": 64
       },
       "animations": [
         {
@@ -329,26 +329,26 @@
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/characters/compose.ts",
-        "source": "tools/art/characters/sage.ts",
-        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/characters/sage.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
-      "notes": "Wide-brimmed pointed heather hat with a gold star, long dark hair, teal robe with gold trim, a glowing orb. Body ~29 px tall; origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
+      "notes": "v3 at 2×: wide-brimmed heather hat, long dark hair, teal robe with gold stars and a zigzag hem, an orb held in both hands. Origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
     },
     {
       "id": "char.npc-guildmaster",
       "path": "characters/npc-guildmaster.png",
       "category": "character",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "The Guild Hall's guildmaster (Experience): idle and walk in four directions; turns to face the player when spoken to.",
-      "width": 96,
-      "height": 256,
+      "width": 192,
+      "height": 512,
       "grid": {
-        "width": 24,
-        "height": 32
+        "width": 48,
+        "height": 64
       },
       "animations": [
         {
@@ -413,26 +413,26 @@
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/characters/compose.ts",
-        "source": "tools/art/characters/guildmaster.ts",
-        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/characters/guildmaster.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
-      "notes": "Bald, grey moustache and brows, rolled sleeves, leather apron, a ledger. Shortest and widest of the cast (~25 px). Origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
+      "notes": "v3 at 2×: bald with a grey horseshoe of hair, specs up, walrus moustache, leather apron, an open ledger in both hands. Shortest and widest of the cast. Origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
     },
     {
       "id": "char.npc-courier",
       "path": "characters/npc-courier.png",
       "category": "character",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "The courier at the Exit Portal (Contact): idle and walk in four directions; turns to face the player when spoken to.",
-      "width": 96,
-      "height": 256,
+      "width": 192,
+      "height": 512,
       "grid": {
-        "width": 24,
-        "height": 32
+        "width": 48,
+        "height": 64
       },
       "animations": [
         {
@@ -497,87 +497,89 @@
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/characters/compose.ts",
-        "source": "tools/art/characters/courier.ts",
-        "notes": "Every pixel placed by hand as text grids in the source file; compose.ts only stacks the parts into frames. No image-generation tool was used."
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/characters/courier.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
-      "notes": "Flat cap, blond hair, brick-red jacket with gold buttons, satchel with a letter. Player proportions (~26 px). Origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
+      "notes": "v3 at 2×: blond curls, freckles, tweed newsboy cap with a letter in the band, brick jacket, satchel on his left hip. Origin bottom-centre (feet). Right-facing rows mirror the left-facing ones."
     },
     {
       "id": "tiles.terrain",
       "path": "tiles/terrain.png",
       "category": "tileset",
       "type": "spritesheet",
-      "status": "placeholder",
+      "status": "production",
       "usage": "Overworld ground and decoration tiles: grass, grass-tufts, path, water, shore, bush, rock, fence, flowers, stump. Collision is a tile property in the map's tileset.",
-      "width": 80,
-      "height": 32,
+      "width": 160,
+      "height": 64,
       "grid": {
-        "width": 16,
-        "height": 16
+        "width": 32,
+        "height": 32
       },
       "transparency": "mixed",
       "palette": "baltibytes-v0",
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/placeholders/terrain.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/tiles/village.py, decor.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
-      "notes": "Tiles 0-4 are opaque ground; 5-9 are decoration on a transparent background. No autotile transitions yet."
+      "notes": "Tiles 0-4 are opaque ground (two grass fills, a full path, full water, a shore with grass above water); 5-9 are decoration on a transparent background. The village edges are in tiles.village."
     },
     {
       "id": "tiles.village",
       "path": "tiles/village.png",
       "category": "tileset",
       "type": "spritesheet",
-      "status": "draft",
-      "usage": "Starting Village tiles that extend tiles.terrain: grass edges for paths and the pond (12 each, chosen automatically by the map generator), pond water, cobbles, clover, tulips, daisies, tall grass, pebbles, a north\u2013south fence, reeds, lilies, mushrooms.",
-      "width": 128,
-      "height": 80,
+      "status": "production",
+      "usage": "Starting Village tiles that extend tiles.terrain: corner-based path and pond edges (16 each, chosen automatically by the map generator from corner masks), two more grass fills, clover, tulips, daisies, tall grass, pebbles, a north–south fence, reeds, lilies, mushrooms.",
+      "width": 256,
+      "height": 192,
       "grid": {
-        "width": 16,
-        "height": 16
+        "width": 32,
+        "height": 32
       },
       "transparency": "mixed",
       "palette": "baltibytes-v0",
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/village/tiles.ts",
-        "notes": "Edge tiles reuse the terrain set's path texture so they match it."
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/tiles/village.py, decor.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
-      "notes": "37 tiles in an 8 \u00d7 5 sheet; the last 3 cells are empty. Collision is the 'collides' tile property in each map's tileset."
+      "notes": "43 tiles in an 8 × 6 sheet; the last 5 cells are empty. path-<mask> and pond-<mask> show the surface on the corners in the mask (north-west 8, north-east 4, south-west 2, south-east 1). Collision is the \"collides\" tile property in each map's tileset: any pond tile with water collides."
     },
     {
       "id": "tiles.dungeon",
       "path": "tiles/dungeon.png",
       "category": "tileset",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "Dungeon (Projects) tiles: wall tops with a rim on every combination of sides that meet floor (16), upper and lower brick wall faces, four flagstone floors, a two-tile runner rug, rubble, cobwebs, and a banner per project colour.",
-      "width": 128,
-      "height": 64,
+      "width": 256,
+      "height": 128,
       "grid": {
-        "width": 16,
-        "height": 16
+        "width": 32,
+        "height": 32
       },
       "transparency": "mixed",
       "palette": "baltibytes-v0",
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/dungeon/tiles.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/tiles/dungeon.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "The map generator picks wall tops, faces and rims from the wall layout. Banners hang on lower wall faces (decor layer) and collide like the wall."
     },
@@ -586,23 +588,24 @@
       "path": "tiles/interior.png",
       "category": "tileset",
       "type": "spritesheet",
-      "status": "draft",
-      "usage": "Indoor floors and rugs for the Skill Tower and the Guild Hall: three plank floors, a heather rug in 9 pieces plus a star centre, books, scrolls. Walls and banners come from tiles.dungeon.",
-      "width": 128,
-      "height": 32,
+      "status": "production",
+      "usage": "Indoor floors and rugs for the Skill Tower and the Guild Hall: three dark plank floors, a heather rug in 9 pieces plus a star centre, books, scrolls. Walls and banners come from tiles.dungeon.",
+      "width": 256,
+      "height": 64,
       "grid": {
-        "width": 16,
-        "height": 16
+        "width": 32,
+        "height": 32
       },
       "transparency": "mixed",
       "palette": "baltibytes-v0",
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/interior/tiles.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/tiles/interior.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       }
     },
     {
@@ -613,8 +616,8 @@
       "status": "placeholder",
       "usage": "Small test area for the art preview page (art-preview.html).",
       "grid": {
-        "width": 16,
-        "height": 16
+        "width": 32,
+        "height": 32
       },
       "provenance": {
         "origin": "code-generated",
@@ -634,8 +637,8 @@
       "status": "draft",
       "usage": "The Starting Village (About me): entrance arch, workshop, cobbled square with the notice board and the guide, pond, flower garden, forest edge.",
       "grid": {
-        "width": 16,
-        "height": 16
+        "width": 32,
+        "height": 32
       },
       "provenance": {
         "origin": "code-generated",
@@ -655,8 +658,8 @@
       "status": "draft",
       "usage": "The Dungeon (Projects): a torch-lit hall with five vaults, each holding a quest chest that opens a project's case study. Stairs lead back up to the village.",
       "grid": {
-        "width": 16,
-        "height": 16
+        "width": 32,
+        "height": 32
       },
       "provenance": {
         "origin": "code-generated",
@@ -676,8 +679,8 @@
       "status": "draft",
       "usage": "The Skill Tower (Skills): a round stone room with bookshelves, the sage on a star rug and a lectern for each skill category. Reached by the village's east road.",
       "grid": {
-        "width": 16,
-        "height": 16
+        "width": 32,
+        "height": 32
       },
       "provenance": {
         "origin": "code-generated",
@@ -697,8 +700,8 @@
       "status": "draft",
       "usage": "The Guild Hall (Experience): a timbered hall with a hearth, the guildmaster, a plaque for each role, long tables and the records board. Reached by the village's west road.",
       "grid": {
-        "width": 16,
-        "height": 16
+        "width": 32,
+        "height": 32
       },
       "provenance": {
         "origin": "code-generated",
@@ -715,26 +718,27 @@
       "path": "objects/sign.png",
       "category": "object",
       "type": "image",
-      "status": "placeholder",
+      "status": "production",
       "usage": "Readable wooden sign; shows dialogue when the player interacts.",
-      "width": 16,
-      "height": 16,
+      "width": 32,
+      "height": 32,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/placeholders/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/tiles/decor.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "solid": [
         {
-          "x": 5,
-          "y": 10,
-          "width": 6,
-          "height": 6
+          "x": 10,
+          "y": 20,
+          "width": 12,
+          "height": 12
         }
       ]
     },
@@ -743,27 +747,28 @@
       "path": "objects/house.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
-      "usage": "The workshop in the Starting Village: plank walls, shingle roof, chimney, flower boxes, a '</>' plaque over the door. Interacting at the door shows its dialogue.",
-      "width": 80,
-      "height": 80,
+      "status": "production",
+      "usage": "The workshop in the Starting Village: wooden shake roof, half-timbered walls, a front gable with a round window, a '</>' plaque over the door, a lantern and a hanging gear sign. Interacting at the door shows its dialogue.",
+      "width": 160,
+      "height": 160,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 4,
-          "y": 24,
-          "width": 72,
-          "height": 56
+          "x": 8,
+          "y": 48,
+          "width": 144,
+          "height": 112
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/village/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/workshop.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "Solid over the whole building footprint (walls and the roof's depth), so nobody walks into the roof from behind."
     },
@@ -772,27 +777,28 @@
       "path": "objects/tree-pine.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
+      "status": "production",
       "usage": "Pine tree: forest edges and accents.",
-      "width": 32,
-      "height": 56,
+      "width": 64,
+      "height": 112,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 12,
-          "y": 50,
-          "width": 8,
-          "height": 6
+          "x": 24,
+          "y": 100,
+          "width": 16,
+          "height": 12
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/village/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/trees.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "Solid at the trunk only; characters pass behind the crown."
     },
@@ -801,27 +807,28 @@
       "path": "objects/tree-birch.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
+      "status": "production",
       "usage": "Birch tree: forest edges and accents.",
-      "width": 32,
-      "height": 48,
+      "width": 64,
+      "height": 96,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 12,
-          "y": 42,
-          "width": 8,
-          "height": 6
+          "x": 24,
+          "y": 84,
+          "width": 16,
+          "height": 12
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/village/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/trees.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "Solid at the trunk only."
     },
@@ -830,62 +837,64 @@
       "path": "objects/arch.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
+      "status": "production",
       "usage": "Welcome arch at the village entrance: the village's focal point. Characters walk through between the posts.",
-      "width": 64,
-      "height": 48,
+      "width": 128,
+      "height": 96,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 6,
-          "y": 41,
-          "width": 8,
-          "height": 7
+          "x": 12,
+          "y": 82,
+          "width": 16,
+          "height": 14
         },
         {
-          "x": 50,
-          "y": 41,
-          "width": 8,
-          "height": 7
+          "x": 100,
+          "y": 82,
+          "width": 16,
+          "height": 14
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/village/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/arch.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
-      "notes": "Two solid boxes, one per post foot; the 36 px between them is the way in."
+      "notes": "Two solid boxes, one per pillar foot; the 72 px between them is the way in."
     },
     {
       "id": "obj.noticeboard",
       "path": "objects/noticeboard.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
+      "status": "production",
       "usage": "Notice board on the village square; holds the About me text.",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 4,
-          "y": 26,
-          "width": 25,
-          "height": 6
+          "x": 8,
+          "y": 52,
+          "width": 50,
+          "height": 12
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/village/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/noticeboard.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "One box across both posts, so nobody walks under the board."
     },
@@ -894,13 +903,13 @@
       "path": "objects/lamp.png",
       "category": "object",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "Lamp post with a flickering flame; frame 0 is shown when motion is reduced.",
-      "width": 64,
-      "height": 32,
+      "width": 128,
+      "height": 64,
       "grid": {
-        "width": 16,
-        "height": 32
+        "width": 32,
+        "height": 64
       },
       "animations": [
         {
@@ -915,47 +924,50 @@
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 5,
-          "y": 28,
-          "width": 6,
-          "height": 4
+          "x": 3,
+          "y": 58,
+          "width": 9,
+          "height": 6
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/village/props.ts"
-      }
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/lamp.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
+      },
+      "notes": "Solid at the iron post's foot only; the lantern hangs to its right."
     },
     {
       "id": "obj.crates",
       "path": "objects/crates.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
+      "status": "production",
       "usage": "Crates and a barrel beside the workshop.",
-      "width": 32,
-      "height": 24,
+      "width": 64,
+      "height": 48,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 1,
-          "y": 14,
-          "width": 30,
-          "height": 10
+          "x": 2,
+          "y": 28,
+          "width": 60,
+          "height": 20
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/village/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/crates.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       }
     },
     {
@@ -963,48 +975,49 @@
       "path": "objects/cellar.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
+      "status": "production",
       "usage": "Cellar entrance in the village: a stone arch in a grassy mound; walking into the doorway goes down to the Dungeon.",
-      "width": 48,
-      "height": 48,
+      "width": 96,
+      "height": 96,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "solid": [
         {
           "x": 0,
-          "y": 34,
-          "width": 15,
-          "height": 14
+          "y": 68,
+          "width": 30,
+          "height": 28
         },
         {
-          "x": 33,
-          "y": 34,
-          "width": 15,
-          "height": 14
+          "x": 66,
+          "y": 68,
+          "width": 30,
+          "height": 28
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/dungeon/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/cellar.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
-      "notes": "The 18 px between the two solid boxes is the doorway; the map's portal sits inside it."
+      "notes": "The 36 px between the two solid boxes is the doorway; the map's portal sits inside it."
     },
     {
       "id": "obj.torch",
       "path": "objects/torch.png",
       "category": "object",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "Wall torch on dungeon wall faces; the flame flickers (frame 0 when motion is reduced).",
-      "width": 64,
-      "height": 24,
+      "width": 128,
+      "height": 48,
       "grid": {
-        "width": 16,
-        "height": 24
+        "width": 32,
+        "height": 48
       },
       "animations": [
         {
@@ -1020,10 +1033,11 @@
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/dungeon/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/torch.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "Not solid: it hangs on a wall that already collides."
     },
@@ -1032,13 +1046,13 @@
       "path": "objects/chest.png",
       "category": "object",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "Quest chest in each dungeon vault. Interacting opens the project's case study; it shows open once the visitor has read it.",
-      "width": 24,
-      "height": 48,
+      "width": 48,
+      "height": 96,
       "grid": {
-        "width": 24,
-        "height": 24
+        "width": 48,
+        "height": 48
       },
       "animations": [
         {
@@ -1060,19 +1074,20 @@
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 2,
-          "y": 12,
-          "width": 20,
-          "height": 12
+          "x": 4,
+          "y": 24,
+          "width": 40,
+          "height": 24
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/dungeon/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/chest.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "Two states as one-frame animations, so the game can pick 'closed' or 'open' by name."
     },
@@ -1081,19 +1096,20 @@
       "path": "objects/stairs-up.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
+      "status": "production",
       "usage": "Stairs up out of the dungeon, brightening towards daylight; the bottom step is the portal back to the village.",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/dungeon/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/stairs.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "Not solid: the player walks onto it."
     },
@@ -1102,27 +1118,28 @@
       "path": "objects/bookshelf.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
+      "status": "production",
       "usage": "Bookshelf against a wall (Skill Tower).",
-      "width": 32,
-      "height": 32,
+      "width": 64,
+      "height": 64,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 1,
-          "y": 24,
-          "width": 30,
-          "height": 8
+          "x": 2,
+          "y": 48,
+          "width": 60,
+          "height": 16
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/interior/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/tower.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       }
     },
     {
@@ -1130,13 +1147,13 @@
       "path": "objects/lectern.png",
       "category": "object",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "Lectern with an open tome in the Skill Tower; each opens one skill category. Gold motes rise off the page (frame 0 when motion is reduced).",
-      "width": 64,
-      "height": 24,
+      "width": 128,
+      "height": 48,
       "grid": {
-        "width": 16,
-        "height": 24
+        "width": 32,
+        "height": 48
       },
       "animations": [
         {
@@ -1151,19 +1168,20 @@
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 5,
-          "y": 18,
-          "width": 6,
-          "height": 5
+          "x": 6,
+          "y": 38,
+          "width": 20,
+          "height": 10
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/interior/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/tower.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       }
     },
     {
@@ -1171,13 +1189,13 @@
       "path": "objects/hearth.png",
       "category": "object",
       "type": "spritesheet",
-      "status": "draft",
+      "status": "production",
       "usage": "Stone hearth set into the Guild Hall's back wall; the fire flickers (frame 0 when motion is reduced).",
-      "width": 192,
-      "height": 48,
+      "width": 384,
+      "height": 96,
       "grid": {
-        "width": 48,
-        "height": 48
+        "width": 96,
+        "height": 96
       },
       "animations": [
         {
@@ -1193,10 +1211,11 @@
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/interior/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/hall.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "Not solid: it is part of a wall that already collides."
     },
@@ -1205,27 +1224,28 @@
       "path": "objects/table.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
+      "status": "production",
       "usage": "Long guild table with mugs and bread.",
-      "width": 48,
-      "height": 24,
+      "width": 96,
+      "height": 48,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 1,
-          "y": 8,
-          "width": 46,
-          "height": 16
+          "x": 2,
+          "y": 16,
+          "width": 92,
+          "height": 32
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/interior/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/hall.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       }
     },
     {
@@ -1233,19 +1253,20 @@
       "path": "objects/plaque.png",
       "category": "object",
       "type": "image",
-      "status": "draft",
+      "status": "production",
       "usage": "Wall plaque in the Guild Hall; each opens one role.",
-      "width": 16,
-      "height": 24,
+      "width": 32,
+      "height": 48,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/interior/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/hall.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "Hangs on a wall face; not solid."
     },
@@ -1254,13 +1275,13 @@
       "path": "objects/portal.png",
       "category": "object",
       "type": "spritesheet",
-      "status": "draft",
-      "usage": "The Exit Portal (Contact) in the village glade: a stone ring with a turning heather and sea-light swirl. Interacting opens the contact panel (email, links, r\u00e9sum\u00e9).",
-      "width": 192,
-      "height": 56,
+      "status": "production",
+      "usage": "The Exit Portal (Contact) in the village glade: a stone ring with a turning heather and sea-light swirl. Interacting opens the contact panel (email, links, résumé).",
+      "width": 384,
+      "height": 112,
       "grid": {
-        "width": 48,
-        "height": 56
+        "width": 96,
+        "height": 112
       },
       "animations": [
         {
@@ -1275,19 +1296,20 @@
       "palette": "baltibytes-v0",
       "solid": [
         {
-          "x": 4,
-          "y": 44,
-          "width": 40,
-          "height": 12
+          "x": 8,
+          "y": 88,
+          "width": 80,
+          "height": 24
         }
       ],
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/interior/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/props/portal.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       },
       "notes": "Hard pixels only (no soft alpha), though the art bible allows a glow here. Frame 0 when motion is reduced."
     },
@@ -1296,19 +1318,20 @@
       "path": "ui/dialogue-box.png",
       "category": "ui",
       "type": "image",
-      "status": "placeholder",
-      "usage": "Nine-slice frame (8 px corners) for the dialogue box and panels, used as a CSS border-image.",
-      "width": 24,
-      "height": 24,
+      "status": "production",
+      "usage": "Nine-slice frame (16 px corners) for the dialogue box and panels, used as a CSS border-image.",
+      "width": 48,
+      "height": 48,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/placeholders/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/ui/ui.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       }
     },
     {
@@ -1316,19 +1339,20 @@
       "path": "ui/prompt.png",
       "category": "ui",
       "type": "image",
-      "status": "placeholder",
+      "status": "production",
       "usage": "Speech bubble with \"!\" above the nearest thing the player can interact with.",
-      "width": 9,
-      "height": 9,
+      "width": 18,
+      "height": 18,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/placeholders/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/ui/ui.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       }
     },
     {
@@ -1336,19 +1360,20 @@
       "path": "effects/shadow.png",
       "category": "effect",
       "type": "image",
-      "status": "placeholder",
+      "status": "production",
       "usage": "Ground shadow under characters and objects; the game draws it at 25 % opacity.",
-      "width": 12,
-      "height": 5,
+      "width": 24,
+      "height": 10,
       "transparency": "transparent",
       "palette": "baltibytes-v0",
       "provenance": {
         "origin": "code-generated",
         "author": "Claude (AI assistant) for Vytautas Z",
-        "created": "2026-10-13",
+        "created": "2026-10-20",
         "license": "owner",
-        "tool": "tools/art/generate-placeholders.ts",
-        "source": "tools/art/placeholders/props.ts"
+        "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py",
+        "source": "designs/baltibytes/ui/ui.py",
+        "notes": "Painted in code at 2× (ART_BIBLE §11): shapes with palette ramps, light, cast shadows and outlines by rule, details placed by hand; chosen by Vytautas from rounds of variants. No image generation in the pixels."
       }
     }
   ]

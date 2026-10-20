@@ -11,7 +11,7 @@
   --gold: #e3a840;
   --font-pixel: 'Pixelify Sans', ui-monospace, monospace;
   /* CSS pixels per game pixel; set by src/game/pixel-scale.ts. */
-  --px: 4px;
+  --px: 2px;
   color-scheme: dark;
 }
 
@@ -56,22 +56,23 @@ html, body {
   text-align: center;
 }
 
-/* Dialogue: the ui.dialogue-box nine-slice (8 px corners) as a border-image, scaled by --px. */
+/* Dialogue: the ui.dialogue-box nine-slice (16 px corners; art at 2×, ART_BIBLE §11) as a
+   border-image, scaled by --px. Sizes are in game pixels, twice the 1× numbers. */
 .dialogue {
   position: fixed;
   z-index: 3;
   left: 50%;
   bottom: 40px;
   transform: translateX(-50%);
-  width: min(calc(100vw - 32px), calc(var(--px) * 224));
+  width: min(calc(100vw - 32px), calc(var(--px) * 448));
   margin: 0;
-  padding: calc(var(--px) * 2) calc(var(--px) * 4);
+  padding: calc(var(--px) * 4) calc(var(--px) * 8);
   border-style: solid;
-  border-width: calc(var(--px) * 8);
-  border-image: var(--frame-image) 8 fill / calc(var(--px) * 8) stretch;
+  border-width: calc(var(--px) * 16);
+  border-image: var(--frame-image) 16 fill / calc(var(--px) * 16) stretch;
   image-rendering: pixelated;
   color: var(--ink);
-  font-size: clamp(16px, calc(var(--px) * 6), 26px);
+  font-size: clamp(16px, calc(var(--px) * 12), 26px);
   line-height: 1.35;
   cursor: pointer;
 }
@@ -104,8 +105,8 @@ html, body {
   max-height: calc(100vh - 32px);
   overflow-y: auto;
   border-style: solid;
-  border-width: calc(var(--px) * 8);
-  border-image: var(--frame-image) 8 fill / calc(var(--px) * 8) stretch;
+  border-width: calc(var(--px) * 16);
+  border-image: var(--frame-image) 16 fill / calc(var(--px) * 16) stretch;
   image-rendering: pixelated;
   padding: 4px 12px;
   color: var(--ink);

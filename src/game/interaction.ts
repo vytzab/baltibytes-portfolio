@@ -17,7 +17,7 @@ export interface Interactable {
   onInteract?: (playerX: number, playerY: number) => void;
 }
 
-const PROMPT_GAP = 2;
+const PROMPT_GAP = 4;
 
 export class InteractionPrompt {
   private readonly targets: Interactable[];

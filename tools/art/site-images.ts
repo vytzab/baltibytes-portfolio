@@ -74,7 +74,7 @@ function crop(src: RgbaImage, x: number, y: number, w: number, h: number): RgbaI
   return out;
 }
 
-/** The whole village at 1×, plus extra sprites placed for the picture (e.g. the player). */
+/** The whole village at one screen pixel per game pixel, plus extra sprites placed for the picture (e.g. the player). */
 function renderVillage(extra: MapObject[]): RgbaImage {
   const map = JSON.parse(readFileSync(join(ASSETS, 'maps/village.json'), 'utf8'));
   const tw: number = map.tilewidth;
@@ -126,23 +126,23 @@ function writeIco(path: string, png: RgbaImage): void {
 }
 
 export function writeSiteImages(paperHex: string): void {
-  // Link preview, 1200 × 630 (the size LinkedIn, Slack and X expect): 300 × 158 game pixels of the
-  // square (workshop, notice board, lamps, the guide) at ×4, with the player walking up to the
-  // board. 158 × 4 = 632, so the bottom two screen pixels are trimmed; still whole game pixels.
-  const scene = renderVillage([{ name: 'player', type: 'npc', x: 232, y: 206, properties: [{ name: 'sprite', value: 'char.player' }, { name: 'row', value: '3' }] }]);
-  writePng(join(PUBLIC, 'og-image.png'), crop(enlarge(crop(scene, 72, 58, 300, 158), 4), 0, 0, 1200, 630));
+  // Link preview, 1200 × 630 (the size LinkedIn, Slack and X expect): 600 × 316 game pixels of the
+  // square (workshop, notice board, lamps, the guide) at ×2, with the player walking up to the
+  // board. 316 × 2 = 632, so the bottom two screen pixels are trimmed; still whole game pixels.
+  const scene = renderVillage([{ name: 'player', type: 'npc', x: 464, y: 412, properties: [{ name: 'sprite', value: 'char.player' }, { name: 'row', value: '3' }] }]);
+  writePng(join(PUBLIC, 'og-image.png'), crop(enlarge(crop(scene, 144, 116, 600, 316), 2), 0, 0, 1200, 630));
 
-  // Icons: the player's head and shoulders (16 × 16 from the idle-down frame), on paper.
+  // Icons: the player's head (32 × 32 from the idle-down frame), on paper.
   const player = byId.get('char.player')!;
-  const head = canvas(16, 16);
+  const head = canvas(32, 32);
   fill(head, paperHex);
-  draw(head, image(player.path), 4, 7, 16, 16, 0, 0);
-  writePng(join(PUBLIC, 'favicon.png'), enlarge(head, 2));
-  writeIco(join(PUBLIC, 'favicon.ico'), enlarge(head, 2));
-  // Apple touch icon: 180 × 180, the head at ×10 (160) centred on a 10 px paper margin.
+  draw(head, image(player.path), 8, 2, 32, 32, 0, 0);
+  writePng(join(PUBLIC, 'favicon.png'), head);
+  writeIco(join(PUBLIC, 'favicon.ico'), head);
+  // Apple touch icon: 180 × 180, the head at ×5 (160) centred on a 10 px paper margin.
   const touch = canvas(180, 180);
   fill(touch, paperHex);
-  draw(touch, enlarge(head, 10), 0, 0, 160, 160, 10, 10);
+  draw(touch, enlarge(head, 5), 0, 0, 160, 160, 10, 10);
   writePng(join(PUBLIC, 'apple-touch-icon.png'), touch);
   console.log('  public/og-image.png, favicon.png, favicon.ico, apple-touch-icon.png');
 }

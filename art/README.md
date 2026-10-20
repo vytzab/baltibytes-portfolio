@@ -20,15 +20,14 @@ How art gets into the game: where files live, how they're described, checked and
 | `art/palettes/` | The palette (`.json` is the source of truth; `.gpl` and `.png` are generated for editors) | Yes |
 | `art/source/` | Editor files for production art (`.aseprite`, `.pxo`, `.kra`), mirroring `src/assets/` folders. Create it when the first one exists. | Yes |
 | `art/inbox/` | Scratch space for raw imports: tool outputs, sketches, downloads waiting for review | **No** (git-ignored) |
-| `tools/art/` | The generator, the validator and their tests | Yes |
-| `tools/art/placeholders/` | Code that draws the placeholder terrain, props, UI and map | Yes |
-| `tools/art/village/` | The Starting Village: `tiles.ts` (village tileset: edges, cobbles, plants), `props.ts` (workshop, trees, arch, notice board, lamp, crates), `map.ts` (the village layout as text, written as Tiled JSON with edges chosen automatically) | Yes |
-| `tools/art/dungeon/` | The Dungeon: `tiles.ts` (walls with faces and rimmed tops, flagstones, rug, cobwebs, a banner per project colour), `props.ts` (torch, quest chest, exit stairs, and the village's cellar entrance), `map.ts` (walls as `#`/`.` text; vaults follow `src/content/projects.ts`) | Yes |
-| `tools/art/interior/` | The Skill Tower and the Guild Hall: `tiles.ts` (floorboards, heather rug, star, books, scrolls), `props.ts` (bookshelf, lectern, hearth, table, plaque), `maps.ts` (both maps; lecterns follow `skills.ts`, plaques follow `experience.ts`) | Yes |
+| `tools/art/` | The map and site-image generator, the validator and their tests. The sprites, tilesets and UI are not drawn here: the sibling assetGenerator repo paints them at 2× and writes them into `src/assets/` (see Workflows) | Yes |
+| `tools/art/placeholders/` | `terrain.ts` (the terrain tileset's tile list) and `map.ts` (the art-preview test area) | Yes |
+| `tools/art/village/` | The Starting Village: `tiles.ts` (the village tileset's tile list: corner-based path and pond edges, grass fills, plants), `map.ts` (the village layout as text, written as Tiled JSON with edges chosen automatically from corner masks) | Yes |
+| `tools/art/dungeon/` | The Dungeon: `tiles.ts` (the tile list: walls with faces and rimmed tops, flagstones, rug, cobwebs, a banner per project colour), `map.ts` (walls as `#`/`.` text; vaults follow `src/content/projects.ts`) | Yes |
+| `tools/art/interior/` | The Skill Tower and the Guild Hall: `tiles.ts` (the tile list: floorboards, heather rug, star, books, scrolls), `maps.ts` (both maps; lecterns follow `skills.ts`, plaques follow `experience.ts`) | Yes |
 | `tools/art/maps/` | `indoor.ts`: the shared builder for indoor maps (walls pick their own faces and rims; floors, decor, entities, portals) | Yes |
-| `tools/art/characters/` | The characters: `player.ts`, `guide.ts`, `keeper.ts`, `sage.ts` and `guildmaster.ts` hold every pixel as hand-drawn text grids (head, body, arm, legs per direction); `compose.ts` stacks them into 24 × 32 frames and sheets | Yes |
 | `src/game/` | Engine code that uses assets by id: loader, `world.ts` (builds a map: layers, collision, entities, props, depth sorting), characters, dialogue, interaction, scaling, `rules.ts` (feet box and interaction range, shared with the validator) | Yes |
-| `tools/art/site-images.ts` | The fixed-URL images in `public/`: `og-image.png` (the link preview, 1200 × 630: a crop of the Starting Village rendered from its map and sprites at ×4) and the icons (`favicon.ico`, `favicon.png`, `apple-touch-icon.png`: the player's head and shoulders). Run by `npm run art:generate` after the game art; never edit the outputs by hand. They live outside `src/assets/`, so they have no manifest entries | Yes |
+| `tools/art/site-images.ts` | The fixed-URL images in `public/`: `og-image.png` (the link preview, 1200 × 630: a crop of the Starting Village rendered from its map and sprites at ×2) and the icons (`favicon.ico`, `favicon.png`, `apple-touch-icon.png`: the player's head). Run by `npm run art:generate` after the game art; never edit the outputs by hand. They live outside `src/assets/`, so they have no manifest entries | Yes |
 | `src/content/` | Text the game shows: `about.ts` (About me), `projects.ts` (case studies), `skills.ts` (Skill Tower), `experience.ts` (Guild Hall and education), `contact.ts` (Exit Portal and résumé). The repo is public, so everything here is published | Yes |
 | `src/resume/` | The résumé page (`resume.html`), rendered from `src/content` at build time by `vite.config.ts`: no JavaScript needed, print styles included | Yes |
 | `src/portfolio/` | The plain version of the site (`portfolio.html`), rendered the same way, also used for `404.html`'s styles | Yes |
@@ -45,7 +44,7 @@ npm run dev                 # dev server with hot reload: the game at /, the art
 npm run dev -- --host       # same, reachable from a phone on the same Wi-Fi (use the printed network URL)
 npm run art:validate        # check the manifest against the files (also part of build and check)
 npm run art:validate -- --no-placeholders   # also fail on placeholder or draft art (a future release gate)
-npm run art:generate        # redraw all code-drawn art (characters, placeholders) + palette files
+npm run art:generate        # regenerate the maps, the palette files and the site images
 npm test                    # validator tests (deliberately broken fixtures)
 npm run check               # type-check + validate + tests: run before every commit
 npm run build               # validate + type-check + production build into dist/ (what Cloudflare runs)
@@ -92,7 +91,7 @@ The art preview is a **development tool**: `npm run dev` serves it at `/art-prev
     "author": "…",
     "created": "2026-10-13",
     "license": "owner",                   // owner | CC0-1.0 | CC-BY-4.0 | OFL-1.1 | MIT
-    "tool": "tools/art/generate-placeholders.ts", // required for code-generated and ai-assisted
+    "tool": "assetGenerator repo (private): assetgen export designs/baltibytes/export.py", // required for code-generated and ai-assisted
     "source": "…",                        // https URL for third-party; source file otherwise
     "attribution": "…",                   // required for CC-BY-4.0
     "notes": "…"
@@ -130,9 +129,9 @@ It **cannot** judge whether art is good, readable, on-model or consistent in sty
 6. Review in the art preview (`npm run dev` → `/art-preview.html`), on grass and path, at ×3 and default zoom, and in the Assets panel.
 7. `npm run check` and `npm run build`, then commit (the PNG, the source file and the manifest change together).
 
-### Change a character
+### Change a character, tile or prop (painted in code)
 
-Edit the grids in `tools/art/characters/<name>.ts` (one character per pixel; the `legend` at the top maps letters to palette colours), then `npm run art:generate` and look at the sheet in the Assets panel and the character in the scene. `compose.ts` refuses parts that change size between poses, so frames can't jump. To hand a character over to a pixel editor instead: export the sheet PNG, keep the 24 × 32 grid and row order, remove it from `generate-placeholders.ts`, and change its provenance to `hand-drawn`.
+Every sprite, tileset and UI piece is painted at 2× by the sibling assetGenerator repo (`../assetGenerator`, private): one Python design per asset in `designs/baltibytes/`, each with its chosen variant (`CHOSEN`). Change the design there, review it with `assetgen render` / `variants` / `tiles`, then run `uv run assetgen export designs/baltibytes/export.py`, which renders every chosen asset into its file here (refusing soft alpha and off-palette pixels). Then validate, look at it in the art preview, check and build here. A tileset's tile order is listed in both repos (`export.py` and `tools/art/*/tiles.ts`): change both together. To hand an asset over to a pixel editor instead: export its PNG, keep its grid and row order, remove it from `export.py`, and change its provenance to `hand-drawn`.
 
 ### Approve art
 
@@ -143,7 +142,7 @@ When the owner approves a draft (or placeholder), set its `status` to `productio
 1. Keep the **id and path**. Overwrite the PNG with the new one.
 2. If the size, frame size or animation rows changed, update `width`, `height`, `grid`, `animations` in the manifest. Keep animation **names** the same so game code doesn't change.
 3. Update `status` (`draft` until the owner approves it, then `production`) and `provenance` (origin, author, date, licence, tool or source).
-4. If the asset was code-generated, remove it from `tools/art/generate-placeholders.ts` so `npm run art:generate` doesn't overwrite it.
+4. If the asset was painted in code, remove it from the assetGenerator's `designs/baltibytes/export.py` so the next export doesn't overwrite it.
 5. Validate, review in the preview, check, build, commit.
 
 No game code changes are needed unless the asset gains new animations or a different role.
@@ -154,13 +153,13 @@ Edit the entry in `manifest.json`, then `npm run art:validate`. The id never cha
 
 ### Change or add a map
 
-Both current maps are generated: edit the text layout in `tools/art/village/map.ts` (or `tools/art/placeholders/map.ts` for the test area) and run `npm run art:generate`. Path and pond edges are picked automatically; the generator stops with a message if a path or pond is only 1 tile wide somewhere.
+All maps are generated: edit the text layout in `tools/art/village/map.ts`, `dungeon/map.ts`, `interior/maps.ts` (or `tools/art/placeholders/map.ts` for the test area) and run `npm run art:generate`. Positions are in tiles (`px(n)`, 32 px each) plus pixel offsets at 2×. Path and pond edges are picked automatically from corner masks; the generator stops with a message if a path or pond is only 1 cell wide somewhere.
 
 To hand a map over to Tiled instead: remove its `writeMap` line from `generate-placeholders.ts`, then edit `src/assets/maps/<name>.json` in Tiled. Keep tilesets embedded and named after their ids, layers in CSV, `collides` as a tile property, entities as points in `entities`, blockers as rectangles in `collision`. Place edge tiles by hand (or set up a Tiled terrain set). Save, `npm run art:validate` (it checks walkability too), check in the preview.
 
 ### Add a prop
 
-Draw it in `tools/art/village/props.ts` (or a pixel editor), add its manifest entry with `solid` boxes for its footprint, and place it in a map as a `prop` point at its feet with a `sprite` property (add `dialogue` to make it talk). Animated props are sprite sheets with an animation; the game plays the first one (frame 0 when motion is reduced).
+Paint it as a design in the assetGenerator repo and add it to `export.py` (or draw it in a pixel editor), add its manifest entry with `solid` boxes for its footprint, and place it in a map as a `prop` point at its feet with a `sprite` property (add `dialogue` to make it talk). Animated props are sprite sheets with an animation; the game plays the first one (frame 0 when motion is reduced).
 
 ### Before committing
 
@@ -177,17 +176,17 @@ git status      # every new PNG has its manifest entry; no files in art/inbox ar
 Give them ART_BIBLE.md, the palette (`art/palettes/baltibytes-v0.png` and `.gpl`), a screenshot of the art preview and one or two existing sheets for scale. Then a brief like:
 
 > **Asset:** `obj.chest` — a small wooden treasure chest for the Dungeon (projects as quests), closed and open.
-> **Size:** 16 × 16 frames, 2 frames in one row (`closed`, `open`), PNG with transparent background.
+> **Size:** 48 × 48 frames, 2 frames in one column (`closed`, `open`), PNG with transparent background.
 > **View:** top-down three-quarter, light from the top-left, 1 px ink outline, no anti-aliasing, only the 30 palette colours (wood and gold ramps).
-> **Mood:** cozy, worn, hand-made; reads clearly at 16 px. Original design, not based on any game.
+> **Mood:** cozy, worn, hand-made; reads clearly at 48 px. Original design, not based on any game.
 
-For image-generation tools, add: "pixel art, 16×16 sprite, limited palette, hard edges, no anti-aliasing, no background". Expect to redraw. These tools rarely produce a real pixel grid or exact palette.
+For image-generation tools, add: "pixel art, 48×48 sprite, limited palette, hard edges, no anti-aliasing, no background". Expect to redraw. These tools rarely produce a real pixel grid or exact palette.
 
 ### Importing and cleaning up generated or scanned art (manual)
 
 1. Save the raw output in `art/inbox/` (ignored by git). Note the tool, model and prompt.
 2. Open it in a pixel editor. Find the true pixel size (generated "pixel art" is usually drawn with blocks of several screen pixels, often uneven).
-3. Scale it down with **nearest-neighbour** to the target size (24 × 32 characters, 16 × 16 tiles …), or, better, redraw it on a new canvas at the target size using the output as a reference layer.
+3. Scale it down with **nearest-neighbour** to the target size (48 × 64 characters, 32 × 32 tiles …), or, better, redraw it on a new canvas at the target size using the output as a reference layer.
 4. Convert to the palette: in Pixelorama/LibreSprite/GIMP load `baltibytes-v0.gpl` and switch to indexed colour with **no dithering**, then fix stray pixels by hand.
 5. Remove the background (fully transparent, alpha 0) and any semi-transparent edge pixels; add the 1 px ink outline; check light direction.
 6. Save the cleaned editor file in `art/source/`, export the PNG to `src/assets/`, add the manifest entry with `"origin": "ai-assisted"` (or `hand-drawn`), the tool, and the prompt in `notes`.
