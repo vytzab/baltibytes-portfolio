@@ -80,7 +80,7 @@ export const PROJECTS: Project[] = [
     title: 'Ninelight',
     tagline: 'Short, focused brain games for Android, grouped by the kind of thinking they challenge.',
     kind: 'Android app',
-    status: 'In development · not yet on Google Play',
+    status: 'On Google Play since October 2026',
     role: 'Solo: design, code, art, sound',
     stack: ['Kotlin', 'Jetpack Compose', 'Material 3', 'Room', 'DataStore', 'Hilt', 'Coroutines', 'TypeScript', 'Cloudflare Workers'],
     accent: 'heather',
@@ -115,14 +115,18 @@ export const PROJECTS: Project[] = [
       },
       {
         title: 'Outcome',
-        paragraphs: ['In closed testing on Google Play, working through the testing period required before a public release.'],
+        paragraphs: ['Released on Google Play in October 2026 after closed testing, in English and Lithuanian, with regular updates since.'],
         bullets: [
           'A daily challenge leaderboard on a small serverless backend (a TypeScript Cloudflare Worker with a SQLite database), protected against cheating with signed requests and Google Play Integrity checks',
           'Monetisation without a subscription: a free daily set and a one-time unlock, bought through Google Play',
         ],
       },
     ],
-    links: [{ label: 'Today\'s leaderboard', url: 'https://daily.baltibytes.com' }],
+    links: [
+      { label: 'About Ninelight', url: 'https://baltibytes.com/ninelight/' },
+      { label: 'Google Play', url: 'https://play.google.com/store/apps/details?id=com.vytzab.ninefold' },
+      { label: 'Today\'s leaderboard', url: 'https://daily.baltibytes.com' },
+    ],
   },
   {
     id: 'scoretracker',

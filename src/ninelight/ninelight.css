@@ -1,0 +1,146 @@
+/* Ninelight's pages wear the app's brand (docs/DESIGN_SYSTEM.md → Ninelight pages; the values come
+   from androidEduGame/DESIGN_SYSTEM.md §1–§3, §7, §8, where they are checked at 4.5:1 for text and
+   3:1 for graphics in both themes). Roboto, Material 3's type scale, flat surfaces, no shadows. */
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+
+:root {
+  --page: #f7faf9;
+  --card: #ffffff;
+  --border: #e2e8e5;
+  --text: #1f2937;
+  --text-2: #4b5563;
+  --link: #1d4ed8;      /* the app's info blue: links and notes */
+  --primary: #047857;   /* emerald 700: the filled button */
+  --on-primary: #ffffff;
+  --focus: #047857;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #0e1513;
+    --card: #18211e;
+    --border: #2f3d38;
+    --text: #f3f4f6;
+    --text-2: #d1d5db;
+    --link: #60a5fa;
+    --primary: #34d399; /* emerald 400 */
+    --on-primary: #022c22;
+    --focus: #34d399;
+  }
+}
+
+/* Skill tiles: each skill's container (tint) and content (icon and name), app §2. */
+[data-skill='memory'] { --tint: #f3e8ff; --on-tint: #6b21a8; }
+[data-skill='attention'] { --tint: #dcfce7; --on-tint: #166534; }
+[data-skill='processing-speed'] { --tint: #ffedd5; --on-tint: #9a3412; }
+[data-skill='logic'] { --tint: #dbeafe; --on-tint: #1e40af; }
+[data-skill='numeracy'] { --tint: #e0e7ff; --on-tint: #3730a3; }
+[data-skill='spatial-reasoning'] { --tint: #fce7f3; --on-tint: #9d174d; }
+[data-skill='language'] { --tint: #ccfbf1; --on-tint: #115e59; }
+[data-skill='executive-function'] { --tint: #fef3c7; --on-tint: #92400e; }
+[data-skill='problem-solving'] { --tint: #ffe4e6; --on-tint: #9f1239; }
+@media (prefers-color-scheme: dark) {
+  [data-skill='memory'] { --tint: #3b0764; --on-tint: #e9d5ff; }
+  [data-skill='attention'] { --tint: #052e16; --on-tint: #bbf7d0; }
+  [data-skill='processing-speed'] { --tint: #431407; --on-tint: #fed7aa; }
+  [data-skill='logic'] { --tint: #172554; --on-tint: #bfdbfe; }
+  [data-skill='numeracy'] { --tint: #1e1b4b; --on-tint: #c7d2fe; }
+  [data-skill='spatial-reasoning'] { --tint: #500724; --on-tint: #fbcfe8; }
+  [data-skill='language'] { --tint: #042f2e; --on-tint: #99f6e4; }
+  [data-skill='executive-function'] { --tint: #451a03; --on-tint: #fde68a; }
+  [data-skill='problem-solving'] { --tint: #4c0519; --on-tint: #fecdd3; }
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font: 400 16px/1.5 Roboto, system-ui, sans-serif;
+}
+a { color: var(--link); text-underline-offset: 2px; }
+a:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+img { max-width: 100%; height: auto; }
+
+/* One 720 px column (the app's MAX_CONTENT_WIDTH), 16 px gutters. */
+.nl-bar, .nl-main, .nl-footer { max-width: 752px; margin: 0 auto; padding: 0 16px; }
+.nl-bar { padding-top: 16px; }
+.nl-brand { display: inline-block; }
+.nl-brand img { display: block; width: 168px; }
+
+h1 { margin: 0; font-size: 28px; line-height: 36px; font-weight: 400; }   /* headlineMedium */
+h2 { margin: 0 0 8px; font-size: 22px; line-height: 28px; font-weight: 500; } /* titleLarge */
+h3 { margin: 16px 0 4px; font-size: 16px; line-height: 24px; font-weight: 500; } /* titleMedium */
+p { margin: 8px 0; }
+ul { margin: 8px 0; padding-left: 24px; }
+li { margin: 4px 0; }
+strong { font-weight: 500; }
+
+.nl-hero { padding: 24px 0 8px; }
+.nl-lede { font-size: 18px; color: var(--text-2); }
+.nl-note { color: var(--text-2); font-size: 14px; line-height: 20px; }
+.nl-main > .nl-note { margin: 16px 0; }
+
+/* Material 3's filled button: fully round, emerald, 48 px tall as a touch target. */
+.nl-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none;
+}
+.nl-button:focus-visible { outline-color: var(--text); }
+
+/* Screenshots: a row that scrolls sideways on phones, four abreast on wider screens. */
+.nl-shots {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(150px, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+  padding: 0 0 8px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.nl-shots li { margin: 0; scroll-snap-align: start; }
+.nl-shots img { display: block; border-radius: 12px; }
+
+/* Cards: flat, white on the page (dark: one tone up), 12 px corners, 16 px padding. */
+.nl-card {
+  margin: 12px 0;
+  padding: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.nl-card > :last-child { margin-bottom: 0; }
+
+.nl-skills { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; padding: 0; list-style: none; }
+.nl-skill {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin: 0;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--tint);
+  color: var(--on-tint);
+}
+.nl-skill-icon { flex: none; width: 40px; height: 40px; }
+.nl-skill-icon svg { display: block; width: 40px; height: 40px; }
+.nl-skill-name { display: block; font-weight: 500; }
+.nl-skill-games { display: block; font-size: 14px; line-height: 20px; }
+
+.nl-legal h1 { margin-bottom: 16px; }
+.nl-legal h2 { margin-top: 24px; }
+
+.nl-footer { padding-top: 8px; padding-bottom: 32px; color: var(--text-2); font-size: 14px; line-height: 20px; }
+.nl-footer ul { display: flex; flex-wrap: wrap; gap: 0 16px; margin: 0; padding: 0; list-style: none; }
+.nl-footer li a { display: inline-flex; align-items: center; min-height: 48px; }
