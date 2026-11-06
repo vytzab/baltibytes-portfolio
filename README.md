@@ -29,6 +29,10 @@ Everything in the game is also on one plain page at `/portfolio.html`: the same 
 
 The résumé is a page at `/resume.html`, built from the same content as the game (`src/content`); it works without JavaScript and prints to PDF from the browser. It can be switched off in `src/content/site.ts` (`SHOW_RESUME`).
 
+## Ninelight
+
+[`/ninelight/`](https://baltibytes.com/ninelight/) is the home page of Ninelight, my Android brain-games app, with [what's new](https://baltibytes.com/ninelight/changelog) in each version, its [privacy policy](https://baltibytes.com/ninelight/privacy) and [terms of service](https://baltibytes.com/ninelight/terms). These pages use the app's own look rather than the portfolio's, and are built from `src/content/ninelight*` with no JavaScript.
+
 ## Art
 
 All artwork is original. How it's made, checked and added: [art/README.md](art/README.md). The visual rules: [art/ART_BIBLE.md](art/ART_BIBLE.md). Every asset file is listed with its source and licence in [`src/assets/manifest.json`](src/assets/manifest.json).
@@ -36,6 +40,8 @@ All artwork is original. How it's made, checked and added: [art/README.md](art/R
 ## Credits
 
 - [Pixelify Sans](https://fonts.google.com/specimen/Pixelify+Sans) by The Pixelify Sans Project Authors, SIL Open Font License 1.1
+- The "Get it on Google Play" badge on the Ninelight page is Google's, used under its [badge guidelines](https://play.google.com/intl/en_us/badges/). Google Play and the Google Play logo are trademarks of Google LLC.
+- [Roboto](https://fonts.google.com/specimen/Roboto) by The Roboto Project Authors, SIL Open Font License 1.1 (the Ninelight pages)
 - [Phaser](https://phaser.io), MIT
 
 ## Licence
