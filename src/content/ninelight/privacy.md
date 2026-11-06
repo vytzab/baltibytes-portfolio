@@ -5,7 +5,7 @@
 **Contact:** baltibytes@gmail.com
 **Last updated:** 2026-10-28
 
-This policy explains what happens to your information when you use the app. The short version: **the app has no account and collects nothing about you. Everything you play stays on your device, unless you choose to take part in the daily challenge leaderboard, which sends your daily challenge scores under a made-up name.**
+This policy explains what happens to your information when you use the app. The short version: **the app has no account and collects nothing about you. Everything you play stays on your device, unless you choose to take part in the daily challenge leaderboard, which sends your daily challenge scores under a made-up name, or to back up to Google Play Games, which keeps a copy in your own Google account.**
 
 ## What the app stores, and where
 
@@ -16,11 +16,11 @@ The app keeps the following **only on your device**:
 - **Your versus matches:** for each pass-and-play match you finish, your own score and place, and the game. The other players' names and scores are only shown during the match and are never stored.
 - **Challenges you have played:** which shared puzzles you have started, and your first score on each, so a replay doesn't replace it. A challenge code holds a game, its puzzles and a score, and nothing about you; the app never sends one: you share it yourself, with the app you choose.
 - **Your daily challenge tries:** for each day you start the daily challenge, the game, its puzzles and level, your first try's score, and whether it went on the leaderboard.
-- **Your settings:** sound and its volume, vibration, the daily reminder and its time, whether you have seen the welcome screen, and, for the leaderboard, whether you take part, your made-up name and whether others may see it.
+- **Your settings:** sound and its volume, vibration, the daily reminder and its time, whether you have seen the welcome screen, for the leaderboard, whether you take part, your made-up name and whether others may see it, and whether you back up to Google Play Games and when it last did.
 - **Whether you have bought Unlimited,** so the app works offline.
 - **How many free plays you have used today,** for the free version's daily limit.
 
-None of this is sent to us or to anyone else, except what the daily challenge leaderboard sends if you choose to take part (below).
+None of this is sent to us or to anyone else, except what the daily challenge leaderboard sends if you choose to take part, and the copy kept in your Google account if you choose to back up to Google Play Games (both below).
 
 ## The daily challenge leaderboard (optional)
 
@@ -45,7 +45,7 @@ Before your first daily challenge, the app asks whether you want to take part in
 
 ## What the app does not do
 
-- No account and no sign-in, including for the leaderboard.
+- No Ninelight account, and no sign-in for the leaderboard. The only sign-in is to Google Play Games, and only if you turn on backing up to it.
 - No analytics, tracking or advertising, and no third-party advertising or analytics code.
 - No location, contacts, photos, microphone or camera.
 - No sharing or selling of data.
@@ -63,6 +63,16 @@ If you have Android backup turned on, Android may include your game results, ach
 **More → Settings → Your data → Back up my progress** writes a file with your game results, daily workouts, achievements, versus results, daily challenge tries and settings (sound, vibration, the daily reminder and relaxed timing). It doesn't include your leaderboard key or name, your free plays or your purchase. You choose where the file goes: saved on your phone, or sent with an app you pick (for example Google Drive, email or another phone). The app itself sends it nowhere, and we never receive it unless you send it to us. Anyone you give the file to can read your results in it.
 
 **Restore from a file** reads a file you choose and adds what's in it to the progress on your phone; it deletes nothing. The file is read only on your phone.
+
+## Backing up to Google Play Games (optional)
+
+**More → Settings → Your data → Back up to Google Play Games** is off unless you turn it on, and so is **Restore from Google Play Games** on the welcome screen. Until you do, the app doesn't start Google Play Games or sign you in to it.
+
+**If you turn it on**, the app signs you in to Google Play Games, which asks Google to link Ninelight to your Google account's Play Games profile. It then keeps the same file as **Back up my progress** (above) as a saved game in your Google account. When you open or leave the app, it adds anything new from that copy to your phone (from another phone on the same account, for example) and updates the copy with your phone's progress. On a new phone, turning it on brings your progress back.
+
+**Who holds it:** Google keeps the copy, in storage that belongs to your Google account, under the [Google Privacy Policy](https://policies.google.com/privacy). We never receive it, and we can't see it or your Google account. Google Play Games itself may record that you play Ninelight, for example in your Play Games profile and Google's My Activity, as set in your Google account.
+
+**Stopping and deleting:** turning it off stops backing up; the copy stays in your Google account until you delete it. **Delete the copy in Google Play Games**, in the same place, deletes it and turns backing up off. Your progress on the phone stays either way. **Reset all progress** also replaces the copy, the next time the app backs up, so the reset isn't undone by it. You can manage or delete Play Games data, including your profile, in the Google Play Games app and your Google account.
 
 ## Daily reminder
 
@@ -86,7 +96,7 @@ Most of your data is only on your device, and you control it:
 
 - In the app: **More → Settings → Reset all progress** deletes every result. Each game's progress screen can also delete that game's results. Achievements you have earned are kept after a reset; clearing the app's storage or uninstalling deletes them too.
 - Uninstalling the app, or clearing its storage in Android's settings, deletes everything the app stored.
-- To delete a backup, use your phone's backup settings or your Google account. A backup file you made yourself is yours to delete wherever you saved or sent it.
+- To delete a backup, use your phone's backup settings or your Google account. A backup file you made yourself is yours to delete wherever you saved or sent it. The copy in Google Play Games: **More → Settings → Your data → Delete the copy in Google Play Games**, or your Google account.
 - Leaderboard: **More → Settings → Daily challenge leaderboard → Delete my scores** removes your scores and name from the server. Uninstalling the app doesn't do this, as the server can't tell; delete your scores first, or email us your leaderboard name.
 
 ## Children

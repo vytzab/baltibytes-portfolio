@@ -2,6 +2,13 @@
 
 Each version of Ninelight on Google Play, newest first. Updates arrive through Google Play.
 
+## 1.0.3 (6 November 2026)
+
+- **Back up to Google Play Games:** keep a copy of your progress in your own Google account and get it back on a new phone, or keep two phones in step: More → Settings → Your data. It's off unless you turn it on, and free for everyone.
+- **The home-screen widget shows this week's goal** under your streak.
+- **On tablets and sideways,** Progress shows your skills as cards, two side by side.
+- About now links to the terms of service, and the privacy policy has moved to baltibytes.com.
+
 ## 1.0.2 (28 October 2026)
 
 - **A weekly goal** on Today, the same for everyone, Monday to Sunday: play on 4 different days, play games from 5 skills, and so on. It can be reached in the free version too.
