@@ -40,6 +40,7 @@ All artwork is original. How it's made, checked and added: [art/README.md](art/R
 ## Credits
 
 - [Pixelify Sans](https://fonts.google.com/specimen/Pixelify+Sans) by The Pixelify Sans Project Authors, SIL Open Font License 1.1
+- The "Get it on Google Play" badge on the Ninelight page is Google's, used under its [badge guidelines](https://play.google.com/intl/en_us/badges/). Google Play and the Google Play logo are trademarks of Google LLC.
 - [Roboto](https://fonts.google.com/specimen/Roboto) by The Roboto Project Authors, SIL Open Font License 1.1 (the Ninelight pages)
 - [Phaser](https://phaser.io), MIT
 

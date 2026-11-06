@@ -6,7 +6,7 @@
 
 export const NINELIGHT = {
   name: 'Ninelight',
-  // utm_source=website is Google Play's install referrer, so Play Console counts installs from here.
+  // The badge's link. utm_source=website is Google Play's install referrer, so Play Console counts installs from here.
   playUrl: 'https://play.google.com/store/apps/details?id=com.vytzab.ninefold&referrer=utm_source%3Dwebsite',
   dailyBoardUrl: 'https://daily.baltibytes.com',
   email: 'baltibytes@gmail.com',

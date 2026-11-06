@@ -72,6 +72,7 @@ function footer(): string {
         </ul>
       </nav>
       <p>Made by ${esc(ABOUT.name)} · <a href="/">baltibytes.com</a></p>
+      <p>Google Play and the Google Play logo are trademarks of Google LLC.</p>
     </footer>`;
 }
 
@@ -111,7 +112,7 @@ export function renderNinelightHome(root: string): string {
   return page(`<section class="nl-hero">
         <h1>${esc(NINELIGHT.headline)}</h1>
         <p class="nl-lede">${esc(NINELIGHT.lede)}</p>
-        <p><a class="nl-button" href="${esc(NINELIGHT.playUrl)}">Get it on Google Play</a></p>
+        <p class="nl-badge"><a href="${esc(NINELIGHT.playUrl)}"><img src="${IMG}/google-play-badge.png" alt="Get it on Google Play" width="207" height="80" /></a></p>
         <p class="nl-note">${esc(NINELIGHT.platforms)}</p>
       </section>
       <ul class="nl-shots" aria-label="Screenshots">

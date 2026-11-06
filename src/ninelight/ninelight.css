@@ -11,8 +11,6 @@
   --text: #1f2937;
   --text-2: #4b5563;
   --link: #1d4ed8;      /* the app's info blue: links and notes */
-  --primary: #047857;   /* emerald 700: the filled button */
-  --on-primary: #ffffff;
   --focus: #047857;
   color-scheme: light dark;
 }
@@ -24,8 +22,6 @@
     --text: #f3f4f6;
     --text-2: #d1d5db;
     --link: #60a5fa;
-    --primary: #34d399; /* emerald 400 */
-    --on-primary: #022c22;
     --focus: #34d399;
   }
 }
@@ -82,20 +78,13 @@ strong { font-weight: 500; }
 .nl-note { color: var(--text-2); font-size: 14px; line-height: 20px; }
 .nl-main > .nl-note { margin: 16px 0; }
 
-/* Material 3's filled button: fully round, emerald, 48 px tall as a touch target. */
-.nl-button {
-  display: inline-flex;
-  align-items: center;
-  min-height: 48px;
-  padding: 0 24px;
-  border-radius: 999px;
-  background: var(--primary);
-  color: var(--on-primary);
-  font-weight: 500;
-  font-size: 16px;
-  text-decoration: none;
-}
-.nl-button:focus-visible { outline-color: var(--text); }
+/* Google's official badge, unchanged (play.google.com/intl/en_us/badges): its file includes the
+   clear space Google asks for (41 of 250 px on each side), so it's pulled left by that much to line
+   up with the text; the clear space still keeps everything else away from the badge. Black with a
+   grey edge, it reads on both themes. */
+.nl-badge { margin: 0; }
+.nl-badge a { display: inline-block; margin-left: -13px; border-radius: 12px; }
+.nl-badge img { display: block; width: 207px; height: 80px; }
 
 /* Screenshots: a row that scrolls sideways on phones, four abreast on wider screens. */
 .nl-shots {
